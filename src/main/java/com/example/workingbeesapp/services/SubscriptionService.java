@@ -1,2 +1,4 @@
-package com.example.workingbeesapp.services;public class SubscriptionService {
+package com.example.workingbeesapp.services;
+
+public class SubscriptionService {
 }
