@@ -19,7 +19,7 @@ public class ExtraServiceDto {
 
     private String serviceType;
 
-    private String servicePrice;
+    private int servicePrice;
 
     private String serviceDuration;
 
