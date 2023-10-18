@@ -1,14 +1,11 @@
 package com.example.workingbeesapp.services;
 
-
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.repositories.CompanyRepository;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
