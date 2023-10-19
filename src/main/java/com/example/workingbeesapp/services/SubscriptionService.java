@@ -1,9 +1,8 @@
 package com.example.workingbeesapp.services;
 
-import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.SubscriptionDto;
+
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
-import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class SubscriptionService {
 
     public List<SubscriptionDto> getAllSubscriptions() {
         List<Subscription> subscriptions = subscriptionRepository.findAll();
-        List<SubscriptionDto> subscriptionDtoList = new ArrayList<>(); // watch out: in case you have a list, don't forget to use plural - here: televisions//
+        List<SubscriptionDto> subscriptionDtoList = new ArrayList<>();
         for (Subscription subscription : subscriptions) {
             SubscriptionDto subscriptionDto = transferSubscriptionToSubscriptionDto(subscription);
             subscriptionDtoList.add(subscriptionDto);
@@ -33,51 +32,52 @@ public class SubscriptionService {
     }
 
     // FUNCTION FOR GET ONE COMPANY //
-    public CompanyDto getOneCompany(Long id) {
-        Optional<Company> optionalCompany = companyRepository.findById(id);
-        if (optionalCompany.isPresent()) {
-            CompanyDto subscription = transferCompanyToCompanyDto(optionalCompany.get());
+
+    public SubscriptionDto getOneSubscription(Long id) {
+        Optional<Subscription> optionalSubscription = subscriptionRepository.findById(id);
+        if (optionalSubscription.isPresent()) {
+            SubscriptionDto subscription = transferSubscriptionToSubscriptionDto(optionalSubscription.get());
             return subscription;
         } else {
-            throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
+            throw new RecordNotFoundException("Item of type Subscription with id: " + id + " could not be found.");
         }
     }
 
     // FUNCTION FOR CREATING ONE COMPANY //
 
-    public CompanyDto createCompany(CompanyDto subscriptionDto) {
-        Company newCompany = transferCompanyDtoToCompany(subscriptionDto);
-        companyRepository.save(newCompany);
-        return transferCompanyToCompanyDto(newCompany);
+    public SubscriptionDto createSubscription(SubscriptionDto subscriptionDto) {
+        Subscription newSubscription = transferSubscriptionDtoToSubscription(subscriptionDto);
+        subscriptionRepository.save(newSubscription);
+        return transferSubscriptionToSubscriptionDto(newSubscription);
     }
 
     // FUNCTION TO UPDATE COMPANY //
-    public CompanyDto updateCompany(Long id, CompanyDto subscriptionDto) {
-        if (companyRepository.findById(id).isPresent()) {
+    public SubscriptionDto updateSubscription(Long id, SubscriptionDto subscriptionDto) {
+        if (subscriptionRepository.findById(id).isPresent()) {
 
-            Company subscription = companyRepository.findById(id).get();
+            Subscription subscription = subscriptionRepository.findById(id).get();
 
-            Company company1 = transferCompanyDtoToCompany(subscriptionDto);
+            Subscription company1 = transferSubscriptionDtoToSubscription(subscriptionDto);
 
             company1.setId(subscription.getId());
 
-            companyRepository.save(company1);
+            subscriptionRepository.save(company1);
 
-            return transferCompanyToCompanyDto(company1);
+            return transferSubscriptionToSubscriptionDto(company1);
         } else {
-            throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
+            throw new RecordNotFoundException("Item of type Subscription with id: " + id + " could not be found.");
         }
     }
 
     // FUNCTION TO DELETE COMPANY //
-    public void deleteCompany(Long id) {
-        if (companyRepository.existsById(id)) {
-            Optional<Company> optionalCompany = companyRepository.findById(id);
-            Company obsoleteCompany = optionalCompany.get();
+    public void deleteSubscription(Long id) {
+        if (subscriptionRepository.existsById(id)) {
+            Optional<Subscription> optionalSubscription = subscriptionRepository.findById(id);
+            Subscription obsoleteSubscription = optionalSubscription.get();
 
-            companyRepository.delete(obsoleteCompany);
+            subscriptionRepository.delete(obsoleteSubscription);
         } else {
-            throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
+            throw new RecordNotFoundException("Item of type Subscription with id: " + id + " could not be found.");
         }
     }
 
