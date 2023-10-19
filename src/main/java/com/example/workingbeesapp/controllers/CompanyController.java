@@ -1,6 +1,7 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
+import com.example.workingbeesapp.dtos.IdInputDto;
 import com.example.workingbeesapp.services.CompanyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,6 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    // GETTING UserList --- functional//
 
     @GetMapping("")
     public ResponseEntity<List<CompanyDto>> getAllCompanies() {
@@ -68,5 +68,12 @@ public class CompanyController {
         companyService.deleteCompany(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    // --- ASSIGNING SUBSCRIPTION TO COMPANY ONE - TO - ONE RELATION --- //
+    @PutMapping("/{id}/subscription")
+    public ResponseEntity<Object> assignSubscriptionToCompany(@PathVariable("id") Long companyId, @RequestBody IdInputDto input) {
+        companyService.assignSubscriptionToCompany(companyId, input.id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -31,5 +31,6 @@ public class Subscription {
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
-    // TODO - set up relation with working spaces and teams //
+    @OneToOne(mappedBy = "subscription")
+    private Company company;
 }

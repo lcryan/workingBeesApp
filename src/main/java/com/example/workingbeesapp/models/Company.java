@@ -35,5 +35,8 @@ public class Company {
     @Column(name = "payment_details")
     private String paymentDetails;
 
-    // TODO: set up relations to teams //
+    // --- relation to SUBSCRIPTION --- //
+    @OneToOne
+    @JoinColumn(name = "subscription_overview")
+    private Subscription subscription;
 }

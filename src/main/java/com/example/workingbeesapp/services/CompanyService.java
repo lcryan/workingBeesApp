@@ -3,8 +3,10 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;
+import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
+import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,8 +18,11 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
-    public CompanyService(CompanyRepository companyRepository) {
+    private final SubscriptionRepository subscriptionRepository;
+
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository) {
         this.companyRepository = companyRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
 
@@ -108,5 +113,22 @@ public class CompanyService {
         company.setPaymentDetails(companyDto.getPaymentDetails());
 
         return company;
+    }
+
+    // --- assigning SUBSCRIPTION TO COMPANY --- //
+
+    public void assignSubscriptionToCompany(Long companyId, Long subscriptionId) {
+        var optionalCompany = companyRepository.findById(companyId);
+        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
+
+        if (optionalCompany.isPresent() && optionalSubscription.isPresent()) {
+            var company = optionalCompany.get();
+            var subscription = optionalSubscription.get();
+
+            company.setSubscription(subscription);
+            companyRepository.save(company);
+        } else {
+            throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
+        }
     }
 }
