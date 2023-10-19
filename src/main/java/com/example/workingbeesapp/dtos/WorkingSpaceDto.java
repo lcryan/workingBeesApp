@@ -19,7 +19,7 @@ public class WorkingSpaceDto {
 
     private String type;
 
-    private int size;
+    private String size;
 
     //TODO : don't forget to lay relation to team class ! //
 }
