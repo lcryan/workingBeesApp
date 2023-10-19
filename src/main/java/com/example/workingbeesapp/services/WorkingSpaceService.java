@@ -101,7 +101,7 @@ public class WorkingSpaceService {
         workingSpace.setId(workingSpaceDto.getId());
         workingSpace.setName(workingSpaceDto.getName());
         workingSpace.setType(workingSpaceDto.getType());
-        workingSpace.setSize(workingSpaceDto.getSize());
+        workingSpace.setCapacity(workingSpaceDto.getCapacity());
 
         return workingSpace;
     }
