@@ -19,7 +19,7 @@ public class TeamDto {
 
     private String workingSpace;
 
-    private String roomSize;
+    private int teamSize;
 
     private String extraService;
 }

@@ -31,8 +31,8 @@ public class Team {
 
     //TODO : 2. add relation to workingSpace class here and add a list / set here //
 
-    @Column(name = "room_size")
-    private String roomSize;
+    @Column(name = "team_size")
+    private int teamSize;
 
     @Column(name = "extra_service")
     private String extraService;

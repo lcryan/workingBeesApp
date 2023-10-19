@@ -27,8 +27,8 @@ public class WorkingSpace {
     @Column(name = "space_type")
     private String type;
 
-    @Column(name = "space_size")
-    private String size;
+    @Column(name = "space_capacity")
+    private String capacity;
 
     //TODO : don't forget to lay relation to team class ! //
 }
