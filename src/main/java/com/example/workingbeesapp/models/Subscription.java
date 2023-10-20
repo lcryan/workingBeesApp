@@ -25,8 +25,15 @@ public class Subscription {
 
     @Column(name = "price")
     private double price;
+
     @Column(name = "duration")
     private String duration;
+
+    @Column(name = "start_date")
+    private int startDate;
+
+    @Column(name = "end_date")
+    private int endDate;
 
     @Column(name = "working_space_type")
     private String workingSpaceType;
