@@ -89,7 +89,7 @@ public class TeamService {
         teamDto.setId(team.getId());
         teamDto.setCompany(team.getCompany());
         teamDto.setWorkingSpace(team.getWorkingSpace());
-        teamDto.setRoomSize(team.getRoomSize());
+        teamDto.setTeamSize(team.getTeamSize());
         teamDto.setExtraService(team.getExtraService());
 
         return teamDto;
