@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -30,10 +32,10 @@ public class Subscription {
     private String duration;
 
     @Column(name = "start_date")
-    private int startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private int endDate;
+    private LocalDate endDate;
 
     @Column(name = "working_space_type")
     private String workingSpaceType;

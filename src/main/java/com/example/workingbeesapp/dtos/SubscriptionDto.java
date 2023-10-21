@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -20,9 +22,9 @@ public class SubscriptionDto {
 
     private String duration;
 
-    private int startDate;
+    private LocalDate startDate;
 
-    private int endDate;
+    private LocalDate endDate;
 
     private String workingSpaceType; // TODO: make this into a list - with different types of working spaces - Paris room - Tokyo room etc. one-To-Many//
 }
