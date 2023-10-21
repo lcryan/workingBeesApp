@@ -21,10 +21,14 @@ public class Team {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "company")
-    private String company;
+/*    @Column(name = "company")
+    private String company;*/
 
     //TODO: 1. add relation to company class and make this a list or set //
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "teams_overview")
+    private Company company;
 
     @Column(name = "working_space")
     private String workingSpace;
