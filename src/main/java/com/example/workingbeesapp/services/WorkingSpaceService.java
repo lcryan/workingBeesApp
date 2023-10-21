@@ -89,7 +89,7 @@ public class WorkingSpaceService {
         workingSpaceDto.setId(workingSpace.getId());
         workingSpaceDto.setName(workingSpace.getName());
         workingSpaceDto.setType(workingSpace.getType());
-        workingSpaceDto.setSize(workingSpace.getSize());
+        workingSpaceDto.setCapacity(workingSpace.getCapacity());
 
         return workingSpaceDto;
     }
