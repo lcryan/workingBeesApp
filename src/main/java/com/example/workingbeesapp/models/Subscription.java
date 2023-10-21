@@ -40,6 +40,6 @@ public class Subscription {
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
-    @OneToOne(mappedBy = "subscription")
+    @OneToOne(mappedBy = "subscription") //basic set up now functional in db //
     private Company company;
 }
