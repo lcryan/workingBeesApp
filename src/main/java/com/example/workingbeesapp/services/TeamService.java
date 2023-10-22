@@ -3,6 +3,7 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Team;
+import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,11 @@ import java.util.Optional;
 public class TeamService {
 
     private final TeamRepository teamRepository;
+    private CompanyRepository companyRepository;
 
-    public TeamService(TeamRepository teamRepository) {
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository) {
         this.teamRepository = teamRepository;
+        this.companyRepository = companyRepository;
     }
 
     public List<TeamDto> getAllTeams() {
@@ -80,9 +83,23 @@ public class TeamService {
     }
 
 
-    // --- assign TEAM TO COMPANY -- MANY TO ONE RELATION --- THIS IS THE OWNER OF THE RELATION --- //
+    // --- assign TEAM(S) TO COMPANY -- MANY-TO-ONE-RELATION --- THIS IS THE OWNER OF THE RELATION --- //
 
-    public void assignTeamToCompany
+    public void assignCompanyToTeam(Long id, Long companyId) {
+        var optionalCompany = companyRepository.findById(id);
+        var optionalTeam = teamRepository.findById(companyId);
+
+        if (optionalCompany.isPresent() && optionalTeam.isPresent()) {
+            var company = optionalCompany.get();
+            var team = optionalTeam.get();
+
+            team.setCompany(company);
+            teamRepository.save(team);
+        } else {
+            throw new RecordNotFoundException();
+        }
+    }
+
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
