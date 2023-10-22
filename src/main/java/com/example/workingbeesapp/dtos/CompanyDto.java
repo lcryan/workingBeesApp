@@ -17,7 +17,7 @@ public class CompanyDto {
 
     private String companyName;
 
-    private String teamName; // TODO : This has to become a list - Many to One - one to many relation //
+    private String teamName;
 
     private String companyDetails;
 
