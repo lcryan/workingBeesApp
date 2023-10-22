@@ -1,6 +1,6 @@
 package com.example.workingbeesapp.dtos;
 
-import com.example.workingbeesapp.models.ExtraService;
+import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.models.Team;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,13 +35,22 @@ public class CompanyDto {
     @JsonIncludeProperties({"id", "team_name", "working_space", "team_size", "extra_service"})
     private List<Team> teams;
 
-    // --- EXTRA-SERVICE of relation One-To-Many --- include props JSON//
-    @JsonIncludeProperties({"id", "service_name", "service_type", "service_price", "service_duration"})
-    private List<ExtraService> extraServices;
-
     // --- SUBSCRIPTION of relation One-To-One --- include props JSON //
 
     @JsonIncludeProperties({"id", "price", "duration", "start_date", "end_date", "working_space_type"})
-    private Subscription subscription;
+    Subscription subscription;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CompanyDto companyDto = (CompanyDto) o;
+
+        return Objects.equals(id, companyDto.id) && Objects.equals(companyName, companyDto.companyName) && Objects.equals(companyDetails, companyDto.companyDetails) && Objects.equals(teamName, companyDto.teamName) && Objects.equals(paymentDetails, companyDto.paymentDetails) && Objects.equals(subscription, companyDto.subscription) && Objects.equals(teams, companyDto.teams);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, companyName, companyDetails, teamName, paymentDetails, subscription, teams);
+    }
 }

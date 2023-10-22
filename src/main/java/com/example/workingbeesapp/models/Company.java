@@ -1,6 +1,5 @@
 package com.example.workingbeesapp.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,7 +39,7 @@ public class Company {
     private String paymentDetails;
 
     // --- relation to SUBSCRIPTION --- CHECKED --- functional ---//
-    // TODO : I would like the company to be able to see the full overview of their subscription - is this even possible in the backend ? //
+
     @OneToOne
     @JoinColumn(name = "subscription_overview")
     private Subscription subscription;
@@ -47,10 +47,22 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<Team> teams;
 
-    @OneToMany(mappedBy = "company")
-    private List<ExtraService> extraServices;
 
-    // TODO-- add methods to add subscription / teams & extraservices here//
-    // TODO -- at equals method and hashcode method here --//
-    // TODO -- adjust service and controller subs. -- //
+    public void addTeam(Team team) {
+        this.teams.add(team);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Company company = (Company) o;
+
+        return Objects.equals(id, company.id) && Objects.equals(companyName, company.companyName) && Objects.equals(companyDetails, company.companyDetails) && Objects.equals(teamName, company.teamName) && Objects.equals(paymentDetails, company.paymentDetails) && Objects.equals(subscription, company.subscription) && Objects.equals(teams, company.teams);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, companyName, companyDetails, teamName, paymentDetails, subscription, teams);
+    }
 }
