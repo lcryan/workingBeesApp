@@ -49,8 +49,8 @@ public class Team {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return Objects.equals(id, team.id) && Objects.equals(teamName, team.teamName) && Objects.equals(company, team.company) && Objects.equals(workingSpace, team.workingSpace) && Objects.equals(teamSize, team.teamSize) && Objects.equals(extraService, team.extraService);
+        Team that = (Team) o;
+        return Objects.equals(id, that.id) && Objects.equals(teamName, that.teamName) && Objects.equals(company, that.company) && Objects.equals(workingSpace, that.workingSpace) && Objects.equals(teamSize, that.teamSize) && Objects.equals(extraService, that.extraService);
     }
 
     @Override
