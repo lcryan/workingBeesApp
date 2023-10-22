@@ -44,6 +44,6 @@ public class Company {
     private Subscription subscription;
 
     @OneToMany(mappedBy = "company")
-    /* @JsonIgnore*/ // TODO : check out, if you want to use  @JSON ignore here //
-    private List<Team> teams;
+    @JsonIgnore
+    List<Team> teams;
 }

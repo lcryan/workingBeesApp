@@ -21,25 +21,24 @@ public class Team {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "company")
-    private String company;
+/*    @Column(name = "company")
+    private String company;*/
 
-    //TODO: 1. add relation to company class and make this a list or set //
-
+    // -- Team is the owner of the relation - no foreign key in the db -- //
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "teams_overview")
-    private Team team;
+    @JoinColumn(name = "company_id")
+    private Company company;
 
+    //TODO : 2. add relation to workingSpace class here //
     @Column(name = "working_space")
     private String workingSpace;
-
-    //TODO : 2. add relation to workingSpace class here and add a list / set here //
 
     @Column(name = "team_size")
     private int teamSize;
 
+    // TODO: 3. add extraService relation here and add a //
     @Column(name = "extra_service")
     private String extraService;
 
-    // TODO: 3. add extraService relation here and add a list / set here //
+
 }

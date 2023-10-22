@@ -1,5 +1,6 @@
 package com.example.workingbeesapp.dtos;
 
+import com.example.workingbeesapp.models.Company;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ public class TeamDto {
 
     private Long id;
 
-    private String company;
+    private Company company;
 
     private String workingSpace;
 

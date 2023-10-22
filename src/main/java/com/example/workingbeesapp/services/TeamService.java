@@ -80,6 +80,10 @@ public class TeamService {
     }
 
 
+    // --- assign TEAM TO COMPANY -- MANY TO ONE RELATION --- THIS IS THE OWNER OF THE RELATION --- //
+
+    public void assignTeamToCompany
+
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
     private TeamDto transferTeamToTeamDto(Team team) {
