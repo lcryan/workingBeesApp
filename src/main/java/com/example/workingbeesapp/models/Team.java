@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -32,16 +34,27 @@ public class Team {
     @JoinColumn(name = "company_id")
     private Company company;
 
-    //TODO : 2. add relation to workingSpace class here //
+    //TODO : 2. add relation to workingSpace class here - ONE TO ONE //
     @Column(name = "working_space")
     private String workingSpace;
 
     @Column(name = "team_size")
     private int teamSize;
 
-    // TODO: 3. add extraService relation here and add a //
+    // TODO: 3. add extraService relation here and add a list - every team can have more than one service//
     @Column(name = "extra_service")
     private String extraService;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(id, team.id) && Objects.equals(teamName, team.teamName) && Objects.equals(company, team.company) && Objects.equals(workingSpace, team.workingSpace) && Objects.equals(teamSize, team.teamSize) && Objects.equals(extraService, team.extraService);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, teamName, company, workingSpace, teamSize, extraService);
+    }
 }
