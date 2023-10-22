@@ -1,6 +1,5 @@
 package com.example.workingbeesapp.dtos;
 
-import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.models.Team;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
