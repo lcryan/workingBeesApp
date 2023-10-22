@@ -38,12 +38,15 @@ public class Company {
     @Column(name = "payment_details")
     private String paymentDetails;
 
-    // --- relation to SUBSCRIPTION --- //
+    // --- relation to SUBSCRIPTION --- CHECKED --- functional ---//
+    // TODO : I would like the company to be able to see the full overview of their subscription - is this even possible in the backend ? //
     @OneToOne
     @JoinColumn(name = "subscription_overview")
     private Subscription subscription;
 
     @OneToMany(mappedBy = "company")
-    @JsonIgnore
-    List<Team> teams;
+    private List<Team> teams;
+
+    @OneToMany(mappedBy = "company")
+    private List<ExtraService> extraServices;
 }
