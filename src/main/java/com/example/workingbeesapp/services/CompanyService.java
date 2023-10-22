@@ -3,10 +3,11 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;
-import com.example.workingbeesapp.models.Subscription;
+import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
+import com.example.workingbeesapp.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,9 +21,12 @@ public class CompanyService {
 
     private final SubscriptionRepository subscriptionRepository;
 
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository) {
+    private final TeamRepository teamRepository;
+
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, TeamRepository teamRepository) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
+        this.teamRepository = teamRepository;
     }
 
 
@@ -99,6 +103,9 @@ public class CompanyService {
         companyDto.setCompanyDetails(company.getCompanyDetails());
         companyDto.setPaymentDetails(company.getPaymentDetails());
 
+        companyDto.setTeams(company.getTeams());
+        companyDto.setSubscription(company.getSubscription());
+
         return companyDto;
     }
 
@@ -111,6 +118,9 @@ public class CompanyService {
         company.setTeamName(companyDto.getTeamName());
         company.setCompanyDetails(companyDto.getCompanyDetails());
         company.setPaymentDetails(companyDto.getPaymentDetails());
+
+        company.setTeams(companyDto.getTeams());
+        company.setSubscription(companyDto.getSubscription());
 
         return company;
     }
@@ -130,5 +140,11 @@ public class CompanyService {
         } else {
             throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
         }
+    }
+
+ /*   public void addTeamToCompany(CompanyDto companyDto, Company company) {
+        for (Team team: companyDto.getTeams()) {
+            if(!team.getTeam().isEmpty())
+        }*/
     }
 }
