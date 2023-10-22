@@ -30,13 +30,8 @@ public class CompanyDto {
     private String paymentDetails;
 
     // --- TEAMS of relation One-To-Many --- include props JSON //
-
-    @JsonIncludeProperties({"id", "team_name", "working_space", "team_size", "extra_service"})
     private List<Team> teams;
-
     // --- SUBSCRIPTION of relation One-To-One --- include props JSON //
-
-    @JsonIncludeProperties({"id", "price", "duration", "start_date", "end_date", "working_space_type"})
     Subscription subscription;
 
     @Override
