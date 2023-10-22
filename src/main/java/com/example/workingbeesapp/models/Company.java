@@ -49,4 +49,8 @@ public class Company {
 
     @OneToMany(mappedBy = "company")
     private List<ExtraService> extraServices;
+
+    // TODO-- add methods to add subscription / teams & extraservices here//
+    // TODO -- at equals method and hashcode method here --//
+    // TODO -- adjust service and controller subs. -- //
 }
