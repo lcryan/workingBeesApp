@@ -16,6 +16,8 @@ public class TeamDto {
 
     private Long id;
 
+    private String teamName;
+
     private Company company;
 
     private String workingSpace;

@@ -21,6 +21,9 @@ public class Team {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "team_name")
+    private String teamName;
+
 /*    @Column(name = "company")
     private String company;*/
 
