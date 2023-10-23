@@ -46,23 +46,4 @@ public class Company {
 
     @OneToMany
     private List<Team> teams;
-
-
-    public void addTeam(Team team) {
-        this.teams.add(team);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Company company = (Company) o;
-
-        return Objects.equals(id, company.id) && Objects.equals(companyName, company.companyName) && Objects.equals(companyDetails, company.companyDetails) && Objects.equals(teamName, company.teamName) && Objects.equals(paymentDetails, company.paymentDetails) && Objects.equals(subscription, company.subscription) && Objects.equals(teams, company.teams);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, companyName, companyDetails, teamName, paymentDetails, subscription, teams);
-    }
 }
