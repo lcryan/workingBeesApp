@@ -28,22 +28,8 @@ public class CompanyDto {
 
     private String paymentDetails;
 
-    // --- TEAMS of relation One-To-Many --- include props JSON //
+    // --- TEAMS of relation One-To-Many ---  //
     private List<Team> teams;
-    // --- SUBSCRIPTION of relation One-To-One --- include props JSON //
+    // --- SUBSCRIPTION of relation One-To-One ---//
     Subscription subscription;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CompanyDto companyDto = (CompanyDto) o;
-
-        return Objects.equals(id, companyDto.id) && Objects.equals(companyName, companyDto.companyName) && Objects.equals(companyDetails, companyDto.companyDetails) && Objects.equals(teamName, companyDto.teamName) && Objects.equals(paymentDetails, companyDto.paymentDetails) && Objects.equals(subscription, companyDto.subscription) && Objects.equals(teams, companyDto.teams);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, companyName, companyDetails, teamName, paymentDetails, subscription, teams);
-    }
 }
