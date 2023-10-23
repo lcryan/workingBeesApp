@@ -93,9 +93,9 @@ public class CompanyService {
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
-    private CompanyDto transferCompanyToCompanyDto(Company company) {
+    public static CompanyDto transferCompanyToCompanyDto(Company company) {
 
-        CompanyDto companyDto = new CompanyDto();
+        var companyDto = new CompanyDto();
 
         companyDto.setId(company.getId());
         companyDto.setCompanyName(company.getCompanyName());
@@ -109,18 +109,18 @@ public class CompanyService {
         return companyDto;
     }
 
-    private Company transferCompanyDtoToCompany(CompanyDto companyDto) {
+    public Company transferCompanyDtoToCompany(CompanyDto dto) {
 
         Company company = new Company();
 
-        company.setId(companyDto.getId());
-        company.setCompanyName(companyDto.getCompanyName());
-        company.setTeamName(companyDto.getTeamName());
-        company.setCompanyDetails(companyDto.getCompanyDetails());
-        company.setPaymentDetails(companyDto.getPaymentDetails());
+        company.setId(dto.getId());
+        company.setCompanyName(dto.getCompanyName());
+        company.setTeamName(dto.getTeamName());
+        company.setCompanyDetails(dto.getCompanyDetails());
+        company.setPaymentDetails(dto.getPaymentDetails());
 
-        company.setTeams(companyDto.getTeams());
-        company.setSubscription(companyDto.getSubscription());
+        company.setTeams(dto.getTeams());
+        company.setSubscription(dto.getSubscription());
 
         return company;
     }
