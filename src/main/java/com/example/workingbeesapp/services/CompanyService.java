@@ -141,10 +141,5 @@ public class CompanyService {
             throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
         }
     }
-
- /*   public void addTeamToCompany(CompanyDto companyDto, Company company) {
-        for (Team team: companyDto.getTeams()) {
-            if(!team.getTeam().isEmpty())
-        }*/
-    }
 }
+
