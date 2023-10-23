@@ -1,10 +1,14 @@
 package com.example.workingbeesapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.Objects;
 
@@ -26,12 +30,10 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
-/*    @Column(name = "company")
-    private String company;*/
-
     // -- Team is the owner of the relation - no foreign key in the db -- //
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
+    /* @JoinColumn(name = "company_id")*/
+    @JsonIgnore
     private Company company;
 
     //TODO : 2. add relation to workingSpace class here - ONE TO ONE //
