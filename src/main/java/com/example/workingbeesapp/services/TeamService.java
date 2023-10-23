@@ -2,6 +2,7 @@ package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
+import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
@@ -15,11 +16,17 @@ import java.util.Optional;
 public class TeamService {
 
     private final TeamRepository teamRepository;
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository) {
+    private final TeamService teamService;
+
+    private final CompanyService companyService;
+
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, TeamService teamService, CompanyService companyService) {
         this.teamRepository = teamRepository;
+        this.teamService = teamService;
         this.companyRepository = companyRepository;
+        this.companyService = companyService;
     }
 
     public List<TeamDto> getAllTeams() {
@@ -31,6 +38,27 @@ public class TeamService {
         }
         return teamDtoList;
     }
+
+    // -- getting the list of teams by Company -- //
+    public List<TeamDto> getAllTeamsByCompany(String companyName) {
+        List<Team> teamList = teamRepository.findTeamsByCompany_CompanyName(companyName);
+        return transferTeamListToTeamDtoList(teamList);
+    }
+
+    // Transferring TEAM LIST to TEAM DTO LIST HERE //
+
+    public List<TeamDto> transferTeamListToTeamDtoList(List<Team> teams) {
+        List<TeamDto> teamDtoList = new ArrayList<>();
+        for (Team team1 : teams) {
+            TeamDto dto = transferTeamToTeamDto(team1);
+            if (team1.getCompany() != null) {
+                dto.setCompanyDto(CompanyService.transferCompanyToCompanyDto(team1.getCompany())); // not quite sure, if this access-way through class will work out tbc //
+            }
+            teamDtoList.add(dto);
+        }
+        return teamDtoList;
+    }
+
 
     // FUNCTION FOR GET ONE COMPANY //
 
@@ -101,34 +129,50 @@ public class TeamService {
     }
 
 
-    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
+    // --- TRANSFERRING  //
 
-    private TeamDto transferTeamToTeamDto(Team team) {
+
+    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
+    public TeamDto transferTeamToTeamDto(Team team) {
 
         TeamDto teamDto = new TeamDto();
 
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
-        teamDto.setCompany(team.getCompany());
-        teamDto.setWorkingSpace(team.getWorkingSpace());
+  /*      teamDto.setCompany(team.getCompany());
+        teamDto.setWorkingSpace(team.getWorkingSpace());*/
         teamDto.setTeamSize(team.getTeamSize());
         teamDto.setExtraService(team.getExtraService());
 
         return teamDto;
     }
 
-    private Team transferTeamDtoToTeam(TeamDto teamDto) {
+    public Team transferTeamDtoToTeam(TeamDto teamDto) {
 
         Team team = new Team();
 
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
-        team.setCompany(teamDto.getCompany());
-        team.setWorkingSpace(teamDto.getWorkingSpace());
+      /*  team.setCompany(teamDto.getCompany());
+        team.setWorkingSpace(teamDto.getWorkingSpace());*/
         team.setTeamSize(teamDto.getTeamSize());
         team.setExtraService(teamDto.getExtraService());
 
         return team;
+    }
+
+    public void assignTeamToCompany(Long id, Long companyId) {
+        var optionalCompany = companyRepository.findById(id);
+        var optionalTeam = teamRepository.findById(companyId);
+        if (optionalTeam.isPresent() && optionalCompany.isPresent()) {
+            var team = optionalTeam.get();
+            var company = optionalCompany.get();
+
+            team.setCompany(company);
+            teamRepository.save(team);
+        } else {
+            throw new RecordNotFoundException("Item of type Company " + id + " cannot be found.");
+        }
     }
 }
 
