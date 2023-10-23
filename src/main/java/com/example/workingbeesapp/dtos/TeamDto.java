@@ -1,13 +1,9 @@
 package com.example.workingbeesapp.dtos;
 
-import com.example.workingbeesapp.models.Company;
-import com.example.workingbeesapp.models.Team;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
