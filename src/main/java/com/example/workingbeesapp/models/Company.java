@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+import java.util.Objects;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -35,5 +38,31 @@ public class Company {
     @Column(name = "payment_details")
     private String paymentDetails;
 
-    // TODO: set up relations to teams //
+    // --- relation to SUBSCRIPTION --- CHECKED --- functional ---//
+
+    @OneToOne
+    @JoinColumn(name = "subscription_overview")
+    private Subscription subscription;
+
+    @OneToMany
+    private List<Team> teams;
+
+
+    public void addTeam(Team team) {
+        this.teams.add(team);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Company company = (Company) o;
+
+        return Objects.equals(id, company.id) && Objects.equals(companyName, company.companyName) && Objects.equals(companyDetails, company.companyDetails) && Objects.equals(teamName, company.teamName) && Objects.equals(paymentDetails, company.paymentDetails) && Objects.equals(subscription, company.subscription) && Objects.equals(teams, company.teams);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, companyName, companyDetails, teamName, paymentDetails, subscription, teams);
+    }
 }

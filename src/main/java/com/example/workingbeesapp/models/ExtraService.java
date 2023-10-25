@@ -1,6 +1,16 @@
 package com.example.workingbeesapp.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+
+@Getter
+@Setter
 
 @Entity
 @Table(name = "extra_services")
@@ -18,7 +28,7 @@ public class ExtraService {
     private String serviceType;
 
     @Column(name = "service_price")
-    private String servicePrice;
+    private int servicePrice;
 
     @Column(name = "service_duration")
     private String serviceDuration;

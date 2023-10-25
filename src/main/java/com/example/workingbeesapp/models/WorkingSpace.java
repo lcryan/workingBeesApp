@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 
 @Entity
-@Table
+@Table(name = "working_spaces")
 public class WorkingSpace {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +27,8 @@ public class WorkingSpace {
     @Column(name = "space_type")
     private String type;
 
-    @Column(name = "space_size")
-    private int size;
+    @Column(name = "space_capacity")
+    private int capacity;
 
     //TODO : don't forget to lay relation to team class ! //
 }

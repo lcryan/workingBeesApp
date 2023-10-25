@@ -9,16 +9,16 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
+/*@AllArgsConstructor
+@NoArgsConstructor*/
 
-@Getter
+/*@Getter
 @Setter
 
 @Entity
-@Table
+@Table*/
 public class User {
-    @Id
+/*    @Id
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -38,11 +38,11 @@ public class User {
     private String lastname;
 
     @Column
-    private String email;
+    private String email;*/
 
 
     //---  set up relation to Authority --- //
-    @OneToMany(
+/*    @OneToMany(
             targetEntity = Authority.class,
             mappedBy = "username",
             cascade = CascadeType.ALL,
@@ -50,6 +50,6 @@ public class User {
             fetch = FetchType.EAGER)
 
     // methods to add and remove auth from user //
-    private Set<Authority> authoritySet = new HashSet<>();
+    private Set<Authority> authoritySet = new HashSet<>();*/
 
 }

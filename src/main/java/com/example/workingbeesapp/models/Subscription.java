@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -25,11 +27,19 @@ public class Subscription {
 
     @Column(name = "price")
     private double price;
+
     @Column(name = "duration")
     private String duration;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
-    // TODO - set up relation with working spaces and teams //
+    @OneToOne(mappedBy = "subscription") //basic set up now functional in db //
+    private Company company;
 }
