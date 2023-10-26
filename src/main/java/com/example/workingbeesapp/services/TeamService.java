@@ -104,9 +104,6 @@ public class TeamService {
     }
 
 
-    // --- TRANSFERRING  //
-
-
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
     public TeamDto transferTeamToTeamDto(Team team) {
 
@@ -136,18 +133,12 @@ public class TeamService {
         return team;
     }
 
-    public void assignTeamToCompany(Long id, Long companyId) {
-        var optionalCompany = companyRepository.findById(id);
-        var optionalTeam = teamRepository.findById(companyId);
-        if (optionalTeam.isPresent() && optionalCompany.isPresent()) {
-            var team = optionalTeam.get();
-            var company = optionalCompany.get();
-
-            team.setCompany(company);
-            teamRepository.save(team);
-        } else {
-            throw new RecordNotFoundException("Item of type Company " + id + " cannot be found.");
+    public List<Team> transerTeamDtoListToTeamList(List<TeamDto> teamsDtos) {
+        List<Team> teams = new ArrayList<>();
+        for (TeamDto teamsDto : teamsDtos) {
+            teams.add(transferTeamDtoToTeam(teamsDto));
         }
+        return teams;
     }
 }
 
