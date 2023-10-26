@@ -20,9 +20,9 @@ public class TeamDto {
     private String teamName;
 
     // --- relation COMPANY MANY TO ONE (TEAM MANY - COMPANY ONE--- //
-    private Company company; // correct //
-    // --- relation WORKING-SPACE --- ONE TO ONE//
-    private WorkingSpace workingSpace;
+    private Company company;
+    // TODO: set one-to-one relation to team //
+    private String workingSpace;
 
     private int teamSize;
 

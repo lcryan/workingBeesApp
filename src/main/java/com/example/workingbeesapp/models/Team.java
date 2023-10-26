@@ -30,10 +30,9 @@ public class Team {
     @JoinColumn(name = "company_id") // not a must //
     private Company company;
 
-    //TODO : 2. add relation to workingSpace class here - ONE TO ONE //
-    @OneToOne
     @Column(name = "working_space")
-    private WorkingSpace workingSpace;
+    //TODO : 2. add relation to workingSpace class here - ONE TO ONE //
+    private String workingSpace;
 
     @Column(name = "team_size")
     private int teamSize;
@@ -41,6 +40,4 @@ public class Team {
     // TODO: 3. add extraService relation here and add a list - every team can have more than one service//
     @Column(name = "extra_service")
     private String extraService;
-
-
 }

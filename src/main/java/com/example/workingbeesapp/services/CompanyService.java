@@ -3,7 +3,6 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;
-import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
@@ -19,7 +18,7 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
-    private final SubscriptionRepository subscriptionRepository; // for to one to one relation with subscription //
+    private final SubscriptionRepository subscriptionRepository; // for to one-to-one relation with subscription //
 
     private final TeamRepository teamRepository; // for ONE-TO-MANY relation with TEAM - COMPANY IS ONE! //
 
@@ -45,8 +44,7 @@ public class CompanyService {
     public CompanyDto getOneCompany(Long id) {
         Optional<Company> optionalCompany = companyRepository.findById(id);
         if (optionalCompany.isPresent()) {
-            CompanyDto company = transferCompanyToCompanyDto(optionalCompany.get());
-            return company;
+            return transferCompanyToCompanyDto(optionalCompany.get());
         } else {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
@@ -55,11 +53,17 @@ public class CompanyService {
     // FUNCTION FOR CREATING ONE COMPANY //
 
     public Long createCompany(CompanyDto companyDto) {
-        Company newCompany = transferCompanyDtoToCompany(companyDto);
-        Company storedCompany = companyRepository.save(newCompany);
 
-        addTeamToCompany(companyDto, storedCompany);
-        return storedCompany.getId();
+        Company newCompany = new Company();
+        newCompany.setId(companyDto.getId());
+        newCompany.setCompanyName(companyDto.getCompanyName());
+        newCompany.setCompanyDetails(companyDto.getCompanyDetails());
+        newCompany.setTeams(companyDto.getTeams());
+        newCompany.setSubscription(companyDto.getSubscription());
+        newCompany.setPaymentDetails(companyDto.getPaymentDetails());
+
+        Company savedCompany = companyRepository.save(newCompany);
+        return newCompany.getId();
     }
 
     // FUNCTION TO UPDATE COMPANY //
@@ -105,9 +109,6 @@ public class CompanyService {
         companyDto.setCompanyDetails(company.getCompanyDetails());
         companyDto.setPaymentDetails(company.getPaymentDetails());
 
-        companyDto.setTeams(company.getTeams());
-        companyDto.setSubscription(company.getSubscription());
-
         return companyDto;
     }
 
@@ -121,13 +122,11 @@ public class CompanyService {
         company.setCompanyDetails(dto.getCompanyDetails());
         company.setPaymentDetails(dto.getPaymentDetails());
 
-        company.setTeams(dto.getTeams());
-        company.setSubscription(dto.getSubscription());
 
         return company;
     }
 
-    // TRANSER COMPANY LIST DTO TO LIST //
+    // TRANSFER COMPANY LIST DTO TO LIST //
     public List<Company> transferCompanyDtoListToCompanyList(List<CompanyDto> companiesDtos) {
         List<Company> companies = new ArrayList<>();
         for (CompanyDto teamsDto : companiesDtos) {
@@ -150,16 +149,6 @@ public class CompanyService {
             companyRepository.save(company);
         } else {
             throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
-        }
-    }
-
-    // adding Team to Company -- I find "adding" clearer than "assigning" //
-    public void addTeamToCompany(CompanyDto companyDto, Company company) {
-        for (Team team : companyDto.getTeams()) {
-            if (!team.getTeamName().isEmpty()) {
-                team.setCompany(company);
-                teamRepository.save(team);
-            }
         }
     }
 }

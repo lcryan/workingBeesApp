@@ -19,9 +19,11 @@ public class TeamService {
 
     private final CompanyService companyService;
 
+
     public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, CompanyService companyService) {
         this.teamRepository = teamRepository;
         this.companyRepository = companyRepository;
+
         this.companyService = companyService;
     }
 
@@ -35,7 +37,6 @@ public class TeamService {
         return teamDtoList;
     }
 
-    // FUNCTION FOR GET ONE TEAM //
 
     public TeamDto getOneTeam(Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -88,18 +89,18 @@ public class TeamService {
 
     // --- assign TEAM(S) TO COMPANY -- MANY-TO-ONE-RELATION --- THIS IS THE OWNER OF THE RELATION --- //
 
-    public void assignCompanyToTeam(Long id, Long companyId) {
-        var optionalCompany = companyRepository.findById(id);
-        var optionalTeam = teamRepository.findById(companyId);
+    public void assignsCompanyToTeam(Long id, Long companyId) {
+        var optionalTeam = teamRepository.findById(id);
+        var optionalCompany = companyRepository.findById(companyId);
 
-        if (optionalCompany.isPresent() && optionalTeam.isPresent()) {
-            var company = optionalCompany.get();
+        if (optionalTeam.isPresent() && optionalCompany.isPresent()) {
             var team = optionalTeam.get();
+            var company = optionalCompany.get();
 
             team.setCompany(company);
             teamRepository.save(team);
         } else {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException("Item not found.");
         }
     }
 
@@ -111,7 +112,6 @@ public class TeamService {
 
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
-        teamDto.setCompany(team.getCompany());
         teamDto.setWorkingSpace(team.getWorkingSpace());
         teamDto.setTeamSize(team.getTeamSize());
         teamDto.setExtraService(team.getExtraService());
@@ -125,20 +125,10 @@ public class TeamService {
 
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
-        team.setCompany(teamDto.getCompany());
         team.setWorkingSpace(teamDto.getWorkingSpace());
         team.setTeamSize(teamDto.getTeamSize());
         team.setExtraService(teamDto.getExtraService());
 
         return team;
     }
-
-    public List<Team> transerTeamDtoListToTeamList(List<TeamDto> teamsDtos) {
-        List<Team> teams = new ArrayList<>();
-        for (TeamDto teamsDto : teamsDtos) {
-            teams.add(transferTeamDtoToTeam(teamsDto));
-        }
-        return teams;
-    }
 }
-

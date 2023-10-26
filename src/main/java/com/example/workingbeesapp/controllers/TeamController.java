@@ -71,9 +71,9 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/teams/{id}/{companyId}")
+    @PutMapping("/{id}/{companyId}")
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
-        teamService.assignCompanyToTeam(id, companyId);
+        teamService.assignsCompanyToTeam(id, companyId);
         return ResponseEntity.noContent().build();
     }
 }

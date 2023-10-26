@@ -1,5 +1,6 @@
 package com.example.workingbeesapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -45,5 +46,6 @@ public class Company {
     private Subscription subscription;
 
     @OneToMany(mappedBy = "company")
+    @JsonIgnore
     private List<Team> teams; // correct //
 }
