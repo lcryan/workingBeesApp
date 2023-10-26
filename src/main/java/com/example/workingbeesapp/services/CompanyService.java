@@ -3,6 +3,7 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;
+import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
@@ -147,6 +148,16 @@ public class CompanyService {
             companyRepository.save(company);
         } else {
             throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
+        }
+    }
+
+    // adding Team to Company -- I find "adding" clearer than "assigning" //
+    public void addTeamToCompany(CompanyDto companyDto, Company company) {
+        for (Team team : companyDto.getTeams()) {
+            if (!team.getTeamName().isEmpty()) {
+                team.setCompany(company);
+                teamRepository.save(team);
+            }
         }
     }
 }
