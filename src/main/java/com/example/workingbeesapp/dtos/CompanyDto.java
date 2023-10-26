@@ -28,8 +28,8 @@ public class CompanyDto {
 
     private String paymentDetails;
 
-    // --- TEAMS of relation One-To-Many ---  //
-    private List<Team> teams;
+    // --- TEAMS of relation One-To-Many ---  COMPANY IS ONE - TEAM IS MANY //
+    private List<Team> teams; // correct //
     // --- SUBSCRIPTION of relation One-To-One ---//
-    Subscription subscription;
+    private Subscription subscription;
 }

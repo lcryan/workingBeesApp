@@ -35,28 +35,7 @@ public class TeamService {
         return teamDtoList;
     }
 
-    // -- getting the list of teams by Company -- //
-    public List<TeamDto> getAllTeamsByCompany(String companyName) {
-        List<Team> teamList = teamRepository.findTeamsByCompany_CompanyName(companyName);
-        return transferTeamListToTeamDtoList(teamList);
-    }
-
-    // Transferring TEAM LIST to TEAM DTO LIST HERE //
-
-    public List<TeamDto> transferTeamListToTeamDtoList(List<Team> teams) {
-        List<TeamDto> teamDtoList = new ArrayList<>();
-        for (Team team1 : teams) {
-            TeamDto dto = transferTeamToTeamDto(team1);
-            if (team1.getCompany() != null) {
-                dto.setCompanyDto(CompanyService.transferCompanyToCompanyDto(team1.getCompany())); // not quite sure, if this access-way through class will work out tbc //
-            }
-            teamDtoList.add(dto);
-        }
-        return teamDtoList;
-    }
-
-
-    // FUNCTION FOR GET ONE COMPANY //
+    // FUNCTION FOR GET ONE TEAM //
 
     public TeamDto getOneTeam(Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -68,7 +47,7 @@ public class TeamService {
         }
     }
 
-    // FUNCTION FOR CREATING ONE COMPANY //
+    // FUNCTION FOR CREATING ONE TEAM //
 
     public TeamDto createTeam(TeamDto teamDto) {
         Team newTeam = transferTeamDtoToTeam(teamDto);
@@ -76,7 +55,7 @@ public class TeamService {
         return transferTeamToTeamDto(newTeam);
     }
 
-    // FUNCTION TO UPDATE COMPANY //
+    // FUNCTION TO UPDATE TEAM //
     public TeamDto updateTeam(Long id, TeamDto teamDto) {
         if (teamRepository.findById(id).isPresent()) {
 
@@ -94,7 +73,7 @@ public class TeamService {
         }
     }
 
-    // FUNCTION TO DELETE COMPANY //
+    // FUNCTION TO DELETE TEAM //
     public void deleteTeam(Long id) {
         if (teamRepository.existsById(id)) {
             Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -135,8 +114,8 @@ public class TeamService {
 
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
-  /*      teamDto.setCompany(team.getCompany());
-        teamDto.setWorkingSpace(team.getWorkingSpace());*/
+        teamDto.setCompany(team.getCompany());
+        teamDto.setWorkingSpace(team.getWorkingSpace());
         teamDto.setTeamSize(team.getTeamSize());
         teamDto.setExtraService(team.getExtraService());
 
@@ -149,8 +128,8 @@ public class TeamService {
 
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
-      /*  team.setCompany(teamDto.getCompany());
-        team.setWorkingSpace(teamDto.getWorkingSpace());*/
+        team.setCompany(teamDto.getCompany());
+        team.setWorkingSpace(teamDto.getWorkingSpace());
         team.setTeamSize(teamDto.getTeamSize());
         team.setExtraService(teamDto.getExtraService());
 

@@ -44,6 +44,6 @@ public class Company {
     @JoinColumn(name = "subscription_overview")
     private Subscription subscription;
 
-    @OneToMany
-    private List<Team> teams;
+    @OneToMany(mappedBy = "company")
+    private List<Team> teams; // correct //
 }

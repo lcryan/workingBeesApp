@@ -1,5 +1,7 @@
 package com.example.workingbeesapp.dtos;
 
+import com.example.workingbeesapp.models.Company;
+import com.example.workingbeesapp.models.WorkingSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +19,10 @@ public class TeamDto {
 
     private String teamName;
 
-    // --- relation COMPANY --- //
-    private CompanyDto companyDto;
-    // --- relation WORKING-SPACE --- //
-    private WorkingSpaceDto workingSpaceDto;
+    // --- relation COMPANY MANY TO ONE (TEAM MANY - COMPANY ONE--- //
+    private Company company; // correct //
+    // --- relation WORKING-SPACE --- ONE TO ONE//
+    private WorkingSpace workingSpace;
 
     private int teamSize;
 

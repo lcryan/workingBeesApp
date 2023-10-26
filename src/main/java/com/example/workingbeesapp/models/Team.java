@@ -25,14 +25,15 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
-    // -- Team is the owner of the relation - no foreign key in the db -- //
+    // -- Team is the owner of the relation - nothing in the db -- // TODO : ask Mark about this nothing in the db ? //
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "company_id") // not a must //
     private Company company;
 
     //TODO : 2. add relation to workingSpace class here - ONE TO ONE //
+    @OneToOne
     @Column(name = "working_space")
-    private String workingSpace;
+    private WorkingSpace workingSpace;
 
     @Column(name = "team_size")
     private int teamSize;
@@ -40,5 +41,6 @@ public class Team {
     // TODO: 3. add extraService relation here and add a list - every team can have more than one service//
     @Column(name = "extra_service")
     private String extraService;
+
 
 }

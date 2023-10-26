@@ -18,9 +18,9 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
-    private final SubscriptionRepository subscriptionRepository;
+    private final SubscriptionRepository subscriptionRepository; // for to one to one relation with subscription //
 
-    private final TeamRepository teamRepository;
+    private final TeamRepository teamRepository; // for ONE-TO-MANY relation with TEAM - COMPANY IS ONE! //
 
     public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, TeamRepository teamRepository) {
         this.companyRepository = companyRepository;
@@ -122,6 +122,15 @@ public class CompanyService {
         company.setSubscription(dto.getSubscription());
 
         return company;
+    }
+
+    // TRANSER COMPANY LIST DTO TO LIST //
+    public List<Company> transferCompanyDtoListToCompanyList(List<CompanyDto> companiesDtos) {
+        List<Company> companies = new ArrayList<>();
+        for (CompanyDto teamsDto : companiesDtos) {
+            companies.add(transferCompanyDtoToCompany(teamsDto));
+        }
+        return companies;
     }
 
     // --- assigning SUBSCRIPTION TO COMPANY --- //
