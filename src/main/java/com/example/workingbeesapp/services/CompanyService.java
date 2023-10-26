@@ -54,10 +54,12 @@ public class CompanyService {
 
     // FUNCTION FOR CREATING ONE COMPANY //
 
-    public CompanyDto createCompany(CompanyDto companyDto) {
+    public Long createCompany(CompanyDto companyDto) {
         Company newCompany = transferCompanyDtoToCompany(companyDto);
-        companyRepository.save(newCompany);
-        return transferCompanyToCompanyDto(newCompany);
+        Company storedCompany = companyRepository.save(newCompany);
+
+        addTeamToCompany(companyDto, storedCompany);
+        return storedCompany.getId();
     }
 
     // FUNCTION TO UPDATE COMPANY //
