@@ -25,11 +25,11 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
-    // -- Team is the owner of the relation - nothing in the db -- // TODO : ask Mark about this nothing in the db ? //
+    // -- Team is the owner of the relation - nothing in the db -- //
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;
-    // ONE TO ONE RELATION WITH WORKING SPACE //
+    // ONE TO ONE RELATION WITH WORKING SPACE // //TODO :1.functionality still has to be checked via postman //
     @OneToOne
     @JoinColumn(name = "team_working_space")
     private WorkingSpace workingSpace;

@@ -26,5 +26,5 @@ public class SubscriptionDto {
 
     private LocalDate endDate;
 
-    private String workingSpaceType; // TODO: relation with teams ? make this into a list - with different types of working spaces - Paris room - Tokyo room etc. one-To-Many//
+    private String workingSpaceType;
 }

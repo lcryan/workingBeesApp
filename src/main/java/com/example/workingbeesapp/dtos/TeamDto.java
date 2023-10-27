@@ -1,7 +1,5 @@
 package com.example.workingbeesapp.dtos;
 
-import com.example.workingbeesapp.models.Company;
-import com.example.workingbeesapp.models.WorkingSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

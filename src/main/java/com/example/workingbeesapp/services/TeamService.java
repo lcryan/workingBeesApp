@@ -125,7 +125,7 @@ public class TeamService {
         } // getting working space for team //
 
 
-        teamDto.setCompany(team.getCompany());
+        /*teamDto.setCompany(team.getCompany());*/ //TODO : has to be amended so it gives back a dto - think about the lombok implications!! //
 
         return teamDto;
     }

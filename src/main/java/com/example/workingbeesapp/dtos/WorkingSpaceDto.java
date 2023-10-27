@@ -21,5 +21,4 @@ public class WorkingSpaceDto {
 
     private int capacity;
 
-    //TODO : don't forget to lay relation to team class ! //
 }
