@@ -106,7 +106,7 @@ public class CompanyService {
         companyDto.setCompanyDetails(company.getCompanyDetails());
         companyDto.setPaymentDetails(company.getPaymentDetails());
         if (company.getSubscription() != null) {
-            companyDto.setSubscription(subscriptionService.transferSubscriptionToSubscriptionDto(company.getSubscription()));
+            companyDto.setSubscription(subscriptionService.transferSubscriptionToSubscriptionDto(company.getSubscription())); // REMEMBER : lombok needs different approach here in the setter !!! //
         }
 
 
