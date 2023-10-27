@@ -30,7 +30,7 @@ public class SubscriptionController {
 
     // GET ONE SUB --- CHECKED//
     @GetMapping("/{id}")
-    public ResponseEntity<SubscriptionDto> getSubscription(@PathVariable Long id) {
+    public ResponseEntity<SubscriptionDto> getSubscription(@PathVariable("id") Long id) { // changed because of relation to COMPANY ONE TO ONE
         SubscriptionDto subscriptionDto = subscriptionService.getOneSubscription(id);
         return ResponseEntity.ok(subscriptionDto);
     }

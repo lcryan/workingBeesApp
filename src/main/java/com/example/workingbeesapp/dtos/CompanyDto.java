@@ -32,4 +32,5 @@ public class CompanyDto {
     private List<Team> teams; // correct //
     // --- SUBSCRIPTION of relation One-To-One ---//
     private Subscription subscription;
+
 }

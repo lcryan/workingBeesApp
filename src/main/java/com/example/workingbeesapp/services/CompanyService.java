@@ -3,6 +3,7 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;;
+import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
@@ -20,11 +21,14 @@ public class CompanyService {
 
     private final SubscriptionRepository subscriptionRepository; // for to one-to-one relation with subscription //
 
+    private final SubscriptionService subscriptionService;
+
     private final TeamRepository teamRepository; // for ONE-TO-MANY relation with TEAM - COMPANY IS ONE! //
 
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, TeamRepository teamRepository) {
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
+        this.subscriptionService = subscriptionService;
         this.teamRepository = teamRepository;
     }
 
@@ -135,8 +139,8 @@ public class CompanyService {
         var optionalSubscription = subscriptionRepository.findById(subscriptionId);
 
         if (optionalCompany.isPresent() && optionalSubscription.isPresent()) {
-            var company = optionalCompany.get();
-            var subscription = optionalSubscription.get();
+            Company company = optionalCompany.get();
+            Subscription subscription = optionalSubscription.get();
 
             company.setSubscription(subscription);
             companyRepository.save(company);

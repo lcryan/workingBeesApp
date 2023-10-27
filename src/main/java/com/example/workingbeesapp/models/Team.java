@@ -27,7 +27,7 @@ public class Team {
 
     // -- Team is the owner of the relation - nothing in the db -- // TODO : ask Mark about this nothing in the db ? //
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id") // not a must //
+    @JoinColumn(name = "company_id")
     private Company company;
 
     @Column(name = "working_space")

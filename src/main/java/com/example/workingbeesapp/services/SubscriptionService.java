@@ -84,7 +84,7 @@ public class SubscriptionService {
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
-    private SubscriptionDto transferSubscriptionToSubscriptionDto(Subscription subscription) {
+    public SubscriptionDto transferSubscriptionToSubscriptionDto(Subscription subscription) {
 
         SubscriptionDto subscriptionDto = new SubscriptionDto();
 
@@ -95,11 +95,10 @@ public class SubscriptionService {
         subscriptionDto.setEndDate(subscription.getEndDate());
         subscriptionDto.setPrice(subscription.getPrice());
 
-
         return subscriptionDto;
     }
 
-    private Subscription transferSubscriptionDtoToSubscription(SubscriptionDto subscriptionDto) {
+    public Subscription transferSubscriptionDtoToSubscription(SubscriptionDto subscriptionDto) {
 
         Subscription subscription = new Subscription();
 
