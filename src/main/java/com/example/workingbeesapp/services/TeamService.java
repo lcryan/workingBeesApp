@@ -15,16 +15,14 @@ import java.util.Optional;
 public class TeamService {
 
     private final TeamRepository teamRepository;
+
     private final CompanyRepository companyRepository;
 
-    private final CompanyService companyService;
 
-
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, CompanyService companyService) {
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository) {
         this.teamRepository = teamRepository;
-        this.companyRepository = companyRepository;
 
-        this.companyService = companyService;
+        this.companyRepository = companyRepository;
     }
 
     public List<TeamDto> getAllTeams() {
@@ -115,6 +113,8 @@ public class TeamService {
         teamDto.setWorkingSpace(team.getWorkingSpace());
         teamDto.setTeamSize(team.getTeamSize());
         teamDto.setExtraService(team.getExtraService());
+
+        teamDto.setCompany(team.getCompany());
 
         return teamDto;
     }

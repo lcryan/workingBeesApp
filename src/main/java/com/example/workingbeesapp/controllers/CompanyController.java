@@ -41,7 +41,6 @@ public class CompanyController {
     // CREATE COMPANY --- functional//
     @PostMapping("")
     public ResponseEntity<Object> createNewCompany(@Validated @RequestBody CompanyDto companyDto, BindingResult bindingResult) {
-
         if (bindingResult.hasFieldErrors()) {
             StringBuilder sb = new StringBuilder();
             for (FieldError fe : bindingResult.getFieldErrors()) {
@@ -52,12 +51,8 @@ public class CompanyController {
             }
             return ResponseEntity.badRequest().body(sb.toString());
         } else {
-            Long createdId = companyService.createCompany(companyDto);
-            URI uri = URI.create(
-                    ServletUriComponentsBuilder
-                            .fromCurrentContextPath()
-                            .path("/companies/" + createdId).toUriString());
-            return ResponseEntity.created(uri).body(createdId);
+            CompanyDto companyDto1 = companyService.createCompany(companyDto);
+            return ResponseEntity.created(null).body(companyDto1);
         }
     }
 

@@ -2,7 +2,7 @@ package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
-import com.example.workingbeesapp.models.Company;
+import com.example.workingbeesapp.models.Company;;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
@@ -52,19 +52,12 @@ public class CompanyService {
 
     // FUNCTION FOR CREATING ONE COMPANY //
 
-    public Long createCompany(CompanyDto companyDto) {
-
-        Company newCompany = new Company();
-        newCompany.setId(companyDto.getId());
-        newCompany.setCompanyName(companyDto.getCompanyName());
-        newCompany.setCompanyDetails(companyDto.getCompanyDetails());
-        newCompany.setTeams(companyDto.getTeams());
-        newCompany.setSubscription(companyDto.getSubscription());
-        newCompany.setPaymentDetails(companyDto.getPaymentDetails());
-
-        Company savedCompany = companyRepository.save(newCompany);
-        return newCompany.getId();
+    public CompanyDto createCompany(CompanyDto companyDto) {
+        Company newCompany = transferCompanyDtoToCompany(companyDto);
+        companyRepository.save(newCompany);
+        return transferCompanyToCompanyDto(newCompany);
     }
+
 
     // FUNCTION TO UPDATE COMPANY //
     public CompanyDto updateCompany(Long id, CompanyDto companyDto) {
@@ -99,7 +92,7 @@ public class CompanyService {
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
-    public static CompanyDto transferCompanyToCompanyDto(Company company) {
+    public CompanyDto transferCompanyToCompanyDto(Company company) {
 
         var companyDto = new CompanyDto();
 

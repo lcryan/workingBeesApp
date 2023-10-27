@@ -12,6 +12,3 @@ VALUES (12, 'Pixar Inc.', 'Creative Design Team', 'Johnson Street 56, 896629 Cal
 UPDATE teams
 SET company_id = 12
 WHERE id = 1;
-UPDATE teams
-SET company_id = 12
-WHERE id = 2;
