@@ -42,8 +42,8 @@ public class Company {
     // --- relation to SUBSCRIPTION --- CHECKED --- functional ---//
 
     @OneToOne
-    @JoinColumn(name = "subscription_overview")
-    private Subscription subscription;
+    @JoinColumn(name = "your_subscriptions")
+    public Subscription subscription; // removed private //
 
     @OneToMany(mappedBy = "company")
     @JsonIgnore

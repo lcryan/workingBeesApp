@@ -105,6 +105,10 @@ public class CompanyService {
         companyDto.setTeamName(company.getTeamName());
         companyDto.setCompanyDetails(company.getCompanyDetails());
         companyDto.setPaymentDetails(company.getPaymentDetails());
+        if (company.getSubscription() != null) {
+            companyDto.setSubscription(subscriptionService.transferSubscriptionToSubscriptionDto(company.getSubscription()));
+        }
+
 
         return companyDto;
     }
@@ -134,13 +138,13 @@ public class CompanyService {
 
     // --- assigning SUBSCRIPTION TO COMPANY --- //
 
-    public void assignSubscriptionToCompany(Long companyId, Long subscriptionId) {
-        var optionalCompany = companyRepository.findById(companyId);
+    public void assignSubscriptionToCompany(Long id, Long subscriptionId) { // changed to id here instead of companyId //
+        var optionalCompany = companyRepository.findById(id);
         var optionalSubscription = subscriptionRepository.findById(subscriptionId);
 
         if (optionalCompany.isPresent() && optionalSubscription.isPresent()) {
-            Company company = optionalCompany.get();
-            Subscription subscription = optionalSubscription.get();
+            var company = optionalCompany.get();
+            var subscription = optionalSubscription.get();
 
             company.setSubscription(subscription);
             companyRepository.save(company);

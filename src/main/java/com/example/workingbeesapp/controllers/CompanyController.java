@@ -75,8 +75,7 @@ public class CompanyController {
     // --- ASSIGNING SUBSCRIPTION TO COMPANY ONE - TO - ONE RELATION --- //
     // TODO : make this one work - currently not working in postman - gives back 404 //
     @PutMapping("/{id}/subscription")
-    public ResponseEntity<Object> assignSubscriptionToCompany(@PathVariable("id") Long companyId, @RequestBody IdInputDto input) {
-        companyService.assignSubscriptionToCompany(companyId, input.id);
-        return ResponseEntity.ok().build();
+    public void assignSubscriptionToCompany(@PathVariable("id") Long id, @Validated @RequestBody IdInputDto input) {
+        companyService.assignSubscriptionToCompany(id, input.id);
     }
 }

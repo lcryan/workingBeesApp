@@ -21,7 +21,6 @@ public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -40,6 +39,6 @@ public class Subscription {
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
-    @OneToOne(mappedBy = "subscription") //basic set up now functional in db //
+    @OneToOne(mappedBy = "subscription")
     private Company company;
 }
