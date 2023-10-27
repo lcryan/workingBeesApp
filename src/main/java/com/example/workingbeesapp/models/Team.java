@@ -37,7 +37,7 @@ public class Team {
     @Column(name = "team_size")
     private int teamSize;
 
-    // TODO: 3. add extraService relation here and add a list - every team can have more than one service//
+    // TODO: 3. add extraService relation here and add a list - every team can have more than one service! //
     @Column(name = "extra_service")
     private String extraService;
 }

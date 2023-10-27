@@ -29,7 +29,7 @@ public class CompanyDto {
     private String paymentDetails;
 
     // --- TEAMS of relation One-To-Many ---  COMPANY IS ONE - TEAM IS MANY //
-    private List<Team> teams; // TODO : check, if this also has to be set to DTO - list! //
+    private List<Team> teams; // TODO : check, if this also has to be set to DTO - list! - check in COMPANY SERVICE //
     // --- SUBSCRIPTION of relation One-To-One ---//
     private SubscriptionDto subscription; // NOW : this has been changed to subscription Dto // // remember! Lombok needs a different approach with setting here !!! You are setting setSubscription in service ! It is the name not the actual type of var!!!
 }

@@ -17,7 +17,7 @@ public class TeamDto {
 
     private String teamName;
 
-    private CompanyDto company; // TODO: check other Dto classes for the right set up! HAS TO BE DTO!  - it is correct here !!! //
+    private CompanyDto company; // TODO: check other Dto classes for the right set up! HAS TO BE DTO!  - it is now correct here !!! Don't forget to change the transfermethod that gets the company in the teamService! //
 
     private WorkingSpaceDto workingSpace;
 
