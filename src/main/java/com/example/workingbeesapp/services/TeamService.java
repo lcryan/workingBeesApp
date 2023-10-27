@@ -5,6 +5,7 @@ import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
+import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,11 +19,17 @@ public class TeamService {
 
     private final CompanyRepository companyRepository;
 
+    private final WorkingSpaceRepository workingSpaceRepository;
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository) {
+    private final WorkingSpaceService workingSpaceService;
+
+
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService) {
         this.teamRepository = teamRepository;
 
         this.companyRepository = companyRepository;
+        this.workingSpaceRepository = workingSpaceRepository;
+        this.workingSpaceService = workingSpaceService;
     }
 
     public List<TeamDto> getAllTeams() {
@@ -110,9 +117,13 @@ public class TeamService {
 
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
-        teamDto.setWorkingSpace(team.getWorkingSpace());
         teamDto.setTeamSize(team.getTeamSize());
         teamDto.setExtraService(team.getExtraService());
+
+        if (team.getWorkingSpace() != null) {
+            teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
+        } // getting working space for team //
+
 
         teamDto.setCompany(team.getCompany());
 
@@ -125,10 +136,28 @@ public class TeamService {
 
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
-        team.setWorkingSpace(teamDto.getWorkingSpace());
+
         team.setTeamSize(teamDto.getTeamSize());
         team.setExtraService(teamDto.getExtraService());
 
         return team;
+    }
+
+    // ASSIGNING WORKING SPACE TO TEAM //
+
+    public void assignWorkingSpaceToTeam(Long id, Long workingSpaceId) {
+        var optionalTeam = teamRepository.findById(id);
+        var optionalWorkingSpace = workingSpaceRepository.findById(workingSpaceId);
+
+        if (optionalTeam.isPresent() && optionalWorkingSpace.isPresent()) {
+
+            var team = optionalTeam.get();
+            var workingSpace = optionalWorkingSpace.get();
+
+            team.setWorkingSpace(workingSpace);
+            teamRepository.save(team);
+        } else {
+            throw new RecordNotFoundException("Item with id " + workingSpaceId + " couldn't be found.");
+        }
     }
 }

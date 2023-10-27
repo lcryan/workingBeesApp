@@ -3,7 +3,6 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;;
-import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
@@ -25,11 +24,14 @@ public class CompanyService {
 
     private final TeamRepository teamRepository; // for ONE-TO-MANY relation with TEAM - COMPANY IS ONE! //
 
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository) {
+    private final TeamService teamService;
+
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionService = subscriptionService;
         this.teamRepository = teamRepository;
+        this.teamService = teamService;
     }
 
 
@@ -109,6 +111,9 @@ public class CompanyService {
             companyDto.setSubscription(subscriptionService.transferSubscriptionToSubscriptionDto(company.getSubscription())); // REMEMBER : lombok needs different approach here in the setter !!! //
         }
 
+        if (company.getTeams() != null) {
+            companyDto.setTeams(company.getTeams());
+        }
 
         return companyDto;
     }

@@ -29,10 +29,10 @@ public class Team {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;
-
-    @Column(name = "working_space")
-    //TODO : 2. add relation to workingSpace class here - ONE TO ONE //
-    private String workingSpace;
+    // ONE TO ONE RELATION WITH WORKING SPACE //
+    @OneToOne
+    @JoinColumn(name = "team_working_space")
+    private WorkingSpace workingSpace;
 
     @Column(name = "team_size")
     private int teamSize;

@@ -82,7 +82,7 @@ public class WorkingSpaceService {
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
-    private WorkingSpaceDto transferWorkingSpaceToWorkingSpaceDto(WorkingSpace workingSpace) {
+    public WorkingSpaceDto transferWorkingSpaceToWorkingSpaceDto(WorkingSpace workingSpace) {
 
         WorkingSpaceDto workingSpaceDto = new WorkingSpaceDto();
 
@@ -94,7 +94,7 @@ public class WorkingSpaceService {
         return workingSpaceDto;
     }
 
-    private WorkingSpace transferWorkingSpaceDtoToWorkingSpace(WorkingSpaceDto workingSpaceDto) {
+    public WorkingSpace transferWorkingSpaceDtoToWorkingSpace(WorkingSpaceDto workingSpaceDto) {
 
         WorkingSpace workingSpace = new WorkingSpace();
 

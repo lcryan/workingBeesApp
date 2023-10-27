@@ -30,5 +30,6 @@ public class WorkingSpace {
     @Column(name = "space_capacity")
     private int capacity;
 
-    //TODO : don't forget to lay relation to team class ! //
+    @OneToOne(mappedBy = "workingSpace")
+    private Team team;
 }

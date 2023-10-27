@@ -19,10 +19,9 @@ public class TeamDto {
 
     private String teamName;
 
-    // --- relation COMPANY MANY TO ONE (TEAM MANY - COMPANY ONE--- //
-    private Company company;
-    // TODO: set one-to-one relation to team //
-    private String workingSpace;
+    private CompanyDto company; // TODO: check other Dto classes for the right set up! HAS TO BE DTO!  - it is correct here !!! //
+
+    private WorkingSpaceDto workingSpace;
 
     private int teamSize;
 

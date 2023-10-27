@@ -1,6 +1,7 @@
 package com.example.workingbeesapp.controllers;
 
 
+import com.example.workingbeesapp.dtos.IdInputDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.services.TeamService;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +76,11 @@ public class TeamController {
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
         teamService.assignsCompanyToTeam(id, companyId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/{workingSpaceId}")
+    public void assignWorkingSpaceToTeam(@PathVariable("id") Long id, @Validated @RequestBody IdInputDto input) {
+        teamService.assignWorkingSpaceToTeam(id, input.id);
     }
 }
 
