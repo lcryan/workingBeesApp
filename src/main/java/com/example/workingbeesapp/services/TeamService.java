@@ -125,10 +125,6 @@ public class TeamService {
             teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
         }
 
-        if (team.getCompany() != null) {
-            teamDto.setCompany(companyService.transferCompanyToCompanyDto(team.getCompany()));
-        }
-
         return teamDto;
     }
 
