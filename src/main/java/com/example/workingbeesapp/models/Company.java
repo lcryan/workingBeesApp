@@ -39,13 +39,11 @@ public class Company {
     @Column(name = "payment_details")
     private String paymentDetails;
 
-    // --- relation to SUBSCRIPTION --- CHECKED --- functional ---//
-
     @OneToOne
     @JoinColumn(name = "your_subscriptions")
-    public Subscription subscription; // removed private //
+    public Subscription subscription;
 
     @OneToMany(mappedBy = "company")
     @JsonIgnore
-    private List<Team> teams; // correct //
+    private List<Team> teams;
 }
