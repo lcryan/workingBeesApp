@@ -19,15 +19,17 @@ public class TeamService {
 
     private final CompanyRepository companyRepository;
 
+    private final CompanyService companyService;
+
     private final WorkingSpaceRepository workingSpaceRepository;
 
     private final WorkingSpaceService workingSpaceService;
 
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService) {
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, CompanyService companyService, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService) {
         this.teamRepository = teamRepository;
-
         this.companyRepository = companyRepository;
+        this.companyService = companyService;
         this.workingSpaceRepository = workingSpaceRepository;
         this.workingSpaceService = workingSpaceService;
     }
@@ -41,7 +43,6 @@ public class TeamService {
         }
         return teamDtoList;
     }
-
 
     public TeamDto getOneTeam(Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -122,10 +123,11 @@ public class TeamService {
 
         if (team.getWorkingSpace() != null) {
             teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
-        } // getting working space for team //
+        }
 
-
-        /*teamDto.setCompany(team.getCompany());*/ //TODO : has to be amended so it gives back a dto - think about the lombok implications!! //
+        if (team.getCompany() != null) {
+            teamDto.setCompany(companyService.transferCompanyToCompanyDto(team.getCompany()));
+        }
 
         return teamDto;
     }
@@ -136,7 +138,6 @@ public class TeamService {
 
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
-
         team.setTeamSize(teamDto.getTeamSize());
         team.setExtraService(teamDto.getExtraService());
 

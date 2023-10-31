@@ -6,7 +6,6 @@ import com.example.workingbeesapp.models.Company;;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
-import com.example.workingbeesapp.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,16 +21,11 @@ public class CompanyService {
 
     private final SubscriptionService subscriptionService;
 
-    private final TeamRepository teamRepository; // for ONE-TO-MANY relation with TEAM - COMPANY IS ONE! //
 
-    private final TeamService teamService;
-
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService) {
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionService = subscriptionService;
-        this.teamRepository = teamRepository;
-        this.teamService = teamService;
     }
 
 
@@ -104,17 +98,12 @@ public class CompanyService {
 
         companyDto.setId(company.getId());
         companyDto.setCompanyName(company.getCompanyName());
-        companyDto.setTeamName(company.getTeamName());
+       /* companyDto.setTeamName(company.getTeamName());*/
         companyDto.setCompanyDetails(company.getCompanyDetails());
         companyDto.setPaymentDetails(company.getPaymentDetails());
         if (company.getSubscription() != null) {
             companyDto.setSubscription(subscriptionService.transferSubscriptionToSubscriptionDto(company.getSubscription())); // REMEMBER : lombok needs different approach here in the setter !!! //
         }
-
-        if (company.getTeams() != null) {
-            companyDto.setTeams(company.getTeams());
-        }
-
         return companyDto;
     }
 
@@ -124,7 +113,7 @@ public class CompanyService {
 
         company.setId(dto.getId());
         company.setCompanyName(dto.getCompanyName());
-        company.setTeamName(dto.getTeamName());
+   /*     company.setTeamName(dto.getTeamName());*/
         company.setCompanyDetails(dto.getCompanyDetails());
         company.setPaymentDetails(dto.getPaymentDetails());
 

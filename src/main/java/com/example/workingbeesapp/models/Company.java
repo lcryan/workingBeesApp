@@ -30,8 +30,8 @@ public class Company {
     @Column(name = "company_name")
     private String companyName;
 
-    @Column(name = "team_name")
-    private String teamName;
+/*    @Column(name = "team_name")
+    private String teamName;*/
 
     @Column(name = "company_details")
     private String companyDetails;
