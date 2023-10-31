@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 
 public class CompanyDto {
-
+/*@NotBlank */ // TODO: add something similar to @NotBlank //
     private Long id;
 
     private String companyName;
