@@ -19,17 +19,15 @@ public class TeamService {
 
     private final CompanyRepository companyRepository;
 
-    private final CompanyService companyService;
-
     private final WorkingSpaceRepository workingSpaceRepository;
 
     private final WorkingSpaceService workingSpaceService;
 
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, CompanyService companyService, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService) {
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService) {
         this.teamRepository = teamRepository;
         this.companyRepository = companyRepository;
-        this.companyService = companyService;
+
         this.workingSpaceRepository = workingSpaceRepository;
         this.workingSpaceService = workingSpaceService;
     }
