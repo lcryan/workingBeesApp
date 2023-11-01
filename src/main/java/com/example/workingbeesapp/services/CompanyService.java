@@ -21,11 +21,14 @@ public class CompanyService {
 
     private final SubscriptionService subscriptionService;
 
+    private final TeamService teamService;
 
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService) {
+
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamService teamService) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionService = subscriptionService;
+        this.teamService = teamService;
     }
 
 
@@ -103,6 +106,9 @@ public class CompanyService {
         companyDto.setPaymentDetails(company.getPaymentDetails());
         if (company.getSubscription() != null) {
             companyDto.setSubscription(subscriptionService.transferSubscriptionToSubscriptionDto(company.getSubscription())); // REMEMBER : lombok needs different approach here in the setter !!! //
+        /*} if (company.getTeams() != null) {
+            companyDto.setTeams(teamService.transferTeamToTeamDto(company.getTeams().get(0)))*/ // gives back error, as I need back a List Dto ! //
+            //TODO : implement a transfermethod only for teams //
         }
         return companyDto;
     }
