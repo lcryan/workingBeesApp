@@ -16,6 +16,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "teams")
 public class Team {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -25,11 +26,10 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
-    // -- Team is the owner of the relation - nothing in the db -- //
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;
-    // ONE TO ONE RELATION WITH WORKING SPACE // //TODO :1.functionality still has to be checked via postman //
+
     @OneToOne
     @JoinColumn(name = "team_working_space")
     private WorkingSpace workingSpace;
@@ -40,4 +40,5 @@ public class Team {
     // TODO: 3. add extraService relation here and add a list - every team can have more than one service! //
     @Column(name = "extra_service")
     private String extraService;
+
 }
