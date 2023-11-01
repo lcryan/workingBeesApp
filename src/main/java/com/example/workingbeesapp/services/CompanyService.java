@@ -91,7 +91,22 @@ public class CompanyService {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
     }
+    // --- assigning SUBSCRIPTION TO COMPANY --- //
 
+    public void assignSubscriptionToCompany(Long id, Long subscriptionId) { // changed to id here instead of companyId //
+        var optionalCompany = companyRepository.findById(id);
+        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
+
+        if (optionalCompany.isPresent() && optionalSubscription.isPresent()) {
+            var company = optionalCompany.get();
+            var subscription = optionalSubscription.get();
+
+            company.setSubscription(subscription);
+            companyRepository.save(company);
+        } else {
+            throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
+        }
+    }
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
@@ -127,7 +142,7 @@ public class CompanyService {
         return company;
     }
 
-    // TRANSFER COMPANY LIST DTO TO LIST //
+    // TRANSFER COMPANY LIST DTO TO LIST // //TODO : check, if this is still necessary ? //
     public List<Company> transferCompanyDtoListToCompanyList(List<CompanyDto> companiesDtos) {
         List<Company> companies = new ArrayList<>();
         for (CompanyDto teamsDto : companiesDtos) {
@@ -136,21 +151,5 @@ public class CompanyService {
         return companies;
     }
 
-    // --- assigning SUBSCRIPTION TO COMPANY --- //
-
-    public void assignSubscriptionToCompany(Long id, Long subscriptionId) { // changed to id here instead of companyId //
-        var optionalCompany = companyRepository.findById(id);
-        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
-
-        if (optionalCompany.isPresent() && optionalSubscription.isPresent()) {
-            var company = optionalCompany.get();
-            var subscription = optionalSubscription.get();
-
-            company.setSubscription(subscription);
-            companyRepository.save(company);
-        } else {
-            throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
-        }
-    }
 }
 
