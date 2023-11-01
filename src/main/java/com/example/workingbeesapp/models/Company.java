@@ -42,5 +42,6 @@ public class Company {
 
     @OneToMany(mappedBy = "company")
     @JsonIgnore
-    private List<Team> teams; //TODO : List still has to be added to company - this is next step! //
+    private List<Team> teams;
+
 }
