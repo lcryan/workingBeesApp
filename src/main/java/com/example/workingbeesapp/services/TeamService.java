@@ -108,6 +108,23 @@ public class TeamService {
         }
     }
 
+    // ASSIGNING WORKING SPACE TO TEAM //
+
+    public void assignWorkingSpaceToTeam(Long id, Long workingSpaceId) {
+        var optionalTeam = teamRepository.findById(id);
+        var optionalWorkingSpace = workingSpaceRepository.findById(workingSpaceId);
+
+        if (optionalTeam.isPresent() && optionalWorkingSpace.isPresent()) {
+
+            var team = optionalTeam.get();
+            var workingSpace = optionalWorkingSpace.get();
+
+            team.setWorkingSpace(workingSpace);
+            teamRepository.save(team);
+        } else {
+            throw new RecordNotFoundException("Item with id " + workingSpaceId + " couldn't be found.");
+        }
+    }
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
     public TeamDto transferTeamToTeamDto(Team team) {
@@ -137,22 +154,21 @@ public class TeamService {
 
         return team;
     }
+// transfer methods for teamList //
 
-    // ASSIGNING WORKING SPACE TO TEAM //
-
-    public void assignWorkingSpaceToTeam(Long id, Long workingSpaceId) {
-        var optionalTeam = teamRepository.findById(id);
-        var optionalWorkingSpace = workingSpaceRepository.findById(workingSpaceId);
-
-        if (optionalTeam.isPresent() && optionalWorkingSpace.isPresent()) {
-
-            var team = optionalTeam.get();
-            var workingSpace = optionalWorkingSpace.get();
-
-            team.setWorkingSpace(workingSpace);
-            teamRepository.save(team);
-        } else {
-            throw new RecordNotFoundException("Item with id " + workingSpaceId + " couldn't be found.");
+    public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {
+        List<Team> teams = new ArrayList<>();
+        for (TeamDto teamsDto : teamDtoList) {
+            teams.add(transferTeamDtoToTeam(teamsDto));
         }
+        return teams;
+    }
+
+    public List<TeamDto> transferTeamListToTeamDtoList(List<Team> teamList) {
+        List<TeamDto> teamDtoList = new ArrayList<>();
+        for (Team teams : teamList) {
+            teamDtoList.add(transferTeamToTeamDto(teams));
+        }
+        return teamDtoList;
     }
 }
