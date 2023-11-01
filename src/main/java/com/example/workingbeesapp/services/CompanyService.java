@@ -101,14 +101,15 @@ public class CompanyService {
 
         companyDto.setId(company.getId());
         companyDto.setCompanyName(company.getCompanyName());
-       /* companyDto.setTeamName(company.getTeamName());*/
+        /* companyDto.setTeamName(company.getTeamName());*/
         companyDto.setCompanyDetails(company.getCompanyDetails());
         companyDto.setPaymentDetails(company.getPaymentDetails());
         if (company.getSubscription() != null) {
             companyDto.setSubscription(subscriptionService.transferSubscriptionToSubscriptionDto(company.getSubscription())); // REMEMBER : lombok needs different approach here in the setter !!! //
-        /*} if (company.getTeams() != null) {
-            companyDto.setTeams(teamService.transferTeamToTeamDto(company.getTeams().get(0)))*/ // gives back error, as I need back a List Dto ! //
-            //TODO : implement a transfermethod only for teams //
+        }
+        if (company.getTeams() != null) {
+            companyDto.setTeams(teamService.transferTeamListToTeamDtoList(company.getTeams()));
+
         }
         return companyDto;
     }
@@ -119,7 +120,7 @@ public class CompanyService {
 
         company.setId(dto.getId());
         company.setCompanyName(dto.getCompanyName());
-   /*     company.setTeamName(dto.getTeamName());*/
+        /*     company.setTeamName(dto.getTeamName());*/
         company.setCompanyDetails(dto.getCompanyDetails());
         company.setPaymentDetails(dto.getPaymentDetails());
 
