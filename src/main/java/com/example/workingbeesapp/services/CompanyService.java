@@ -101,7 +101,6 @@ public class CompanyService {
 
         companyDto.setId(company.getId());
         companyDto.setCompanyName(company.getCompanyName());
-        /* companyDto.setTeamName(company.getTeamName());*/
         companyDto.setCompanyDetails(company.getCompanyDetails());
         companyDto.setPaymentDetails(company.getPaymentDetails());
         if (company.getSubscription() != null) {
