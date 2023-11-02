@@ -33,4 +33,5 @@ public class Subscription {
 
     @OneToOne(mappedBy = "subscription")
     private Company company;
+
 }
