@@ -35,6 +35,9 @@ public class WorkingSpace {
     @Column(name = "duration")
     private String duration;
 
+    // TODO : price per workingSpace has to be added here - DTO - service have to be adjusted accordingly //
+    // TODO 2: workingSpace and Subscription might need a OneToMany relation //
+
     @Column(name = "start_date")
     private LocalDate startDate;
 
