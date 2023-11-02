@@ -23,13 +23,15 @@ public class TeamService {
 
     private final WorkingSpaceService workingSpaceService;
 
+    private final ExtraServiceService extraServiceService;
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService) {
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService, ExtraServiceService extraServiceService) {
         this.teamRepository = teamRepository;
         this.companyRepository = companyRepository;
 
         this.workingSpaceRepository = workingSpaceRepository;
         this.workingSpaceService = workingSpaceService;
+        this.extraServiceService = extraServiceService;
     }
 
     public List<TeamDto> getAllTeams() {
@@ -134,8 +136,9 @@ public class TeamService {
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
         teamDto.setTeamSize(team.getTeamSize());
-       /* teamDto.setExtraService(team.getExtraService());*/ // TODO: have to set extraService List here including transfer method from ExtraService Service //
-
+        if (team.getExtraServices() != null) {
+            teamDto.setExtraService(extraServiceService.transferExtraServiceListToExtraServiceListDto(team.getExtraServices()));
+        }
         if (team.getWorkingSpace() != null) {
             teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
         }
@@ -150,8 +153,6 @@ public class TeamService {
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
         team.setTeamSize(teamDto.getTeamSize());
-        /*   team.setExtraService(teamDto.getExtraService());*/ // TODO: have to set extraService List here including transfer method from ExtraService Service below //
-
         return team;
     }
 // transfer methods for TeamList to TeamListDto //
