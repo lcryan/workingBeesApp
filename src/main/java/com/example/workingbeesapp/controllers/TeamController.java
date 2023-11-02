@@ -78,9 +78,12 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
+    // TODO : this has to be corrected - step for 3.11.2023 @PutMapping is not coming out correctly in postman //
     @PutMapping("/{id}/{workingSpaceId}")
     public void assignWorkingSpaceToTeam(@PathVariable("id") Long id, @Validated @RequestBody IdInputDto input) {
         teamService.assignWorkingSpaceToTeam(id, input.id);
+
+        //TODO : to be completed! //
     }
 }
 
