@@ -134,7 +134,7 @@ public class TeamService {
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
         teamDto.setTeamSize(team.getTeamSize());
-        teamDto.setExtraService(team.getExtraService());
+       /* teamDto.setExtraService(team.getExtraService());*/ // TODO: have to set extraService List here including transfer method from ExtraService Service //
 
         if (team.getWorkingSpace() != null) {
             teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
@@ -150,11 +150,11 @@ public class TeamService {
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
         team.setTeamSize(teamDto.getTeamSize());
-        team.setExtraService(teamDto.getExtraService());
+        /*   team.setExtraService(teamDto.getExtraService());*/ // TODO: have to set extraService List here including transfer method from ExtraService Service below //
 
         return team;
     }
-// transfer methods for teamList //
+// transfer methods for TeamList to TeamListDto //
 
     public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {
         List<Team> teams = new ArrayList<>();
