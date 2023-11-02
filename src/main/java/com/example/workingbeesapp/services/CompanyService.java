@@ -17,7 +17,7 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
-    private final SubscriptionRepository subscriptionRepository; // for to one-to-one relation with subscription //
+    private final SubscriptionRepository subscriptionRepository;
 
     private final SubscriptionService subscriptionService;
 
@@ -134,7 +134,6 @@ public class CompanyService {
 
         company.setId(dto.getId());
         company.setCompanyName(dto.getCompanyName());
-        /*     company.setTeamName(dto.getTeamName());*/
         company.setCompanyDetails(dto.getCompanyDetails());
         company.setPaymentDetails(dto.getPaymentDetails());
 
