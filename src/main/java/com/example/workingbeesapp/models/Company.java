@@ -41,7 +41,6 @@ public class Company {
     public Subscription subscription;
 
     @OneToMany(mappedBy = "company")
-    @JsonIgnore
     private List<Team> teams;
 
 }
