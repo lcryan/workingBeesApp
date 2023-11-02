@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,8 +39,6 @@ public class Team {
     @Column(name = "team_size")
     private int teamSize;
 
-    // TODO: 3. add extraService relation here and add a list - every team can have more than one service! //
-    @Column(name = "extra_service")
-    private String extraService;
-
+    @OneToMany(mappedBy = "teams")
+    private List<ExtraService> extraServices;
 }

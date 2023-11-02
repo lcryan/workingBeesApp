@@ -32,4 +32,8 @@ public class ExtraService {
 
     @Column(name = "service_duration")
     private String serviceDuration;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id")
+    private Team team;
 }
