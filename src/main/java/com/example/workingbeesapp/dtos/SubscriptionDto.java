@@ -20,11 +20,5 @@ public class SubscriptionDto {
 
     private double price;
 
-    private String duration;
-
-    private LocalDate startDate;
-
-    private LocalDate endDate;
-
     private String workingSpaceType;
 }
