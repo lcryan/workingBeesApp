@@ -39,6 +39,6 @@ public class Team {
     @Column(name = "team_size")
     private int teamSize;
 
-    @OneToMany(mappedBy = "teams")
+    @OneToMany(mappedBy = "team")
     private List<ExtraService> extraServices;
 }
