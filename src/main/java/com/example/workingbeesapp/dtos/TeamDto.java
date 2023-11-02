@@ -25,4 +25,6 @@ public class TeamDto {
 
     private List<ExtraServiceDto> extraService;
 
+    private CompanyDto company;
+
 }

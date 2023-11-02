@@ -1,4 +1,5 @@
 package com.example.workingbeesapp.models;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,5 +41,11 @@ public class Company {
 
     @OneToMany(mappedBy = "company")
     private List<Team> teams;
+
+    // methods to adding different classes //
+
+    public void addTeam(Team team) {
+        this.teams.add(team);
+    }
 
 }

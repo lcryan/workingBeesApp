@@ -41,4 +41,5 @@ public class Team {
 
     @OneToMany(mappedBy = "team")
     private List<ExtraService> extraServices;
+
 }

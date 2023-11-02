@@ -1,11 +1,14 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
+import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;;
+import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
+import com.example.workingbeesapp.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,12 +26,15 @@ public class CompanyService {
 
     private final TeamService teamService;
 
+    private final TeamRepository teamRepository;
 
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamService teamService) {
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService, TeamRepository teamRepository1) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionService = subscriptionService;
+
         this.teamService = teamService;
+        this.teamRepository = teamRepository;
     }
 
 
@@ -57,8 +63,12 @@ public class CompanyService {
 
     public CompanyDto createCompany(CompanyDto companyDto) {
         Company newCompany = transferCompanyDtoToCompany(companyDto);
-        companyRepository.save(newCompany);
-        return transferCompanyToCompanyDto(newCompany);
+        Company savedCompany = companyRepository.save(newCompany);
+
+        // Add teams to the company //
+        addTeamToCompany(companyDto, savedCompany);
+
+        return transferCompanyToCompanyDto(savedCompany);
     }
 
 
@@ -141,14 +151,27 @@ public class CompanyService {
         return company;
     }
 
-    // TRANSFER COMPANY LIST DTO TO LIST // //TODO : check, if this is still necessary ? //
+    // --- TRANSFER COMPANY LIST DTO TO LIST --- // //TODO : check, if this is still necessary ? //
     public List<Company> transferCompanyDtoListToCompanyList(List<CompanyDto> companiesDtos) {
         List<Company> companies = new ArrayList<>();
-        for (CompanyDto teamsDto : companiesDtos) {
-            companies.add(transferCompanyDtoToCompany(teamsDto));
+        for (CompanyDto companyDto : companiesDtos) {
+            companies.add(transferCompanyDtoToCompany(companyDto));
         }
         return companies;
     }
 
-}
+    // --- ADDING METHODS : adding team - subscription - working space - extra service here --- //
 
+
+    // -- ADD TEAM TO COMPANY METHOD  -- //
+
+    private void addTeamToCompany(CompanyDto companyDto, Company company) {
+        if (companyDto.getTeams() != null && !companyDto.getTeams().isEmpty()) {
+            for (TeamDto teamDto : companyDto.getTeams()) {
+                Team team = teamService.transferTeamDtoToTeam(teamDto);
+                team.setCompany(company);
+                teamRepository.save(team);
+            }
+        }
+    }
+}
