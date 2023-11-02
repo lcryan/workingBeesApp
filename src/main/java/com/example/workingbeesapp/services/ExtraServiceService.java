@@ -85,7 +85,7 @@ public class ExtraServiceService {
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
-    private ExtraServiceDto transferExtraServiceToExtraServiceDto(ExtraService extraService) {
+    public ExtraServiceDto transferExtraServiceToExtraServiceDto(ExtraService extraService) {
 
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
 
@@ -98,7 +98,7 @@ public class ExtraServiceService {
         return extraServiceDto;
     }
 
-    private ExtraService transferExtraServiceDtoToExtraService(ExtraServiceDto extraServiceDto) {
+    public ExtraService transferExtraServiceDtoToExtraService(ExtraServiceDto extraServiceDto) {
 
         ExtraService extraService = new ExtraService();
 
@@ -109,6 +109,23 @@ public class ExtraServiceService {
         extraService.setServicePrice(extraServiceDto.getServicePrice());
 
         return extraService;
+    }
+
+    // TRANSFER METHOD FOR LIST EXTRA SERVICE //
+    public List<ExtraServiceDto> transferExtraServiceListToExtraServiceListDto(List<ExtraService> extraServiceList) {
+        List<ExtraServiceDto> extraServiceDtoList = new ArrayList<>();
+        for (ExtraService extraServices : extraServiceList) {
+            extraServiceDtoList.add(transferExtraServiceToExtraServiceDto(extraServices));
+        }
+        return extraServiceDtoList;
+    }
+
+    public List<ExtraService> transferExtraServiceDtoListToExtraServiceList(List<ExtraServiceDto> extraServiceDtoList) {
+        List<ExtraService> extraServiceList1 = new ArrayList<>();
+        for (ExtraServiceDto extraServiceDtos : extraServiceDtoList) {
+            extraServiceList1.add(transferExtraServiceDtoToExtraService(extraServiceDtos));
+        }
+        return extraServiceList1;
     }
 
 }
