@@ -19,8 +19,8 @@ public class CompanyDto {
     private Long id;
 
     private String companyName;
-
- /*   private String teamName;*/
+/*
+    private String teamName;*/
 
     private String companyDetails;
 

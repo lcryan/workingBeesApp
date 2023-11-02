@@ -164,7 +164,7 @@ public class CompanyService {
 
 
     // -- ADD TEAM TO COMPANY METHOD  -- //
-
+// TODO : check if this is actually necessary ? //
     private void addTeamToCompany(CompanyDto companyDto, Company company) {
         if (companyDto.getTeams() != null && !companyDto.getTeams().isEmpty()) {
             for (TeamDto teamDto : companyDto.getTeams()) {

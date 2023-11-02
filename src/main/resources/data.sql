@@ -14,7 +14,6 @@ VALUES (88, 'Pixar Team Up!Lunch Buffet', 'catering buffet', 3150.00, '7 days');
 INSERT INTO companies (id, company_name, company_details, payment_details)
 VALUES (12, 'Pixar Inc.', 'Johnson Street 56, 896629 Calabasas, California', 'American Bank, 873027 89830 9878');
 
-
 UPDATE teams
 SET team_working_space = 67
 WHERE id = 2;
