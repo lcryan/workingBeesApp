@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -20,5 +22,11 @@ public class WorkingSpaceDto {
     private String type;
 
     private int capacity;
+
+    private String duration;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
 
 }
