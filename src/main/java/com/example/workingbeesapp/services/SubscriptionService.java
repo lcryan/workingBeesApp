@@ -90,10 +90,7 @@ public class SubscriptionService {
 
         subscriptionDto.setId(subscription.getId());
         subscriptionDto.setWorkingSpaceType(subscription.getWorkingSpaceType());
-        subscriptionDto.setDuration(subscription.getDuration());
-        subscriptionDto.setStartDate(subscription.getStartDate());
-        subscriptionDto.setEndDate(subscription.getEndDate());
-        subscriptionDto.setPrice(subscription.getPrice());
+        subscriptionDto.setTotalAmount(subscription.getTotalAmount());
 
         return subscriptionDto;
     }
@@ -104,10 +101,7 @@ public class SubscriptionService {
 
         subscription.setId(subscriptionDto.getId());
         subscription.setWorkingSpaceType(subscriptionDto.getWorkingSpaceType());
-        subscription.setDuration(subscriptionDto.getDuration());
-        subscription.setStartDate(subscriptionDto.getStartDate());
-        subscription.setEndDate(subscriptionDto.getEndDate());
-        subscription.setPrice(subscriptionDto.getPrice());
+        subscription.setTotalAmount(subscriptionDto.getTotalAmount());
 
         return subscription;
     }

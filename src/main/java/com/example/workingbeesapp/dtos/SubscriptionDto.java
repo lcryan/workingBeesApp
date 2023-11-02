@@ -18,7 +18,8 @@ public class SubscriptionDto {
 
     private Long id;
 
-    private double price;
+    private double totalAmount;
 
+    // TODO : adjust to future relation with WorkingSpace //
     private String workingSpaceType;
 }

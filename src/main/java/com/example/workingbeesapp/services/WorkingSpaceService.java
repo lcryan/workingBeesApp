@@ -90,6 +90,9 @@ public class WorkingSpaceService {
         workingSpaceDto.setName(workingSpace.getName());
         workingSpaceDto.setType(workingSpace.getType());
         workingSpaceDto.setCapacity(workingSpace.getCapacity());
+        workingSpaceDto.setDuration(workingSpace.getDuration());
+        workingSpaceDto.setStartDate(workingSpace.getStartDate());
+        workingSpaceDto.setEndDate(workingSpace.getEndDate());
 
         return workingSpaceDto;
     }
@@ -102,6 +105,9 @@ public class WorkingSpaceService {
         workingSpace.setName(workingSpaceDto.getName());
         workingSpace.setType(workingSpaceDto.getType());
         workingSpace.setCapacity(workingSpaceDto.getCapacity());
+        workingSpace.setDuration(workingSpaceDto.getDuration());
+        workingSpace.setStartDate(workingSpaceDto.getStartDate());
+        workingSpace.setEndDate(workingSpace.getEndDate());
 
         return workingSpace;
     }
