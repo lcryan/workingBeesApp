@@ -2,11 +2,11 @@ INSERT INTO teams (id, team_name, team_size)
 VALUES (1, 'Pixar Inc. Creative Team', 12),
        (2, 'Pixar Inc. Marketing Team', 45);
 
-INSERT INTO working_spaces(id, space_name, space_type, space_capacity)
-VALUES (67, 'Tokyo Valley', 'conference room', 100);
+INSERT INTO working_spaces(id, space_name, space_type, space_capacity, duration, start_date, end_date)
+VALUES (67, 'Tokyo Valley', 'conference room', 100, '3 months', '12/1/2024', '12/4/2024');
 
-INSERT INTO subscriptions (id, price, duration, start_date, end_date, working_space_type)
-VALUES (45, 290.00, '3 months', '12/1/2024', '12/4/2024', 'Conference room');
+INSERT INTO subscriptions (id, total_amount, working_space_type)
+VALUES (45, 290.00,'Conference room');
 
 INSERT INTO extra_services (id, service_name, service_type, service_price, service_duration)
 VALUES (88, 'Pixar Team Up!Lunch Buffet', 'catering buffet', 3150.00, '7 days');
