@@ -24,18 +24,10 @@ public class Subscription {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "price")
-    private double price;
+    @Column(name = "total_amount")
+    private double totalAmount;
 
-    @Column(name = "duration")
-    private String duration;
-
-    @Column(name = "start_date")
-    private LocalDate startDate;
-
-    @Column(name = "end_date")
-    private LocalDate endDate;
-
+    // TODO : make a relation of workingSpaces here : oneToMany //
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
