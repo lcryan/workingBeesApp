@@ -11,9 +11,10 @@ INSERT INTO subscriptions (id, total_amount, working_space_type)
 VALUES (45, 290.00, 'Conference room'),
        (55, 5600.00, 'Meeting room');
 
-INSERT INTO extra_services (id, service_name, service_type, service_price, service_duration)
-VALUES (88, 'Pixar Team Up!Lunch Buffet', 'catering buffet', 3150.00, '7 days'),
-       (123, 'Postal Service Pixar Marketing', 'postal service', 150.00, '7 days');
+INSERT INTO extra_services (id, service_name, company_name, service_type, service_price, service_duration)
+VALUES (88, 'Pixar Team Up!Lunch Buffet', 'Pixar Inc.', 'catering buffet', 3150.00, '7 days'),
+       (123, 'Postal Service Pixar Marketing', 'Pixar Inc.', 'postal service', 150.00, '7 days'),
+       (34, 'Carbonyde Corporate Dinner', 'Carbonyde', 'sit-down dinner', 800.00, '1 day');
 
 INSERT INTO companies (id, company_name, company_details, payment_details)
 VALUES (12, 'Pixar Inc.', 'Johnson Street 56, 896629 Calabasas, California', 'American Bank, 873027 89830 9878'),

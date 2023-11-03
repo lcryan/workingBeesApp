@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class ExtraServiceService {
-    ;
+
     private final ExtraServiceRepository extraServiceRepository;
 
 
@@ -84,7 +84,7 @@ public class ExtraServiceService {
     }
 
 
-    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
+    // ******* TRANSFER HELPER METHODS HERE  ******* //
 
     public ExtraServiceDto transferExtraServiceToExtraServiceDto(ExtraService extraService) {
 
@@ -92,6 +92,7 @@ public class ExtraServiceService {
 
         extraServiceDto.setId(extraService.getId());
         extraServiceDto.setServiceName(extraService.getServiceName());
+        extraServiceDto.setCompanyName(extraService.getCompanyName());
         extraServiceDto.setServiceType(extraService.getServiceType());
         extraServiceDto.setServiceDuration(extraService.getServiceDuration());
         extraServiceDto.setServicePrice(extraService.getServicePrice());
@@ -106,9 +107,11 @@ public class ExtraServiceService {
 
         extraService.setId(extraServiceDto.getId());
         extraService.setServiceName(extraServiceDto.getServiceName());
+        extraService.setCompanyName(extraServiceDto.getCompanyName());
         extraService.setServiceType(extraServiceDto.getServiceType());
         extraService.setServiceDuration(extraServiceDto.getServiceDuration());
         extraService.setServicePrice(extraServiceDto.getServicePrice());
+
 
         return extraService;
     }
@@ -122,6 +125,7 @@ public class ExtraServiceService {
         return extraServiceDtoList;
     }
 
+    // TODO : check, if you need this function at all - if not : remove it - obsolete! //
     public List<ExtraService> transferExtraServiceDtoListToExtraServiceList(List<ExtraServiceDto> extraServiceDtoList) {
         List<ExtraService> extraServiceList1 = new ArrayList<>();
         for (ExtraServiceDto extraServiceDtos : extraServiceDtoList) {
