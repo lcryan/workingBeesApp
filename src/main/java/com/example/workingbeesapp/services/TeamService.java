@@ -135,6 +135,7 @@ public class TeamService {
 
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
+        teamDto.setCompanyName(team.getCompanyName());
         teamDto.setTeamSize(team.getTeamSize());
         if (team.getExtraServices() != null) {
             teamDto.setExtraService(extraServiceService.transferExtraServiceListToExtraServiceListDto(team.getExtraServices()));
@@ -152,9 +153,11 @@ public class TeamService {
 
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
+        team.setCompanyName(teamDto.getCompanyName());
         team.setTeamSize(teamDto.getTeamSize());
         return team;
     }
+
 // transfer methods for TeamList to TeamListDto //
 
     public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {

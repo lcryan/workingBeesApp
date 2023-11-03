@@ -28,6 +28,9 @@ public class Team {
     @Column(name = "team_name")
     private String teamName;
 
+    @Column(name = "company_name")
+    private String companyName;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
     private Company company;

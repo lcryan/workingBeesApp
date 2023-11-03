@@ -19,12 +19,11 @@ public class TeamDto {
 
     private String teamName;
 
+    private String companyName;
+
     private WorkingSpaceDto workingSpace;
 
     private int teamSize;
 
     private List<ExtraServiceDto> extraService;
-
-/*    private CompanyDto company;*/
-
 }
