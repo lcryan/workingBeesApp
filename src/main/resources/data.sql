@@ -7,9 +7,9 @@ INSERT INTO working_spaces(id, space_name, company_name, space_type, space_capac
 VALUES (67, 'Tokyo Valley', 'Pixar Inc.', 'conference room', 100, 1000.00, '3 months', '12/1/2024', '12/4/2024'),
        (99, 'Amsterdam Grachten', 'Carbonyde GmbH', 'meeting room', 30, 2000.00, '1 month', '1/3/2024', '1/4/2024');
 
-INSERT INTO subscriptions (id, total_amount, working_space_type)
-VALUES (45, 290.00, 'Conference room'),
-       (55, 5600.00, 'Meeting room');
+INSERT INTO subscriptions (id, total_amount, company_name, working_space_type)
+VALUES (45, 290.00, 'Pixar Inc.', 'Conference room'),
+       (55, 5600.00, 'Carbonyde GmbH', 'Meeting room');
 
 INSERT INTO extra_services (id, service_name, company_name, service_type, service_price, service_duration)
 VALUES (88, 'Pixar Team Up!Lunch Buffet', 'Pixar Inc.', 'catering buffet', 3150.00, '7 days'),
@@ -55,3 +55,11 @@ WHERE id = 88;
 UPDATE extra_services
 SET team_id = 1
 WHERE id = 123;
+
+UPDATE working_spaces
+SET subscription_id = 45
+WHERE id = 67;
+
+update working_spaces
+SET subscription_id = 55
+WHERE id = 99;
