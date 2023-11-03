@@ -1,6 +1,5 @@
 package com.example.workingbeesapp.controllers;
 
-
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.services.TeamService;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,7 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    // GET LIST OF TEAMS BY COMPANY NAME / GET LIST OF TEAMS IF NO COMPANYNAME ADDED //
+    // GET LIST OF TEAMS BY COMPANY NAME / GET LIST OF TEAMS IF NO COMPANYNAME ADDED / SORTED ALPHABETICALLY //
     @GetMapping("")
     public ResponseEntity<List<TeamDto>> getTeamsByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
         List<TeamDto> teamDtos;
@@ -32,10 +31,13 @@ public class TeamController {
         } else {
             teamDtos = teamService.getTeamsByCompanyName(companyName.get());
         }
+        // sorting teams alphabetically //
+        teamDtos.sort(Comparator.comparing(TeamDto::getCompanyName));
+
         return ResponseEntity.ok().body(teamDtos);
     }
 
-    // GET ONE TEAM //
+    // GET ONE TEAM BY ID//
     @GetMapping("/{id}")
     public ResponseEntity<TeamDto> getTeam(@PathVariable Long id) {
         TeamDto teamDto = teamService.getOneTeam(id);
@@ -68,8 +70,7 @@ public class TeamController {
         return ResponseEntity.ok().body(teamDto1);
     }
 
-    // DELETING TEAM ---  CHECKED//
-
+    // DELETING TEAM //
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTeam(@PathVariable Long id) {
         teamService.deleteTeam(id);
