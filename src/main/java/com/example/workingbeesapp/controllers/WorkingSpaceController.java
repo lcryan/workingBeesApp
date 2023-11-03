@@ -8,7 +8,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/workingspaces")
@@ -19,13 +21,21 @@ public class WorkingSpaceController {
         this.workingSpaceService = workingSpaceService;
     }
 
+    // GET LIST OF WORKING SPACES ALPHABETICALLY SORTED BY COMPANY NAME, IF COMPANY NAME APPLICABLE //
     @GetMapping("")
-    public ResponseEntity<List<WorkingSpaceDto>> getAllWorkingSpaces() {
-        List<WorkingSpaceDto> workingSpaceDtoList = workingSpaceService.getAllWorkingSpaces();
-        return ResponseEntity.ok(workingSpaceDtoList);
+    public ResponseEntity<List<WorkingSpaceDto>> getWorkingSpacesByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
+        List<WorkingSpaceDto> workingSpaceDtos;
+        if (companyName.isEmpty()) {
+            workingSpaceDtos = workingSpaceService.getAllWorkingSpaces();
+        } else {
+            workingSpaceDtos = workingSpaceService.getWorkingSpacesByCompanyName(companyName.get());
+        }
+
+        workingSpaceDtos.sort(Comparator.comparing(WorkingSpaceDto::getCompanyName));
+        return ResponseEntity.ok().body(workingSpaceDtos);
     }
 
-    // GET ONE TEAM --- CHECKED//
+    // GET ONE TEAM //
     @GetMapping("/{id}")
     public ResponseEntity<WorkingSpaceDto> getWorkingSpace(@PathVariable Long id) {
         WorkingSpaceDto workingSpaceDto = workingSpaceService.getOneWorkingSpace(id);

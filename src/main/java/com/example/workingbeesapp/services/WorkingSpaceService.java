@@ -19,6 +19,7 @@ public class WorkingSpaceService {
         this.workingSpaceRepository = workingSpaceRepository;
     }
 
+    // GET LIST OF WOKRING SPACES //
     public List<WorkingSpaceDto> getAllWorkingSpaces() {
         List<WorkingSpace> workingSpaces = workingSpaceRepository.findAll();
         List<WorkingSpaceDto> workingSpaceDtoList = new ArrayList<>();
@@ -27,6 +28,13 @@ public class WorkingSpaceService {
             workingSpaceDtoList.add(workingSpaceDto);
         }
         return workingSpaceDtoList;
+    }
+
+    // GET LIST OF WORKING SPACES BY COMPANY NAME //
+
+    public List<WorkingSpaceDto> getWorkingSpacesByCompanyName(String companyName) {
+        List<WorkingSpace> workingSpaceList = workingSpaceRepository.findAllByCompanyNameEqualsIgnoreCase(companyName);
+        return transferWorkingSpaceListToWorkingSpaceDtoList(workingSpaceList);
     }
 
     // FUNCTION FOR GET ONE COMPANY //
@@ -114,6 +122,15 @@ public class WorkingSpaceService {
         workingSpace.setCompanyName(workingSpace.getCompanyName());
 
         return workingSpace;
+    }
+
+    // TRANSFER WORKING SPACE LIST TO WORKING SPACE DTO LIST //
+    public List<WorkingSpaceDto> transferWorkingSpaceListToWorkingSpaceDtoList(List<WorkingSpace> workingSpaceList) {
+        List<WorkingSpaceDto> workingSpaceDtoList = new ArrayList<>();
+        for (WorkingSpace workingSpaces : workingSpaceList) {
+            workingSpaceDtoList.add(transferWorkingSpaceToWorkingSpaceDto(workingSpaces));
+        }
+        return workingSpaceDtoList;
     }
 }
 
