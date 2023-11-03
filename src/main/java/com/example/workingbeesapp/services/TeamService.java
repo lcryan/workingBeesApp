@@ -168,6 +168,7 @@ public class TeamService {
 
 // transfer methods for TeamList to TeamListDto //
 
+    // TODO : if this one is not needed : delete it! :) //
     public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {
         List<Team> teams = new ArrayList<>();
         for (TeamDto teamsDto : teamDtoList) {
