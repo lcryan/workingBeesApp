@@ -80,8 +80,10 @@ public class TeamController {
 
     // TODO : this has to be corrected - step for 3.11.2023 @PutMapping is not coming out correctly in postman //
     @PutMapping("/{id}/{workingSpaceId}")
-    public void assignWorkingSpaceToTeam(@PathVariable("id") Long id, @Validated @RequestBody IdInputDto input) {
-        teamService.assignWorkingSpaceToTeam(id, input.id);
+    public void assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
+        teamService.assignWorkingSpaceToTeam(id, workingSpaceId);
+
+        // had ambigious request in postman - ammended the request body to workingSpaceId instead of InputId //
 
         //TODO : to be completed! //
     }
