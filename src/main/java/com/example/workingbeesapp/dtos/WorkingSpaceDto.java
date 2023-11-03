@@ -25,6 +25,8 @@ public class WorkingSpaceDto {
 
     private String duration;
 
+    private double rentalPrice;
+
     private LocalDate startDate;
 
     private LocalDate endDate;
