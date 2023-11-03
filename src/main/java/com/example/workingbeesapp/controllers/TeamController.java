@@ -1,7 +1,6 @@
 package com.example.workingbeesapp.controllers;
 
 
-import com.example.workingbeesapp.dtos.IdInputDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.services.TeamService;
 import org.springframework.http.ResponseEntity;
@@ -72,20 +71,17 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/{companyId}")
+    @PutMapping("/{id}/assignCompany/{companyId}")
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
         teamService.assignsCompanyToTeam(id, companyId);
         return ResponseEntity.noContent().build();
     }
 
-    // TODO : this has to be corrected - step for 3.11.2023 @PutMapping is not coming out correctly in postman //
-    @PutMapping("/{id}/{workingSpaceId}")
-    public void assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
+
+    @PutMapping("/{id}/assignWorkingSpace/{workingSpaceId}")
+    public ResponseEntity<Object> assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
         teamService.assignWorkingSpaceToTeam(id, workingSpaceId);
-
-        // had ambigious request in postman - ammended the request body to workingSpaceId instead of InputId //
-
-        //TODO : to be completed! //
+        return ResponseEntity.noContent().build();
     }
 }
 
