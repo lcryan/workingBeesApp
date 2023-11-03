@@ -61,14 +61,14 @@ public class WorkingSpaceController {
         }
     }
 
-    // UPDATING TEAM ---  CHECKED//
+    // UPDATE WORKING SPACE//
     @PutMapping("/{id}")
     public ResponseEntity<WorkingSpaceDto> updateWorkingSpace(@PathVariable Long id, @Validated @RequestBody WorkingSpaceDto newTeam) {
         WorkingSpaceDto workingSpaceDto1 = workingSpaceService.updateWorkingSpace(id, newTeam);
         return ResponseEntity.ok().body(workingSpaceDto1);
     }
 
-    // DELETING TEAM ---  CHECKED//
+    // DELETE WORKING SPACE//
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteWorkingSpace(@PathVariable Long id) {
@@ -76,5 +76,12 @@ public class WorkingSpaceController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping("/{id}/{subscriptionId}")
+    public ResponseEntity<Object> assignSubscriptionToWorkingSpace(@PathVariable("id") Long id, @PathVariable("subscriptionId") Long subscriptionId) {
+        workingSpaceService.assignSubscriptionToWorkingSpace(id, subscriptionId);
+        return ResponseEntity.noContent().build();
+    }
+
 }
 

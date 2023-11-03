@@ -3,6 +3,7 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.WorkingSpaceDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.WorkingSpace;
+import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,14 @@ public class WorkingSpaceService {
 
     private final WorkingSpaceRepository workingSpaceRepository;
 
-    public WorkingSpaceService(WorkingSpaceRepository workingSpaceRepository) {
+    private final SubscriptionRepository subscriptionRepository;
+
+    public WorkingSpaceService(WorkingSpaceRepository workingSpaceRepository, SubscriptionRepository subscriptionRepository) {
         this.workingSpaceRepository = workingSpaceRepository;
+        this.subscriptionRepository = subscriptionRepository;
     }
 
-    // GET LIST OF WOKRING SPACES //
+    // GET LIST OF WORKING SPACES //
     public List<WorkingSpaceDto> getAllWorkingSpaces() {
         List<WorkingSpace> workingSpaces = workingSpaceRepository.findAll();
         List<WorkingSpaceDto> workingSpaceDtoList = new ArrayList<>();
@@ -87,6 +91,22 @@ public class WorkingSpaceService {
         }
     }
 
+    // ASSIGN SUBSCRIPTION TO WORKING SPACE //
+
+    public void assignSubscriptionToWorkingSpace(Long id, Long subscriptionId) {
+        var optionalWorkingSpace = workingSpaceRepository.findById(id);
+        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
+
+        if (optionalWorkingSpace.isPresent() && optionalSubscription.isPresent()) {
+            var workingSpace = optionalWorkingSpace.get();
+            var subscription = optionalSubscription.get();
+
+            workingSpace.setSubscription(subscription);
+            workingSpaceRepository.save(workingSpace);
+        } else {
+            throw new RecordNotFoundException("Item not found.");
+        }
+    }
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
