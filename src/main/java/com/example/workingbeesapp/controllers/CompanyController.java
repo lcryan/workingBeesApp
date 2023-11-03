@@ -70,11 +70,10 @@ public class CompanyController {
         return ResponseEntity.noContent().build();
     }
 
-    // --- ASSIGNING SUBSCRIPTION TO COMPANY ONE - TO - ONE RELATION --- //
-    // TODO : Gives back Not Found at the moment - needs to be amended //
-    @PutMapping("/{id}/subscription")
-    public ResponseEntity<Object> assignSubscriptionToCompany(@PathVariable("id") Long id, @Validated @RequestBody IdInputDto input) {
-        companyService.assignSubscriptionToCompany(id, input.id);
+    @PutMapping("/{id}/{subscriptionId}")
+    public ResponseEntity<Object> assignSubscriptionToCompany(@PathVariable("id") Long id, @PathVariable("subscriptionId") Long subscriptionId) {
+        companyService.assignSubscriptionToCompany(id, subscriptionId);
         return ResponseEntity.noContent().build();
     }
 }
+
