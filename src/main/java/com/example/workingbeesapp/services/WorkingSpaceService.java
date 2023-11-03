@@ -93,6 +93,7 @@ public class WorkingSpaceService {
         workingSpaceDto.setDuration(workingSpace.getDuration());
         workingSpaceDto.setStartDate(workingSpace.getStartDate());
         workingSpaceDto.setEndDate(workingSpace.getEndDate());
+        workingSpaceDto.setRentalPrice(workingSpace.getRentalPrice());
 
         return workingSpaceDto;
     }
@@ -108,6 +109,7 @@ public class WorkingSpaceService {
         workingSpace.setDuration(workingSpaceDto.getDuration());
         workingSpace.setStartDate(workingSpaceDto.getStartDate());
         workingSpace.setEndDate(workingSpace.getEndDate());
+        workingSpace.setRentalPrice(workingSpace.getRentalPrice());
 
         return workingSpace;
     }
