@@ -22,7 +22,7 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    // GET LIST OF TEAMS BY COMPANY NAME / GET LIST OF TEAMS IF NO COMPANYNAME ADDED / SORTED ALPHABETICALLY //
+    // GET LIST OF TEAMS ALPHABETICALLY SORTED BY COMPANY NAME, IF COMPANY NAME APPLICABLE //
     @GetMapping("")
     public ResponseEntity<List<TeamDto>> getTeamsByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
         List<TeamDto> teamDtos;
@@ -78,13 +78,14 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
+    // ASSIGN COMPANY TO TEAM //
     @PutMapping("/{id}/{companyId}")
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
         teamService.assignsCompanyToTeam(id, companyId);
         return ResponseEntity.noContent().build();
     }
 
-
+    // ASSIGN WORKING SPACE TO TEAM //
     @PutMapping("/{id}/{workingSpaceId}")
     public ResponseEntity<Object> assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
         teamService.assignWorkingSpaceToTeam(id, workingSpaceId);

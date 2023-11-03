@@ -1,7 +1,6 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
-import com.example.workingbeesapp.dtos.IdInputDto;
 import com.example.workingbeesapp.services.CompanyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -21,14 +20,14 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-
+    // GET COMPANY LIST - BY NAME IF APPLICABLE //
     @GetMapping("")
     public ResponseEntity<List<CompanyDto>> getAllCompanies() {
         List<CompanyDto> companyDtoList = companyService.getAllCompanies();
         return ResponseEntity.ok(companyDtoList);
     }
 
-    // GET ONE COMPANY --- functional//
+    // GET ONE COMPANY BY ID //
     @GetMapping("/{id}")
     public ResponseEntity<CompanyDto> getCompany(@PathVariable Long id) {
         CompanyDto companyDto = companyService.getOneCompany(id);
@@ -36,7 +35,7 @@ public class CompanyController {
     }
 
 
-    // CREATE COMPANY --- functional//
+    // CREATE COMPANY //
     @PostMapping("")
     public ResponseEntity<Object> createNewCompany(@Validated @RequestBody CompanyDto companyDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -54,14 +53,14 @@ public class CompanyController {
         }
     }
 
-    // UPDATING COMPANY --- functional //
+    // UPDATE COMPANY --- functional //
     @PutMapping("/{id}")
     public ResponseEntity<CompanyDto> updateCompany(@PathVariable Long id, @Validated @RequestBody CompanyDto newCompany) {
         CompanyDto companyDto1 = companyService.updateCompany(id, newCompany);
         return ResponseEntity.ok().body(companyDto1);
     }
 
-    // DELETING COMPANY --- functional //
+    // DELETE COMPANY --- functional //
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCompany(@PathVariable Long id) {
@@ -70,6 +69,7 @@ public class CompanyController {
         return ResponseEntity.noContent().build();
     }
 
+    // ASSIGN SUBSCRIPTION TO COMPANY //
     @PutMapping("/{id}/{subscriptionId}")
     public ResponseEntity<Object> assignSubscriptionToCompany(@PathVariable("id") Long id, @PathVariable("subscriptionId") Long subscriptionId) {
         companyService.assignSubscriptionToCompany(id, subscriptionId);
