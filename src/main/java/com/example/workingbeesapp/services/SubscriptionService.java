@@ -16,8 +16,11 @@ public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
 
-    public SubscriptionService(SubscriptionRepository subscriptionRepository) {
+    private final WorkingSpaceService workingSpaceService;
+
+    public SubscriptionService(SubscriptionRepository subscriptionRepository, WorkingSpaceService workingSpaceService) {
         this.subscriptionRepository = subscriptionRepository;
+        this.workingSpaceService = workingSpaceService;
     }
 
 
@@ -89,9 +92,11 @@ public class SubscriptionService {
         SubscriptionDto subscriptionDto = new SubscriptionDto();
 
         subscriptionDto.setId(subscription.getId());
-        subscriptionDto.setWorkingSpaceType(subscription.getWorkingSpaceType());
         subscriptionDto.setTotalAmount(subscription.getTotalAmount());
-
+        subscriptionDto.setCompanyName(subscription.getCompanyName());
+        if (subscription.getWorkingSpaces() != null) {
+            subscriptionDto.setWorkingSpaces(workingSpaceService.transferWorkingSpaceListToWorkingSpaceDtoList(subscription.getWorkingSpaces()));
+        }
         return subscriptionDto;
     }
 
@@ -100,7 +105,6 @@ public class SubscriptionService {
         Subscription subscription = new Subscription();
 
         subscription.setId(subscriptionDto.getId());
-        subscription.setWorkingSpaceType(subscriptionDto.getWorkingSpaceType());
         subscription.setTotalAmount(subscriptionDto.getTotalAmount());
 
         return subscription;

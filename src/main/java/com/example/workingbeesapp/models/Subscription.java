@@ -23,6 +23,9 @@ public class Subscription {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "company_name")
+    private String companyName;
+
     @Column(name = "total_amount")
     private double totalAmount;
 
