@@ -22,5 +22,4 @@ public class ExtraServiceDto {
     private int servicePrice;
 
     private String serviceDuration;
-
 }
