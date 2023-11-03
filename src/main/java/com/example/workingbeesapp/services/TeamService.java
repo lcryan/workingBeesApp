@@ -44,6 +44,14 @@ public class TeamService {
         return teamDtoList;
     }
 
+    // function to GET TEAM BY COMPANY NAME //
+
+    public List<TeamDto> getTeamsByCompanyName(String companyName) {
+        List<Team> teamList = teamRepository.findAllByCompanyNameEqualsIgnoreCase(companyName);
+        return transferTeamListToTeamDtoList(teamList);
+    }
+
+
     public TeamDto getOneTeam(Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
         if (optionalTeam.isPresent()) {

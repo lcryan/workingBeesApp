@@ -9,7 +9,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/teams")
@@ -21,15 +23,27 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    // GETTING TEAM LIST  --- CHECKED //
+    // GETTING TEAM LIST //
 
-    @GetMapping("")
+/*    @GetMapping("")
     public ResponseEntity<List<TeamDto>> getAllTeams() {
         List<TeamDto> teamDtoList = teamService.getAllTeams();
         return ResponseEntity.ok(teamDtoList);
+    }*/
+
+    // GET LIST OF TEAMS BY COMPANY NAME //
+    @GetMapping("")
+    public ResponseEntity<List<TeamDto>> getTeamsByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
+        List<TeamDto> teamDtos;
+        if (companyName.isEmpty()) {
+            teamDtos = teamService.getAllTeams();
+        } else {
+            teamDtos = teamService.getTeamsByCompanyName(companyName.get());
+        }
+        return ResponseEntity.ok().body(teamDtos);
     }
 
-    // GET ONE TEAM --- CHECKED//
+    // GET ONE TEAM //
     @GetMapping("/{id}")
     public ResponseEntity<TeamDto> getTeam(@PathVariable Long id) {
         TeamDto teamDto = teamService.getOneTeam(id);
@@ -37,7 +51,7 @@ public class TeamController {
     }
 
 
-    // CREATE TEAM --- CHECKED//
+    // CREATE TEAM //
     @PostMapping("")
     public ResponseEntity<Object> createNewTeam(@Validated @RequestBody TeamDto teamDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -55,7 +69,7 @@ public class TeamController {
         }
     }
 
-    // UPDATING TEAM ---  CHECKED//
+    // UPDATING TEAM //
     @PutMapping("/{id}")
     public ResponseEntity<TeamDto> updateTeam(@PathVariable Long id, @Validated @RequestBody TeamDto newTeam) {
         TeamDto teamDto1 = teamService.updateTeam(id, newTeam);
