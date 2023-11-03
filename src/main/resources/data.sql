@@ -1,22 +1,31 @@
 INSERT INTO teams (id, team_name, company_Name, team_size)
 VALUES (1, 'Pixar Inc. Creative Team', 'Pixar Inc.', 12),
-       (2, 'Pixar Inc. Marketing Team', 'Pixar Inc', 45);
+       (2, 'Carbonyde Marketing Team', 'Carbonyde', 45);
 
-INSERT INTO working_spaces(id, space_name, space_type, space_capacity, duration, start_date, end_date)
-VALUES (67, 'Tokyo Valley', 'conference room', 100, '3 months', '12/1/2024', '12/4/2024');
+INSERT INTO working_spaces(id, space_name, company_name, space_type, space_capacity, price_per_room, duration,
+                           start_date, end_date)
+VALUES (67, 'Tokyo Valley', 'Pixar Inc.', 'conference room', 100, 1000.00, '3 months', '12/1/2024', '12/4/2024'),
+       (99, 'Amsterdam Grachten', 'Carbonyde GmbH', 'meeting room', 30, 2000.00, '1 month', '1/3/2024', '1/4/2024');
 
 INSERT INTO subscriptions (id, total_amount, working_space_type)
-VALUES (45, 290.00, 'Conference room');
+VALUES (45, 290.00, 'Conference room'),
+       (55, 5600.00, 'Meeting room');
 
 INSERT INTO extra_services (id, service_name, service_type, service_price, service_duration)
-VALUES (88, 'Pixar Team Up!Lunch Buffet', 'catering buffet', 3150.00, '7 days');
+VALUES (88, 'Pixar Team Up!Lunch Buffet', 'catering buffet', 3150.00, '7 days'),
+       (123, 'Postal Service Pixar Marketing', 'postal service', 150.00, '7 days');
 
 INSERT INTO companies (id, company_name, company_details, payment_details)
-VALUES (12, 'Pixar Inc.', 'Johnson Street 56, 896629 Calabasas, California', 'American Bank, 873027 89830 9878');
+VALUES (12, 'Pixar Inc.', 'Johnson Street 56, 896629 Calabasas, California', 'American Bank, 873027 89830 9878'),
+       (15, 'Carbonyde GmbH', 'Am Münchener Dom 324, 67859 München', 'Deutsche Bank, 891520 987678');
 
 UPDATE teams
 SET team_working_space = 67
 WHERE id = 2;
+
+UPDATE teams
+SET team_working_space = 99
+WHERE id = 1;
 
 UPDATE teams
 SET company_id = 12
@@ -26,10 +35,22 @@ UPDATE teams
 SET company_id = 12
 WHERE id = 2;
 
+UPDATE teams
+SET company_id = 15
+WHERE id = 2;
+
 UPDATE companies
 SET your_subscriptions = 45
 WHERE id = 12;
 
+UPDATE companies
+SET your_subscriptions = 55
+WHERE id = 15;
+
 UPDATE extra_services
 SET team_id = 2
 WHERE id = 88;
+
+UPDATE extra_services
+SET team_id = 1
+WHERE id = 123;

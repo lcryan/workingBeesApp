@@ -19,6 +19,8 @@ public class WorkingSpaceDto {
 
     private String name;
 
+    private String companyName;
+
     private String type;
 
     private int capacity;

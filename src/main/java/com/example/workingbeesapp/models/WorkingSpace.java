@@ -38,6 +38,9 @@ public class WorkingSpace {
     @Column(name = "price_per_room")
     private double rentalPrice;
 
+    @Column(name = "companyName")
+    private String companyName;
+
     // TODO 2: workingSpace and Subscription might need a OneToMany relation //
 
     @Column(name = "start_date")
