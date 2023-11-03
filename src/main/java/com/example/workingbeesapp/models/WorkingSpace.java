@@ -51,4 +51,8 @@ public class WorkingSpace {
 
     @OneToOne(mappedBy = "workingSpace")
     private Team team;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subscription_id")
+    private Subscription subscription;
 }

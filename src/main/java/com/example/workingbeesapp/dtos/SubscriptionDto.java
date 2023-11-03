@@ -1,12 +1,12 @@
 package com.example.workingbeesapp.dtos;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +20,5 @@ public class SubscriptionDto {
 
     private double totalAmount;
 
-    // TODO : adjust to future relation with WorkingSpace //
-    private String workingSpaceType;
+    private List<WorkingSpaceDto> workingSpaces;
 }

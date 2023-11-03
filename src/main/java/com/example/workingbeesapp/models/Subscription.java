@@ -1,13 +1,12 @@
 package com.example.workingbeesapp.models;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,5 +32,8 @@ public class Subscription {
 
     @OneToOne(mappedBy = "subscription")
     private Company company;
+
+    @OneToMany(mappedBy = "subscription")
+    private List<WorkingSpace> workingSpaces;
 
 }
