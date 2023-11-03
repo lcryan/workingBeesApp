@@ -23,15 +23,7 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    // GETTING TEAM LIST //
-
-/*    @GetMapping("")
-    public ResponseEntity<List<TeamDto>> getAllTeams() {
-        List<TeamDto> teamDtoList = teamService.getAllTeams();
-        return ResponseEntity.ok(teamDtoList);
-    }*/
-
-    // GET LIST OF TEAMS BY COMPANY NAME //
+    // GET LIST OF TEAMS BY COMPANY NAME / GET LIST OF TEAMS IF NO COMPANYNAME ADDED //
     @GetMapping("")
     public ResponseEntity<List<TeamDto>> getTeamsByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
         List<TeamDto> teamDtos;
