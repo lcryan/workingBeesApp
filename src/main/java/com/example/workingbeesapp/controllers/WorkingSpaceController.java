@@ -1,15 +1,20 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.WorkingSpaceDto;
+import com.example.workingbeesapp.services.FileStorageService;
 import com.example.workingbeesapp.services.WorkingSpaceService;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -17,12 +22,16 @@ import java.util.Optional;
 public class WorkingSpaceController {
     private final WorkingSpaceService workingSpaceService;
 
-    public WorkingSpaceController(WorkingSpaceService workingSpaceService) {
+    private final FileStorageService fileStorageService;
+
+    public WorkingSpaceController(WorkingSpaceService workingSpaceService, FileStorageService fileStorageService) {
         this.workingSpaceService = workingSpaceService;
+        this.fileStorageService = fileStorageService;
     }
 
     // GET LIST OF WORKING SPACES ALPHABETICALLY SORTED BY COMPANY NAME, IF COMPANY NAME APPLICABLE //
     @GetMapping("")
+    @Transactional // this is needed to be able to link an image to the WorkingSpace //
     public ResponseEntity<List<WorkingSpaceDto>> getWorkingSpacesByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
         List<WorkingSpaceDto> workingSpaceDtos;
         if (companyName.isEmpty()) {
@@ -37,6 +46,7 @@ public class WorkingSpaceController {
 
     // GET ONE TEAM //
     @GetMapping("/{id}")
+    @Transactional // see comment above //
     public ResponseEntity<WorkingSpaceDto> getWorkingSpace(@PathVariable Long id) {
         WorkingSpaceDto workingSpaceDto = workingSpaceService.getOneWorkingSpace(id);
         return ResponseEntity.ok(workingSpaceDto);
@@ -82,6 +92,14 @@ public class WorkingSpaceController {
         workingSpaceService.assignSubscriptionToWorkingSpace(id, subscriptionId);
         return ResponseEntity.noContent().build();
     }
+    // Link image to a workinspace //
 
+    @PostMapping("/{id}/image")
+    public ResponseEntity<Object> assignImageToWorkingSpace(@PathVariable("id") Long id, @RequestBody MultipartFile multipartFile) {
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(Objects.requireNonNull(multipartFile.getOriginalFilename())).toUriString();
+        String image = fileStorageService.storeFile(multipartFile, url, id);
+        workingSpaceService.assignImageToWorkingSpace(image, id);
+        return ResponseEntity.noContent().build();
+    }
 }
 

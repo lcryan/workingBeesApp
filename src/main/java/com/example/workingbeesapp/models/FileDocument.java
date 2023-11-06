@@ -18,11 +18,10 @@ import lombok.Setter;
 public class FileDocument {
 
     @Id
-    @GeneratedValue
     private Long id;
 
     private String fileName;
+    private String contentType;
 
-    @Lob
-    private byte[] docFile;
+    private String url;
 }

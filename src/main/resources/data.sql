@@ -7,6 +7,10 @@ INSERT INTO working_spaces(id, space_name, company_name, space_type, space_capac
 VALUES (67, 'Tokyo Valley', 'Pixar Inc.', 'conference room', 100, 1000.00, '3 months', '12/1/2024', '12/4/2024'),
        (99, 'Amsterdam Grachten', 'Carbonyde GmbH', 'meeting room', 30, 2000.00, '1 month', '1/3/2024', '1/4/2024');
 
+INSERT INTO file_uploads(id, file_name, content_type, url)
+VALUES (11, 'Stockholm_PresentationRoom_CEOLevel .jpg', 'image/jpeg',
+        'http://localhost:8080/download/org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@79e61b33');
+
 INSERT INTO subscriptions (id, total_amount, company_name, working_space_type)
 VALUES (45, 290.00, 'Pixar Inc.', 'Conference room'),
        (55, 5600.00, 'Carbonyde GmbH', 'Meeting room');
@@ -60,6 +64,10 @@ UPDATE working_spaces
 SET subscription_id = 45
 WHERE id = 67;
 
-update working_spaces
+UPDATE working_spaces
 SET subscription_id = 55
+WHERE id = 99;
+
+UPDATE working_spaces
+SET file_id = 11
 WHERE id = 99;

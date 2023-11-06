@@ -12,8 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,14 +25,13 @@ public class FileUploadController {
 
     //    post for single upload //
     @PostMapping("single/upload")
-    public FileUploadResponse singleFileUpload(@RequestParam("file") MultipartFile file) {
-
-        String fileName = fileStorageService.storeFile(file);
+    public FileUploadResponse singleFileUpload(@RequestParam("file") MultipartFile file, Long id) {
 
         // next line makes url. example "http://localhost:8080/download/naam.jpg"
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(fileName).toUriString();
+        String url = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(String.valueOf(file)).toUriString();
 
         String contentType = file.getContentType();
+        String fileName = fileStorageService.storeFile(file, url, id);
 
         return new FileUploadResponse(fileName, contentType, url);
     }
@@ -71,7 +68,7 @@ public class FileUploadController {
     }
 
     //    post for multiple uploads //
-    @PostMapping("/multiple/upload")
+/*    @PostMapping("/multiple/upload")
     List<FileUploadResponse> multipleUpload(@RequestParam("files") MultipartFile[] files) {
 
         if (files.length > 7) {
@@ -92,6 +89,6 @@ public class FileUploadController {
         });
 
         return uploadResponseList;
-    }
+    }*/
 }
 

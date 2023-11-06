@@ -2,7 +2,9 @@ package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.WorkingSpaceDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
+import com.example.workingbeesapp.models.FileDocument;
 import com.example.workingbeesapp.models.WorkingSpace;
+import com.example.workingbeesapp.repositories.DocFileRepository;
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,13 @@ public class WorkingSpaceService {
 
     private final SubscriptionRepository subscriptionRepository;
 
-    public WorkingSpaceService(WorkingSpaceRepository workingSpaceRepository, SubscriptionRepository subscriptionRepository) {
+    private final DocFileRepository docFileRepository;
+
+
+    public WorkingSpaceService(WorkingSpaceRepository workingSpaceRepository, SubscriptionRepository subscriptionRepository, DocFileRepository docFileRepository) {
         this.workingSpaceRepository = workingSpaceRepository;
         this.subscriptionRepository = subscriptionRepository;
+        this.docFileRepository = docFileRepository;
     }
 
     // GET LIST OF WORKING SPACES //
@@ -123,6 +129,9 @@ public class WorkingSpaceService {
         workingSpaceDto.setEndDate(workingSpace.getEndDate());
         workingSpaceDto.setRentalPrice(workingSpace.getRentalPrice());
         workingSpaceDto.setCompanyName(workingSpace.getCompanyName());
+        if (workingSpace.getFile() != null) {
+            workingSpaceDto.setFile(workingSpace.getFile());
+        }
 
         return workingSpaceDto;
     }
@@ -141,6 +150,8 @@ public class WorkingSpaceService {
         workingSpace.setRentalPrice(workingSpace.getRentalPrice());
         workingSpace.setCompanyName(workingSpace.getCompanyName());
 
+        workingSpace.setFile(workingSpaceDto.getFile());
+
         return workingSpace;
     }
 
@@ -151,6 +162,21 @@ public class WorkingSpaceService {
             workingSpaceDtoList.add(transferWorkingSpaceToWorkingSpaceDto(workingSpaces));
         }
         return workingSpaceDtoList;
+    }
+
+    // ASSIGN image to WorkingSpace //
+
+    public void assignImageToWorkingSpace(String fileName, Long id) {
+        Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
+        Optional<FileDocument> fileUploadResponse = Optional.ofNullable(docFileRepository.findByFileName(fileName));
+// TODO: check, if this ofNullable will work out accordingly //
+        if (optionalWorkingSpace.isPresent() && fileUploadResponse.isPresent()) {
+            FileDocument image = fileUploadResponse.get();
+            WorkingSpace workingSpace = optionalWorkingSpace.get();
+            workingSpace.setFile(image);
+            workingSpaceRepository.save(workingSpace);
+        }
+
     }
 }
 

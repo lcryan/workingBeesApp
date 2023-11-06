@@ -1,5 +1,7 @@
 package com.example.workingbeesapp.services;
 
+import com.example.workingbeesapp.models.FileDocument;
+import com.example.workingbeesapp.repositories.DocFileRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -24,10 +26,13 @@ public class FileStorageService {
     private Path fileStoragePath;
     private final String fileStorageLocation;
 
-    public FileStorageService(@Value("${my.upload_location}") String fileStorageLocation) {
+    private final DocFileRepository docFileRepository;
+
+    public FileStorageService(@Value("${my.upload_location}") String fileStorageLocation, DocFileRepository docFileRepository) {
         fileStoragePath = Paths.get(fileStorageLocation).toAbsolutePath().normalize();
 
         this.fileStorageLocation = fileStorageLocation;
+        this.docFileRepository = docFileRepository;
 
         try {
             Files.createDirectories(fileStoragePath);
@@ -37,7 +42,7 @@ public class FileStorageService {
 
     }
 
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file, String url, Long id) {
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
@@ -48,6 +53,8 @@ public class FileStorageService {
         } catch (IOException e) {
             throw new RuntimeException("File cannot be stored", e);
         }
+
+        docFileRepository.save(new FileDocument(id, file.getContentType(), url, fileName));
 
         return fileName;
     }

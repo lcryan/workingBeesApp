@@ -147,7 +147,6 @@ public class CompanyService {
         company.setCompanyDetails(dto.getCompanyDetails());
         company.setPaymentDetails(dto.getPaymentDetails());
 
-
         return company;
     }
 

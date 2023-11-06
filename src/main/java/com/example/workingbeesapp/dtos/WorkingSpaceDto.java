@@ -1,5 +1,6 @@
 package com.example.workingbeesapp.dtos;
 
+import com.example.workingbeesapp.models.FileDocument;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,5 +33,7 @@ public class WorkingSpaceDto {
     private LocalDate startDate;
 
     private LocalDate endDate;
+
+    private FileDocument file;
 
 }
