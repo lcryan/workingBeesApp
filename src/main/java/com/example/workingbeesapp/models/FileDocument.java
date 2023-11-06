@@ -14,6 +14,7 @@ import lombok.Setter;
 @Setter
 
 @Entity
+@Table(name = "file_uploads")
 public class FileDocument {
 
     @Id
