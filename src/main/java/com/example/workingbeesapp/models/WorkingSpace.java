@@ -55,4 +55,7 @@ public class WorkingSpace {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
+
+    @OneToOne
+    FileDocument file;
 }
