@@ -1,5 +1,6 @@
 package com.example.workingbeesapp.dtos;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,7 @@ public class UserDto {
     @NotEmpty(message = "Last name cannot be empty")
     private String lastname;
 
-    @NotEmpty(message = "Email cannot be empty")
+    @Email(message = "Email had to be a valid email address")
     private String email;
 
     @NotEmpty
