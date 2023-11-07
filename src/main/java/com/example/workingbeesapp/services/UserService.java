@@ -60,7 +60,7 @@ public class UserService {
         newUser.setUsername(userDto.getUsername());
         newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        List<Role> userRoles = newUser.getRoleList();
+        List<Role> userRoles = new ArrayList<>();
         for (String roleName : userDto.getRoleList()) {
             Optional<Role> optionalRole = roleRepository.findById("ROLE_" + roleName);
             optionalRole.ifPresent(userRoles::add);
