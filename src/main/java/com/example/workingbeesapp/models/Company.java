@@ -36,13 +36,16 @@ public class Company {
     private String paymentDetails;
 
     @OneToOne
+    User user; // owner of relation with fk in User table //
+
+    @OneToOne
     @JoinColumn(name = "your_subscriptions")
     public Subscription subscription;
 
     @OneToMany(mappedBy = "company")
     private List<Team> teams;
 
-    // methods to adding different classes //
+    //  TODO : check, if the method below is needed //
 
     public void addTeam(Team team) {
         this.teams.add(team);

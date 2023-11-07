@@ -1,5 +1,6 @@
 package com.example.workingbeesapp.dtos;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,15 +16,15 @@ import java.util.List;
 @Setter
 
 public class CompanyDto {
-/*@NotBlank */ // TODO: add something similar to @NotBlank //
-    private Long id;
 
+    public Long id;
+    @NotEmpty(message = "Company name cannot be empty")
     private String companyName;
-/*
-    private String teamName;*/
 
+    @NotEmpty(message = "Company details cannot be empty")
     private String companyDetails;
 
+    @NotEmpty(message = "Payment details cannot be empty")
     private String paymentDetails;
 
     // --- TEAMS of relation One-To-Many ---  COMPANY IS ONE - TEAM IS MANY //
