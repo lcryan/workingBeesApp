@@ -25,7 +25,8 @@ public class Role {
     @Id
     private String roleName;
 
-    @ManyToMany(mappedBy = "roles")
+    // relation user and role // many to many // user can have many roles // role can have many users//
+    @ManyToMany(mappedBy = "roleList")
     private List<User> userList;
 
 }
