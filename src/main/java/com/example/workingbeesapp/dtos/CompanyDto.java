@@ -18,6 +18,7 @@ import java.util.List;
 public class CompanyDto {
 
     public Long id;
+
     @NotEmpty(message = "Company name cannot be empty")
     private String companyName;
 

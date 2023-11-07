@@ -18,31 +18,26 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+
 public class User {
 
     @Id
-    @Column(nullable = false, unique = true)
     private String username;
-
-    @Column(nullable = false)
     private String password;
 
-    @Column
+
     private String firstname;
 
-    @Column
     private String lastname;
 
-    @Column
     private String email;
 
-    // setting up relation with Company class ONE-TO-ONE //
-
+    // RELATION WITH COMPANY ONE TO ONE //
     @OneToOne(mappedBy = "user")
     Company company; // it is the company that signs up into the system, not the user //
-    //---  set up relation with Role class --- //
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    // RELATION WITH ROLE MANY TO MANY //
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Role> roleList = new ArrayList<>();
 
 }
