@@ -1,14 +1,10 @@
 package com.example.workingbeesapp.dtos;
 
-import com.example.workingbeesapp.models.Authority;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Objects;
-import java.util.Set;
 
 
 @AllArgsConstructor
@@ -19,35 +15,22 @@ import java.util.Set;
 
 public class UserDto {
 
+    @NotEmpty(message = "Username cannot be empty")
     private String username;
 
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
-    private boolean enabled = true;
-
-    private String apikey;
-
+    @NotEmpty(message = "Firstname cannot be empty")
     private String firstname;
 
+    @NotEmpty(message = "Lastname cannot be empty")
     private String lastname;
 
+    @NotEmpty(message = "Email cannot be empty")
     private String email;
 
-    @JsonSerialize
-    public Set<Authority> authoritySet;
+    @NotEmpty
+    private String[] roleList;
 
-    // equals // comparing two objects for equality - comparing two instances of the class, that should be equal- & hashcode - used to calculate a hashcode - important if objects are stored as a hash table as in HashSet etc.  //
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserDto userDto = (UserDto) o;
-        return Objects.equals(username, userDto.username) && Objects.equals(password, userDto.password) && Objects.equals(enabled, userDto.enabled) && Objects.equals(apikey, userDto.apikey) && Objects.equals(firstname, userDto.firstname) && Objects.equals(lastname, userDto.lastname) && Objects.equals(email, userDto.email) && Objects.equals(authoritySet, userDto.authoritySet);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(username, password, enabled, apikey, firstname, lastname, email);
-    }
 }

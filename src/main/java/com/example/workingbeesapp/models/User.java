@@ -6,30 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-/*@AllArgsConstructor
-@NoArgsConstructor*/
 
-/*@Getter
+@AllArgsConstructor // TODO : take this into consideration for TECHNICAL DECISIONS : why didn't I use @Data //
+@NoArgsConstructor
+
+@Getter
 @Setter
 
 @Entity
-@Table*/
+@Table(name = "users")
 public class User {
-/*    @Id
+
+    @Id
     @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
-
-    @Column(nullable = false)
-    private boolean enabled = true;
-
-    @Column
-    private String apikey;
 
     @Column
     private String firstname;
@@ -38,18 +34,15 @@ public class User {
     private String lastname;
 
     @Column
-    private String email;*/
+    private String email;
 
+    // setting up relation with Company class //
 
-    //---  set up relation to Authority --- //
-/*    @OneToMany(
-            targetEntity = Authority.class,
-            mappedBy = "username",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "user")
+    Company company; // it is the company that signs up into the system, not the user //
+    //---  set up relation with Role class --- //
 
-    // methods to add and remove auth from user //
-    private Set<Authority> authoritySet = new HashSet<>();*/
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roleList = new ArrayList<>();
 
 }
