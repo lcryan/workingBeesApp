@@ -36,7 +36,7 @@ public class User {
     @Column
     private String email;
 
-    // setting up relation with Company class //
+    // setting up relation with Company class ONE-TO-ONE //
 
     @OneToOne(mappedBy = "user")
     Company company; // it is the company that signs up into the system, not the user //

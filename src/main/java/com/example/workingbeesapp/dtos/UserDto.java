@@ -21,10 +21,10 @@ public class UserDto {
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
-    @NotEmpty(message = "Firstname cannot be empty")
+    @NotEmpty(message = "First name cannot be empty")
     private String firstname;
 
-    @NotEmpty(message = "Lastname cannot be empty")
+    @NotEmpty(message = "Last name cannot be empty")
     private String lastname;
 
     @NotEmpty(message = "Email cannot be empty")
