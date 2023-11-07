@@ -32,3 +32,5 @@ public class CompanyDto {
     // --- SUBSCRIPTION of relation One-To-One ---//
     private SubscriptionDto subscription; // remember! Lombok needs a different approach with setting here !!! You are setting setSubscription in service ! It is the name not the actual type of var!!!
 }
+
+// TODO : check, if this is a viable option or do I have to make an extra account enity ? //
