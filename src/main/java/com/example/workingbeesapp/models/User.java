@@ -30,7 +30,7 @@ public class User {
     Company company;
 
     // RELATION WITH ROLE MANY TO MANY //
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roleList = new ArrayList<>();
 
 }
