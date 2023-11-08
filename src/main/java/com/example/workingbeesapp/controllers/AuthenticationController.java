@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authentication")
+@RequestMapping("/authentication") // REMEMBER TO PASS AUTHENTICATION IN THE HEADER!!! AND NOT AUTH !!! // POST /authentication
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager; // Spring Security
