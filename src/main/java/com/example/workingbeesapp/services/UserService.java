@@ -95,4 +95,4 @@ public class UserService {
     }
 }
 
-
+// TODO : check why null in postman on lastname, firstname, email when sending GET request for user //
