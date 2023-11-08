@@ -1,9 +1,11 @@
 package com.example.workingbeesapp.services;
 
+import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.UserDto;
-import com.example.workingbeesapp.exceptions.IdNotFoundException;
+import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Role;
 import com.example.workingbeesapp.models.User;
+import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.RoleRepository;
 import com.example.workingbeesapp.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,42 +22,34 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    private final CompanyRepository companyRepository;
 
-    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository) {
+
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, RoleRepository roleRepository, CompanyRepository companyRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-
+        this.companyRepository = companyRepository;
     }
 
-    public UserDto getUser(String userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isPresent()) {
-            User user1 = user.get();
-            UserDto userDto = new UserDto();
-            userToUserDto(user1, userDto);
-            return (userDto);
-        } else {
-            throw new IdNotFoundException("User not found with ID: " + userId);
-        }
-    }
-
-
+    // GET ALL USERS //
     public List<UserDto> getAllUsers() {
 
         List<User> userList = userRepository.findAll();
-        List<UserDto> userDtoList = new ArrayList<>();
+        List<UserDto> userDtos = new ArrayList<>();
 
         for (User user : userList) {
             UserDto userDto = new UserDto();
             userToUserDto(user, userDto);
 
-            userDtoList.add(userDto);
+            userDtos.add(userDto);
         }
-        return userDtoList;
+        return userDtos;
     }
 
-    public String createUser(UserDto userDto) {
+    // ------------------------------------------------------ //
+
+/*    public String createUser(UserDto userDto) {
         User newUser = new User();
         newUser.setUsername(userDto.getUsername());
         newUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -68,15 +62,12 @@ public class UserService {
         userRepository.save(newUser);
 
         return "User successfully created";
-    }
+    }*/
 
-
+    // HELPER METHODS USER TO USER DTO AND USER DTO TO USER //
     private static void userToUserDto(User user, UserDto userDto) {
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
-        userDto.setFirstname(user.getFirstname());
-        userDto.setLastname(user.getLastname());
-        userDto.setEmail(user.getEmail());
 
         ArrayList<String> roleList = new ArrayList<>();
         for (Role role : user.getRoleList()) {
@@ -88,11 +79,52 @@ public class UserService {
     private static void userDtoToUser(User user, UserDto userDto) {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
-        user.setFirstname(userDto.getFirstname());
-        user.setLastname(userDto.getLastname());
-        user.setEmail(userDto.getEmail());
+    }
 
+    // ------------------------------------------------------ //
+
+    // Create USER with Company and Role //
+    public UserDto createUserWithCompany(CompanyDto companyDto) {
+
+        // Create a new user for company //
+
+        UserDto userDto = new UserDto();
+        userDto.setUsername(companyDto.getUsername());
+        userDto.setPassword(passwordEncoder.encode(companyDto.getPassword()));
+
+        User user = new User();
+        if (companyDto.getRoleList() != null) {
+            List<Role> userRoles = new ArrayList<>();
+            for (String roleName : companyDto.getRoleList()) {
+                Optional<Role> optionalRole = roleRepository.findById("ROLE_" + roleName);
+                optionalRole.ifPresent(userRoles::add);
+            }
+            // making a new User //
+            userDtoToUser(user, userDto);
+            user.setRoleList(userRoles);
+        }
+
+        // Create a new company-user //
+        Company company = new Company();
+        companyDtoToCompany(companyDto, company);
+        // save both in repo //
+        companyRepository.save(company);
+        userRepository.save(user);
+
+        UserDto savedUserDto = new UserDto();
+        userToUserDto(user, savedUserDto);
+
+        return savedUserDto;
+    }
+
+    // make CompanyDto to Company //
+
+    private void companyDtoToCompany(CompanyDto companyDto, Company company) {
+        company.setCompanyName(companyDto.getCompanyName());
+        company.setUsername(companyDto.getUsername());
+        company.setPassword(companyDto.getPassword());
+        company.setRoleList(List.of(companyDto.getRoleList()));
     }
 }
 
-// TODO : check why null in postman on lastname, firstname, email when sending GET request for user //
+
