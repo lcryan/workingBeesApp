@@ -39,7 +39,7 @@ public class SpringSecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return new BeeUserDetailsService(this.userRepository);
+        return new MyUserDetailsService(this.userRepository);
     }
 
     @Bean
