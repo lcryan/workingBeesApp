@@ -1,6 +1,5 @@
 package com.example.workingbeesapp.dtos;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
