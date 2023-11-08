@@ -88,6 +88,10 @@ public class UserService {
     private static void userDtoToUser(User user, UserDto userDto) {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
+        user.setFirstname(userDto.getFirstname());
+        user.setLastname(userDto.getLastname());
+        user.setEmail(userDto.getEmail());
+
     }
 }
 
