@@ -1,6 +1,5 @@
 package com.example.workingbeesapp.controllers;
 
-
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.services.UserService;
