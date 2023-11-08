@@ -25,12 +25,13 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}") //GET /users/{userId}
+/*    @GetMapping("")*/ //GET /users/{userId}
     // This method handles HTTP GET requests to the /users/{userId} endpoint, where {id} is a path variable representing the property ID
-    public ResponseEntity<UserDto> getOneUser(@PathVariable String userId) {
-        UserDto userDto = userService.getUser(userId);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
-    }
+    // TODO : still has to be added - making changes in roles and models first //
+/*    public ResponseEntity<List<UserDto>> getAllUsers() {
+        List<UserDto> userDtoList = userService.getAllUsers();
+        return new ResponseEntity<>(userDtoList, HttpStatus.OK);
+    }*/
 
     // to get all users in the database//
     @GetMapping // GET /users //
