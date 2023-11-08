@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
-public class BeeUserDetailsService implements UserDetailsService {
+public class MyUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public BeeUserDetailsService(UserRepository userRepository) {
+    public MyUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -21,7 +21,7 @@ public class BeeUserDetailsService implements UserDetailsService {
         Optional<User> optionalUser = userRepository.findById(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            return new BeeUserDetails(user);
+            return new MyUserDetails(user);
         } else {
             throw new UsernameNotFoundException("User not found with username: " + username);
         }
