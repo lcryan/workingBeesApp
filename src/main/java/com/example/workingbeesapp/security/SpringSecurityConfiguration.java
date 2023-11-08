@@ -57,10 +57,12 @@ public class SpringSecurityConfiguration {
 
                                 .requestMatchers(HttpMethod.GET, "/users").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/auth").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/authentication").permitAll()
+
+                                /*  .requestMatchers(HttpMethod.POST, "/authentication").hasRole("ADMIN")*/
 
 
-                                .requestMatchers(HttpMethod.POST, "/companies").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.POST, "/companies").authenticated()
                                 .requestMatchers(HttpMethod.GET, "/companies/{companyId}").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers(HttpMethod.GET, "/companies").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/companies/{companyId}").hasRole("ADMIN")
@@ -76,12 +78,12 @@ public class SpringSecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/subscriptions").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers(HttpMethod.DELETE, "/subscriptions/{subscriptionId}").hasAnyRole("ADMIN", "USER")
 
-                                .requestMatchers(HttpMethod.POST, "/extraservices").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/extraservices").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/extraservices").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers(HttpMethod.DELETE, "/extraservices/{extraServiceId}").hasRole("ADMIN")
 
                                 //TODO: not sure if this is the right way to do it //
-                                .requestMatchers(HttpMethod.POST, "/auth").hasRole("ADMIN")
+
 
                                 .requestMatchers(HttpMethod.POST, "/single/fileUpload").hasRole("ADMIN") // single upload
                                 .requestMatchers(HttpMethod.GET, "/download/{fileName}").hasRole("ADMIN") // single download
@@ -94,8 +96,6 @@ public class SpringSecurityConfiguration {
 //                                .requestMatchers(HttpMethod.GET, "/*").permitAll()
 //                                .requestMatchers(HttpMethod.DELETE, "/*").permitAll()
 
-//                                .requestMatchers("/secret").hasRole("ADMIN")
-//                                .requestMatchers("/hello").authenticated()
 //                        .anyRequest().denyAll()
 
 
