@@ -25,16 +25,9 @@ public class User {
     private String username;
     private String password;
 
-
-    private String firstname;
-
-    private String lastname;
-
-    private String email;
-
     // RELATION WITH COMPANY ONE TO ONE //
-    @OneToOne(mappedBy = "user")
-    Company company; // it is the company that signs up into the system, not the user //
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    Company company;
 
     // RELATION WITH ROLE MANY TO MANY //
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
