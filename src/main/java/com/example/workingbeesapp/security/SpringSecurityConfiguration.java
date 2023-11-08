@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,7 +30,7 @@ public class SpringSecurityConfiguration {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(BeeUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) throws Exception {
+    public AuthenticationManager authenticationManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) throws Exception {
         var auth = new DaoAuthenticationProvider();
         auth.setPasswordEncoder(passwordEncoder);
         auth.setUserDetailsService(userDetailsService);
@@ -37,7 +38,7 @@ public class SpringSecurityConfiguration {
     }
 
     @Bean
-    public BeeUserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService() {
         return new BeeUserDetailsService(this.userRepository);
     }
 
@@ -56,10 +57,11 @@ public class SpringSecurityConfiguration {
 
                                 .requestMatchers(HttpMethod.GET, "/users").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/auth").permitAll()
 
 
                                 .requestMatchers(HttpMethod.POST, "/companies").hasAnyRole("ADMIN", "USER")
-                                .requestMatchers(HttpMethod.GET, "/companies/{accountId}").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.GET, "/companies/{companyId}").hasAnyRole("ADMIN", "USER")
                                 .requestMatchers(HttpMethod.GET, "/companies").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/companies/{companyId}").hasRole("ADMIN")
 
