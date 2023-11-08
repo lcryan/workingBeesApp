@@ -1,6 +1,7 @@
 package com.example.workingbeesapp.controllers;
 
 
+import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.services.UserService;
 import jakarta.validation.Valid;
@@ -20,22 +21,12 @@ public class UserController {
     }
 
     @PostMapping("") // POST /users
-    public ResponseEntity<String> createUser(@Valid @RequestBody UserDto userDto) {
-        String result = userService.createUser(userDto);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CompanyDto companyDto) {
+        UserDto result = userService.createUserWithCompany(companyDto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-/*    @GetMapping("")*/ //GET /users/{userId}
-    // This method handles HTTP GET requests to the /users/{userId} endpoint, where {id} is a path variable representing the property ID
-    // TODO : still has to be added - making changes in roles and models first //
-/*    public ResponseEntity<List<UserDto>> getAllUsers() {
-        List<UserDto> userDtoList = userService.getAllUsers();
-        return new ResponseEntity<>(userDtoList, HttpStatus.OK);
-    }*/
-
-    // to get all users in the database//
     @GetMapping // GET /users //
-
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userDtoList = userService.getAllUsers();
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
