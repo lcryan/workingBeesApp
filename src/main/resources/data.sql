@@ -71,3 +71,7 @@ WHERE id = 99;
 UPDATE working_spaces
 SET file_id = 11
 WHERE id = 99;
+
+INSERT INTO roles (role_name)
+VALUES ('ROLE_USER'),
+       ('ROLE_ADMIN');
