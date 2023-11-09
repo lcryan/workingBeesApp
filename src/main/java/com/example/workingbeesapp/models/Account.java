@@ -28,6 +28,9 @@ public class Account {
     @Column(name = "email", unique = true)
     private String email;
 
+    @Column(name = "companyName")
+    private String companyName;
+
     private String password;
 
     @Column(name = "username", unique = true)

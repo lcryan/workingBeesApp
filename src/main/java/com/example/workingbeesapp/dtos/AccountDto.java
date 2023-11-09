@@ -28,6 +28,9 @@ public class AccountDto {
     @NotEmpty(message = "Username cannot be empty")
     private String username;
 
+    @NotEmpty(message = "Company name cannot be empty")
+    private String companyName;
+
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
