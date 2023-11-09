@@ -64,10 +64,6 @@ public class CompanyService {
     public CompanyDto createCompany(CompanyDto companyDto) {
         Company newCompany = transferCompanyDtoToCompany(companyDto);
         Company savedCompany = companyRepository.save(newCompany);
-
-        // Add teams to the company // //TODO : check, if this is actually needed :) //
-        addTeamToCompany(companyDto, savedCompany);
-
         return transferCompanyToCompanyDto(savedCompany);
     }
 

@@ -17,7 +17,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "companies")
-
 public class Company {
 
     @Id
@@ -49,3 +48,4 @@ public class Company {
     }
 
 }
+
