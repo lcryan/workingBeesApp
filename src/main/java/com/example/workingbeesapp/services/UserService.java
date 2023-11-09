@@ -1,14 +1,11 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.AccountDto;
-import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.models.Account;
-import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Role;
 import com.example.workingbeesapp.models.User;
 import com.example.workingbeesapp.repositories.AccountRepository;
-import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.RoleRepository;
 import com.example.workingbeesapp.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -61,6 +58,7 @@ public class UserService {
         }
         userDto.setRoleList(roleList.toArray(new String[0]));
     }
+
     private static void userDtoToUser(User user, UserDto userDto) {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
