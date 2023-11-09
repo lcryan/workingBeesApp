@@ -1,9 +1,12 @@
 package com.example.workingbeesapp.dtos;
 
+import com.example.workingbeesapp.models.FileDocument;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,9 +20,20 @@ public class WorkingSpaceDto {
 
     private String name;
 
+    private String companyName;
+
     private String type;
 
     private int capacity;
 
-    //TODO : don't forget to lay relation to team class ! //
+    private String duration;
+
+    private double rentalPrice;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    private FileDocument file;
+
 }

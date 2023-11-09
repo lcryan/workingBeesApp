@@ -1,12 +1,10 @@
 package com.example.workingbeesapp.dtos;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,13 +16,9 @@ public class SubscriptionDto {
 
     private Long id;
 
-    private double price;
+    private String companyName;
 
-    private String duration;
+    private double totalAmount;
 
-    private LocalDate startDate;
-
-    private LocalDate endDate;
-
-    private String workingSpaceType; // TODO: make this into a list - with different types of working spaces - Paris room - Tokyo room etc. one-To-Many//
+    private List<WorkingSpaceDto> workingSpaces;
 }

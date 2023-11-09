@@ -1,6 +1,5 @@
 package com.example.workingbeesapp.controllers;
 
-
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.services.TeamService;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,9 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/teams")
@@ -21,15 +22,22 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    // GETTING TEAM LIST  --- CHECKED //
-
+    // GET LIST OF TEAMS ALPHABETICALLY SORTED BY COMPANY NAME, IF COMPANY NAME APPLICABLE //
     @GetMapping("")
-    public ResponseEntity<List<TeamDto>> getAllTeams() {
-        List<TeamDto> teamDtoList = teamService.getAllTeams();
-        return ResponseEntity.ok(teamDtoList);
+    public ResponseEntity<List<TeamDto>> getTeamsByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
+        List<TeamDto> teamDtos;
+        if (companyName.isEmpty()) {
+            teamDtos = teamService.getAllTeams();
+        } else {
+            teamDtos = teamService.getTeamsByCompanyName(companyName.get());
+        }
+        // sorting teams alphabetically //
+        teamDtos.sort(Comparator.comparing(TeamDto::getCompanyName));
+
+        return ResponseEntity.ok().body(teamDtos);
     }
 
-    // GET ONE TEAM --- CHECKED//
+    // GET ONE TEAM BY ID//
     @GetMapping("/{id}")
     public ResponseEntity<TeamDto> getTeam(@PathVariable Long id) {
         TeamDto teamDto = teamService.getOneTeam(id);
@@ -37,7 +45,7 @@ public class TeamController {
     }
 
 
-    // CREATE TEAM --- CHECKED//
+    // CREATE TEAM //
     @PostMapping("")
     public ResponseEntity<Object> createNewTeam(@Validated @RequestBody TeamDto teamDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -55,15 +63,14 @@ public class TeamController {
         }
     }
 
-    // UPDATING TEAM ---  CHECKED//
+    // UPDATING TEAM //
     @PutMapping("/{id}")
     public ResponseEntity<TeamDto> updateTeam(@PathVariable Long id, @Validated @RequestBody TeamDto newTeam) {
         TeamDto teamDto1 = teamService.updateTeam(id, newTeam);
         return ResponseEntity.ok().body(teamDto1);
     }
 
-    // DELETING TEAM ---  CHECKED//
-
+    // DELETING TEAM //
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTeam(@PathVariable Long id) {
         teamService.deleteTeam(id);
@@ -71,9 +78,17 @@ public class TeamController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/teams/{id}/{companyId}")
+    // ASSIGN COMPANY TO TEAM //
+    @PutMapping("/{id}/{companyId}")
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
-        teamService.assignCompanyToTeam(id, companyId);
+        teamService.assignsCompanyToTeam(id, companyId);
+        return ResponseEntity.noContent().build();
+    }
+
+    // ASSIGN WORKING SPACE TO TEAM //
+    @PutMapping("/{id}/{workingSpaceId}")
+    public ResponseEntity<Object> assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
+        teamService.assignWorkingSpaceToTeam(id, workingSpaceId);
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,14 +1,13 @@
 package com.example.workingbeesapp.dtos;
 
-import com.example.workingbeesapp.models.Subscription;
-import com.example.workingbeesapp.models.Team;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Objects;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,32 +17,22 @@ import java.util.Objects;
 
 public class CompanyDto {
 
-    private Long id;
+    public Long id;
 
+    @NotEmpty(message = "Company name cannot be empty")
     private String companyName;
 
-    private String teamName;
-
+    @NotEmpty(message = "Company details cannot be empty")
     private String companyDetails;
 
+    @NotEmpty(message = "Payment details cannot be empty")
     private String paymentDetails;
 
-    // --- TEAMS of relation One-To-Many --- include props JSON //
-    private List<Team> teams;
-    // --- SUBSCRIPTION of relation One-To-One --- include props JSON //
-    Subscription subscription;
+    // --- TEAMS of relation One-To-Many ---  COMPANY IS ONE - TEAM IS MANY //
+    private List<TeamDto> teams;
+    // --- SUBSCRIPTION of relation One-To-One ---//
+    private SubscriptionDto subscription; // remember! Lombok needs a different approach with setting here !!! You are setting setSubscription in service ! It is the name not the actual type of var!!!
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CompanyDto companyDto = (CompanyDto) o;
-
-        return Objects.equals(id, companyDto.id) && Objects.equals(companyName, companyDto.companyName) && Objects.equals(companyDetails, companyDto.companyDetails) && Objects.equals(teamName, companyDto.teamName) && Objects.equals(paymentDetails, companyDto.paymentDetails) && Objects.equals(subscription, companyDto.subscription) && Objects.equals(teams, companyDto.teams);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, companyName, companyDetails, teamName, paymentDetails, subscription, teams);
-    }
 }
+
+// TODO : check, if this is a viable option or do I have to make an extra account enity ? //

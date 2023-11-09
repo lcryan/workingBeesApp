@@ -16,8 +16,11 @@ public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
 
-    public SubscriptionService(SubscriptionRepository subscriptionRepository) {
+    private final WorkingSpaceService workingSpaceService;
+
+    public SubscriptionService(SubscriptionRepository subscriptionRepository, WorkingSpaceService workingSpaceService) {
         this.subscriptionRepository = subscriptionRepository;
+        this.workingSpaceService = workingSpaceService;
     }
 
 
@@ -84,31 +87,25 @@ public class SubscriptionService {
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
 
-    private SubscriptionDto transferSubscriptionToSubscriptionDto(Subscription subscription) {
+    public SubscriptionDto transferSubscriptionToSubscriptionDto(Subscription subscription) {
 
         SubscriptionDto subscriptionDto = new SubscriptionDto();
 
         subscriptionDto.setId(subscription.getId());
-        subscriptionDto.setWorkingSpaceType(subscription.getWorkingSpaceType());
-        subscriptionDto.setDuration(subscription.getDuration());
-        subscriptionDto.setStartDate(subscription.getStartDate());
-        subscriptionDto.setEndDate(subscription.getEndDate());
-        subscriptionDto.setPrice(subscription.getPrice());
-
-
+        subscriptionDto.setTotalAmount(subscription.getTotalAmount());
+        subscriptionDto.setCompanyName(subscription.getCompanyName());
+        if (subscription.getWorkingSpaces() != null) {
+            subscriptionDto.setWorkingSpaces(workingSpaceService.transferWorkingSpaceListToWorkingSpaceDtoList(subscription.getWorkingSpaces()));
+        }
         return subscriptionDto;
     }
 
-    private Subscription transferSubscriptionDtoToSubscription(SubscriptionDto subscriptionDto) {
+    public Subscription transferSubscriptionDtoToSubscription(SubscriptionDto subscriptionDto) {
 
         Subscription subscription = new Subscription();
 
         subscription.setId(subscriptionDto.getId());
-        subscription.setWorkingSpaceType(subscriptionDto.getWorkingSpaceType());
-        subscription.setDuration(subscriptionDto.getDuration());
-        subscription.setStartDate(subscriptionDto.getStartDate());
-        subscription.setEndDate(subscriptionDto.getEndDate());
-        subscription.setPrice(subscriptionDto.getPrice());
+        subscription.setTotalAmount(subscriptionDto.getTotalAmount());
 
         return subscription;
     }

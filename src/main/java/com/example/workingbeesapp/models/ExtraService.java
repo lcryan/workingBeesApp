@@ -24,6 +24,9 @@ public class ExtraService {
     @Column(name = "service_name")
     private String serviceName;
 
+    @Column(name = "company_name")
+    private String companyName;
+
     @Column(name = "service_type")
     private String serviceType;
 
@@ -32,4 +35,8 @@ public class ExtraService {
 
     @Column(name = "service_duration")
     private String serviceDuration;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id")
+    private Team team;
 }

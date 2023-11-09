@@ -17,10 +17,11 @@ public class ExtraServiceDto {
 
     private String serviceName;
 
+    private String companyName;
+
     private String serviceType;
 
     private int servicePrice;
 
     private String serviceDuration;
-
 }

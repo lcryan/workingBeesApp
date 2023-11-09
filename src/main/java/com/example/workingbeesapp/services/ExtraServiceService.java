@@ -12,8 +12,9 @@ import java.util.Optional;
 
 @Service
 public class ExtraServiceService {
-    ;
+
     private final ExtraServiceRepository extraServiceRepository;
+
 
     public ExtraServiceService(ExtraServiceRepository extraServiceRepository) {
         this.extraServiceRepository = extraServiceRepository;
@@ -83,32 +84,54 @@ public class ExtraServiceService {
     }
 
 
-    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
+    // ******* TRANSFER HELPER METHODS HERE  ******* //
 
-    private ExtraServiceDto transferExtraServiceToExtraServiceDto(ExtraService extraService) {
+    public ExtraServiceDto transferExtraServiceToExtraServiceDto(ExtraService extraService) {
 
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
 
         extraServiceDto.setId(extraService.getId());
         extraServiceDto.setServiceName(extraService.getServiceName());
+        extraServiceDto.setCompanyName(extraService.getCompanyName());
         extraServiceDto.setServiceType(extraService.getServiceType());
         extraServiceDto.setServiceDuration(extraService.getServiceDuration());
         extraServiceDto.setServicePrice(extraService.getServicePrice());
 
+
         return extraServiceDto;
     }
 
-    private ExtraService transferExtraServiceDtoToExtraService(ExtraServiceDto extraServiceDto) {
+    public ExtraService transferExtraServiceDtoToExtraService(ExtraServiceDto extraServiceDto) {
 
         ExtraService extraService = new ExtraService();
 
         extraService.setId(extraServiceDto.getId());
         extraService.setServiceName(extraServiceDto.getServiceName());
+        extraService.setCompanyName(extraServiceDto.getCompanyName());
         extraService.setServiceType(extraServiceDto.getServiceType());
         extraService.setServiceDuration(extraServiceDto.getServiceDuration());
         extraService.setServicePrice(extraServiceDto.getServicePrice());
 
+
         return extraService;
+    }
+
+    // TRANSFER METHOD FOR LIST EXTRA SERVICE //
+    public List<ExtraServiceDto> transferExtraServiceListToExtraServiceListDto(List<ExtraService> extraServiceList) {
+        List<ExtraServiceDto> extraServiceDtoList = new ArrayList<>();
+        for (ExtraService extraServices : extraServiceList) {
+            extraServiceDtoList.add(transferExtraServiceToExtraServiceDto(extraServices));
+        }
+        return extraServiceDtoList;
+    }
+
+    // TODO : check, if you need this function at all - if not : remove it - obsolete! //
+    public List<ExtraService> transferExtraServiceDtoListToExtraServiceList(List<ExtraServiceDto> extraServiceDtoList) {
+        List<ExtraService> extraServiceList1 = new ArrayList<>();
+        for (ExtraServiceDto extraServiceDtos : extraServiceDtoList) {
+            extraServiceList1.add(transferExtraServiceDtoToExtraService(extraServiceDtos));
+        }
+        return extraServiceList1;
     }
 
 }

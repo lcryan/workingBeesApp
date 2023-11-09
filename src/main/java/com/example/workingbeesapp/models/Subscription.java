@@ -1,13 +1,12 @@
 package com.example.workingbeesapp.models;
 
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,25 +20,23 @@ public class Subscription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "price")
-    private double price;
+    @Column(name = "company_name")
+    private String companyName;
 
-    @Column(name = "duration")
-    private String duration;
+    @Column(name = "total_amount")
+    private double totalAmount;
 
-    @Column(name = "start_date")
-    private LocalDate startDate;
-
-    @Column(name = "end_date")
-    private LocalDate endDate;
-
+    // TODO : make a relation of workingSpaces here : oneToMany //
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
-    @OneToOne(mappedBy = "subscription") //basic set up now functional in db //
+    @OneToOne(mappedBy = "subscription")
     private Company company;
+
+    @OneToMany(mappedBy = "subscription")
+    private List<WorkingSpace> workingSpaces;
+
 }

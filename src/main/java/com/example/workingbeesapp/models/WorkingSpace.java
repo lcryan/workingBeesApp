@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -30,5 +32,30 @@ public class WorkingSpace {
     @Column(name = "space_capacity")
     private int capacity;
 
-    //TODO : don't forget to lay relation to team class ! //
+    @Column(name = "duration")
+    private String duration;
+
+    @Column(name = "price_per_room")
+    private double rentalPrice;
+
+    @Column(name = "companyName")
+    private String companyName;
+
+    // TODO 2: workingSpace and Subscription might need a OneToMany relation //
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
+    @OneToOne(mappedBy = "workingSpace")
+    private Team team;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subscription_id")
+    private Subscription subscription;
+
+    @OneToOne
+    FileDocument file;
 }

@@ -5,6 +5,7 @@ import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
+import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,11 +16,22 @@ import java.util.Optional;
 public class TeamService {
 
     private final TeamRepository teamRepository;
-    private CompanyRepository companyRepository;
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository) {
+    private final CompanyRepository companyRepository;
+
+    private final WorkingSpaceRepository workingSpaceRepository;
+
+    private final WorkingSpaceService workingSpaceService;
+
+    private final ExtraServiceService extraServiceService;
+
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService, ExtraServiceService extraServiceService) {
         this.teamRepository = teamRepository;
         this.companyRepository = companyRepository;
+
+        this.workingSpaceRepository = workingSpaceRepository;
+        this.workingSpaceService = workingSpaceService;
+        this.extraServiceService = extraServiceService;
     }
 
     public List<TeamDto> getAllTeams() {
@@ -32,7 +44,13 @@ public class TeamService {
         return teamDtoList;
     }
 
-    // FUNCTION FOR GET ONE COMPANY //
+    // function to GET TEAM BY COMPANY NAME //
+
+    public List<TeamDto> getTeamsByCompanyName(String companyName) {
+        List<Team> teamList = teamRepository.findAllByCompanyNameEqualsIgnoreCase(companyName);
+        return transferTeamListToTeamDtoList(teamList);
+    }
+
 
     public TeamDto getOneTeam(Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -44,7 +62,7 @@ public class TeamService {
         }
     }
 
-    // FUNCTION FOR CREATING ONE COMPANY //
+    // FUNCTION FOR CREATING ONE TEAM //
 
     public TeamDto createTeam(TeamDto teamDto) {
         Team newTeam = transferTeamDtoToTeam(teamDto);
@@ -52,7 +70,7 @@ public class TeamService {
         return transferTeamToTeamDto(newTeam);
     }
 
-    // FUNCTION TO UPDATE COMPANY //
+    // FUNCTION TO UPDATE TEAM //
     public TeamDto updateTeam(Long id, TeamDto teamDto) {
         if (teamRepository.findById(id).isPresent()) {
 
@@ -70,7 +88,7 @@ public class TeamService {
         }
     }
 
-    // FUNCTION TO DELETE COMPANY //
+    // FUNCTION TO DELETE TEAM //
     public void deleteTeam(Long id) {
         if (teamRepository.existsById(id)) {
             Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -85,50 +103,85 @@ public class TeamService {
 
     // --- assign TEAM(S) TO COMPANY -- MANY-TO-ONE-RELATION --- THIS IS THE OWNER OF THE RELATION --- //
 
-    public void assignCompanyToTeam(Long id, Long companyId) {
-        var optionalCompany = companyRepository.findById(id);
-        var optionalTeam = teamRepository.findById(companyId);
+    public void assignsCompanyToTeam(Long id, Long companyId) {
+        var optionalTeam = teamRepository.findById(id);
+        var optionalCompany = companyRepository.findById(companyId);
 
-        if (optionalCompany.isPresent() && optionalTeam.isPresent()) {
-            var company = optionalCompany.get();
+        if (optionalTeam.isPresent() && optionalCompany.isPresent()) {
             var team = optionalTeam.get();
+            var company = optionalCompany.get();
 
             team.setCompany(company);
             teamRepository.save(team);
         } else {
-            throw new RecordNotFoundException();
+            throw new RecordNotFoundException("Item not found.");
         }
     }
 
+    // ASSIGNING WORKING SPACE TO TEAM //
+
+    public void assignWorkingSpaceToTeam(Long id, Long workingSpaceId) {
+        var optionalTeam = teamRepository.findById(id);
+        var optionalWorkingSpace = workingSpaceRepository.findById(workingSpaceId);
+
+        if (optionalTeam.isPresent() && optionalWorkingSpace.isPresent()) {
+
+            var team = optionalTeam.get();
+            var workingSpace = optionalWorkingSpace.get();
+
+            team.setWorkingSpace(workingSpace);
+            teamRepository.save(team);
+        } else {
+            throw new RecordNotFoundException("Item with id " + workingSpaceId + " couldn't be found.");
+        }
+    }
 
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
-
-    private TeamDto transferTeamToTeamDto(Team team) {
+    public TeamDto transferTeamToTeamDto(Team team) {
 
         TeamDto teamDto = new TeamDto();
 
         teamDto.setId(team.getId());
         teamDto.setTeamName(team.getTeamName());
-        teamDto.setCompany(team.getCompany());
-        teamDto.setWorkingSpace(team.getWorkingSpace());
+        teamDto.setCompanyName(team.getCompanyName());
         teamDto.setTeamSize(team.getTeamSize());
-        teamDto.setExtraService(team.getExtraService());
+        if (team.getExtraServices() != null) {
+            teamDto.setExtraService(extraServiceService.transferExtraServiceListToExtraServiceListDto(team.getExtraServices()));
+        }
+        if (team.getWorkingSpace() != null) {
+            teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
+        }
 
         return teamDto;
     }
 
-    private Team transferTeamDtoToTeam(TeamDto teamDto) {
+    public Team transferTeamDtoToTeam(TeamDto teamDto) {
 
         Team team = new Team();
 
         team.setId(teamDto.getId());
         team.setTeamName(teamDto.getTeamName());
-        team.setCompany(teamDto.getCompany());
-        team.setWorkingSpace(teamDto.getWorkingSpace());
+        team.setCompanyName(teamDto.getCompanyName());
         team.setTeamSize(teamDto.getTeamSize());
-        team.setExtraService(teamDto.getExtraService());
-
         return team;
     }
-}
 
+// transfer methods for TeamList to TeamListDto //
+
+    // TODO : if this one is not needed : delete it! :) //
+    public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {
+        List<Team> teams = new ArrayList<>();
+        for (TeamDto teamsDto : teamDtoList) {
+            teams.add(transferTeamDtoToTeam(teamsDto));
+        }
+        return teams;
+    }
+
+    public List<TeamDto> transferTeamListToTeamDtoList(List<Team> teamList) {
+        List<TeamDto> teamDtoList = new ArrayList<>();
+        for (Team teams : teamList) {
+            teamDtoList.add(transferTeamToTeamDto(teams));
+        }
+        return teamDtoList;
+    }
+}
