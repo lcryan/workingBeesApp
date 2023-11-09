@@ -27,7 +27,7 @@ public class User {
 
     // RELATION WITH COMPANY ONE TO ONE //
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    Company company;
+    Account account;
 
     // RELATION WITH ROLE MANY TO MANY //
     @ManyToMany(fetch = FetchType.EAGER)
