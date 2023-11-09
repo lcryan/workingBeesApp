@@ -1,6 +1,9 @@
 package com.example.workingbeesapp.dtos;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +18,8 @@ import lombok.Setter;
 
 
 public class AccountDto {
+
+    private Long id;
 
     @NotEmpty(message = "First name cannot be empty")
     private String firstName;
