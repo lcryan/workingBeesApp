@@ -105,7 +105,7 @@ public class UserService {
         account.setCompanyName(accountDto.getCompanyName());
         account.setUsername(accountDto.getUsername());
         account.setPassword(accountDto.getPassword());
-        account.setRoleList(List.of(account.getRoleList().toString()));
+        account.setRoleList(account.getRoleList());
     }
 }
 

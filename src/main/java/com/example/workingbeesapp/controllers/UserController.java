@@ -1,5 +1,6 @@
 package com.example.workingbeesapp.controllers;
 
+import com.example.workingbeesapp.dtos.AccountDto;
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.services.UserService;
@@ -20,8 +21,8 @@ public class UserController {
     }
 
     @PostMapping("") // POST /users
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CompanyDto companyDto) {
-        UserDto result = userService.createUserWithCompany(companyDto);
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody AccountDto accountDto) {
+        UserDto result = userService.createUserWithAccount(accountDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 

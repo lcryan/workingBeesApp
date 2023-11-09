@@ -36,7 +36,7 @@ public class Account {
     @Column(name = "username", unique = true)
     private String username;
     @Column(name = "role_list")
-    private List<String> roleList;
+    private String roleList;
 
     @OneToOne
     User user;
