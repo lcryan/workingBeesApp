@@ -34,14 +34,7 @@ public class Company {
     @Column(name = "payment_details")
     private String paymentDetails;
 
-    // USER RELATED and ROLES RELATED //
-    private String password;
-    private String username;
-    private List<String> roleList;
-
-    @OneToOne
-    User user; // owner of relation with fk in User table //
-
+    // Relations //
     @OneToOne
     @JoinColumn(name = "your_subscriptions")
     public Subscription subscription;
