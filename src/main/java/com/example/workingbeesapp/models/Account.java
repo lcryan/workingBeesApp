@@ -19,8 +19,20 @@ public class Account {
     @Column(name = "id", nullable = false) // make sure to add id to db //
     private Long id;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email", unique = true)
+    private String email;
+
     private String password;
+
+    @Column(name = "username", unique = true)
     private String username;
+    @Column(name = "role_list")
     private List<String> roleList;
 
     @OneToOne
