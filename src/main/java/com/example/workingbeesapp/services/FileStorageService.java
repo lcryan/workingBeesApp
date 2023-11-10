@@ -25,7 +25,6 @@ public class FileStorageService {
 
     private Path fileStoragePath;
     private final String fileStorageLocation;
-
     private final DocFileRepository docFileRepository;
 
     public FileStorageService(@Value("${my.upload_location}") String fileStorageLocation, DocFileRepository docFileRepository) {
