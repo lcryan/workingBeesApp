@@ -34,7 +34,7 @@ class CompanyServiceTest {
 
 
     @Test
-    void testGetAllCompanies() {
+    void getAllCompanies() {
         Company companyOne = new Company();
         companyOne.setId(1L); // id is one here - specific to testing //
         companyOne.setCompanyName("Monster Inc.");
@@ -59,7 +59,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void testGetOneCompany() {
+    void getOneCompany() {
 
         Long id = 1L;
         Company companyOne = new Company();
@@ -78,14 +78,14 @@ class CompanyServiceTest {
     }
 
     @Test
-    void testGetOneCompanyNotFound() {
+    void getOneCompanyNotFound() {
         Long id = 1L;
         when(companyRepository.findById(id)).thenReturn(Optional.empty());
         assertThrows(RecordNotFoundException.class, () -> companyService.getOneCompany(id));
     }
 
     @Test
-    void testCreateCompany() {
+    void createCompany() {
         CompanyDto newCompanyDto = new CompanyDto();
 
         newCompanyDto.setCompanyName("Up! Coop.");
@@ -108,7 +108,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void testUpdateCompany() {
+    void updateCompany() {
 
         Long id = 1L;
         CompanyDto companyDto = new CompanyDto();
@@ -142,7 +142,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void testGetUpdatedCompanyNotFound() {
+    void getUpdatedCompanyNotFound() {
 
         Long id = 1L;
         when(companyRepository.findById(id)).thenReturn(Optional.empty());
@@ -151,7 +151,7 @@ class CompanyServiceTest {
 
 
     @Test
-    void testDeleteCompany() {
+    void deleteCompany() {
         Long id = 1L;
         Company existingCompany = new Company();
         existingCompany.setId(id);
@@ -168,14 +168,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void testGetObsoleteCompanyNotFound() {
-        Long id = 1L;
-        when(companyRepository.findById(id)).thenReturn(Optional.empty());
-        assertThrows(RecordNotFoundException.class, () -> companyService.updateCompany(id, new CompanyDto()));
-    }
-
-    @Test
-    void testAssignSubscriptionToCompany() {
+    void assignSubscriptionToCompany() {
         Long companyId = 1L;
         Long subscriptionId = 2L;
 
@@ -201,15 +194,9 @@ class CompanyServiceTest {
         assertEquals(existingSubscription, existingCompany.getSubscription());
     }
 
-    @Test
-    void testGetAssignedSubscriptionNotFound() {
-        Long id = 1L;
-        when(companyRepository.findById(id)).thenReturn(Optional.empty());
-        assertThrows(RecordNotFoundException.class, () -> companyService.updateCompany(id, new CompanyDto()));
-    }
 
     @Test
-    void testTransferCompanyDtoToCompany() {
+    void transferCompanyDtoToCompany() {
         CompanyDto companyDto = new CompanyDto();
         companyDto.setId(1L);
         companyDto.setCompanyName("Up! Coop.");

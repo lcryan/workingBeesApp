@@ -59,19 +59,19 @@ public class AccountService {
 
     public AccountDto updateAccount(Long id, AccountDto accountDto) {
 
-        if (accountRepository.findById(id).isPresent()) {
+        Optional<Account> optionalAccount = accountRepository.findById(id);
 
-            Account account = accountRepository.findById(id).get();
+        if (optionalAccount.isPresent()) {
+            Account account = optionalAccount.get();
 
-            Account account1 = transferAccountDtoToAccount(accountDto);
+            Account updatedAccount = transferAccountDtoToAccount(accountDto);
+            updatedAccount.setId(account.getId());
 
-            account1.setId(account.getId());
+            accountRepository.save(updatedAccount);
 
-            accountRepository.save(account1);
-
-            return transferAccountToAccountDto(account1);
+            return transferAccountToAccountDto(updatedAccount);
         } else {
-            throw new IdNotFoundException("Account with id: " + id + " could not be found.");
+            throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
     }
 
@@ -86,7 +86,6 @@ public class AccountService {
             throw new RecordNotFoundException("Item of type Account with id: " + id + " could not be found.");
         }
     }
-
 
     // transfer methods model to dto and back //
 
@@ -118,4 +117,13 @@ public class AccountService {
         return account;
     }
 
+    public List<Account> transferAccountDtoListToAccountList(List<AccountDto> allAccounts) {
+        List<Account> accountList = new ArrayList<>();
+
+        for (AccountDto accountDto : allAccounts) {
+            Account account = transferAccountDtoToAccount(accountDto);
+            accountList.add(account);
+        }
+        return accountList;
+    }
 }
