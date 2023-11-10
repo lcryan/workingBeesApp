@@ -3,7 +3,6 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.ExtraServiceDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.ExtraService;
-import com.example.workingbeesapp.models.ExtraService;
 import com.example.workingbeesapp.repositories.ExtraServiceRepository;
 import org.springframework.stereotype.Service;
 
