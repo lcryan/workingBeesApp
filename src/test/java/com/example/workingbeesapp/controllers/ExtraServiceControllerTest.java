@@ -61,3 +61,5 @@ class ExtraServiceControllerTest {
     void createNewExtraService() {
     }
 }
+
+// TODO : this integration test still has to be finalised //
