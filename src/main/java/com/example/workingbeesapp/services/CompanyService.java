@@ -70,17 +70,17 @@ public class CompanyService {
 
     // FUNCTION TO UPDATE COMPANY //
     public CompanyDto updateCompany(Long id, CompanyDto companyDto) {
-        if (companyRepository.findById(id).isPresent()) {
+        Optional<Company> optionalCompany = companyRepository.findById(id);
 
-            Company company = companyRepository.findById(id).get();
+        if (optionalCompany.isPresent()) {
+            Company company = optionalCompany.get();
 
-            Company company1 = transferCompanyDtoToCompany(companyDto);
+            Company updatedCompany = transferCompanyDtoToCompany(companyDto);
+            updatedCompany.setId(company.getId());
 
-            company1.setId(company.getId());
+            companyRepository.save(updatedCompany);
 
-            companyRepository.save(company1);
-
-            return transferCompanyToCompanyDto(company1);
+            return transferCompanyToCompanyDto(updatedCompany);
         } else {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
@@ -146,7 +146,7 @@ public class CompanyService {
         return company;
     }
 
-    // --- TRANSFER COMPANY LIST DTO TO LIST --- // //TODO : check, if this is still necessary ? //
+    // --- TRANSFER COMPANY LIST DTO TO LIST ---
     public List<Company> transferCompanyDtoListToCompanyList(List<CompanyDto> companiesDtos) {
         List<Company> companies = new ArrayList<>();
         for (CompanyDto companyDto : companiesDtos) {

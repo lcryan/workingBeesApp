@@ -1,9 +1,11 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
+
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Subscription;
+
 import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import org.junit.jupiter.api.Test;
@@ -13,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,11 +28,13 @@ class CompanyServiceTest {
     CompanyRepository companyRepository;
     @Mock
     SubscriptionRepository subscriptionRepository;
+
     @InjectMocks
     CompanyService companyService;
 
+
     @Test
-    void getAllCompanies() {
+    void testGetAllCompanies() {
         Company companyOne = new Company();
         companyOne.setId(1L); // id is one here - specific to testing //
         companyOne.setCompanyName("Monster Inc.");
@@ -44,7 +47,7 @@ class CompanyServiceTest {
         companyTwo.setCompanyDetails("Trent Reznor Street 666, 666666 New York, Brooklyn");
         companyTwo.setPaymentDetails("Downward Spiral Bank, account number: 0987654321");
 
-        List<Company> testCompanies = new ArrayList<>();
+        List<Company> testCompanies = companyService.transferCompanyDtoListToCompanyList(companyService.getAllCompanies());
         testCompanies.add(companyOne);
         testCompanies.add(companyTwo);
 
@@ -56,7 +59,7 @@ class CompanyServiceTest {
     }
 
     @Test
-    void getOneCompany() {
+    void testGetOneCompany() {
 
         Long id = 1L;
         Company companyOne = new Company();
@@ -75,14 +78,14 @@ class CompanyServiceTest {
     }
 
     @Test
-    void getOneCompanyNotFound() {
+    void testGetOneCompanyNotFound() {
         Long id = 1L;
         when(companyRepository.findById(id)).thenReturn(Optional.empty());
         assertThrows(RecordNotFoundException.class, () -> companyService.getOneCompany(id));
     }
 
     @Test
-    void createCompany() {
+    void testCreateCompany() {
         CompanyDto newCompanyDto = new CompanyDto();
 
         newCompanyDto.setCompanyName("Up! Coop.");
@@ -94,7 +97,7 @@ class CompanyServiceTest {
         company.setCompanyDetails(newCompanyDto.getCompanyDetails());
         company.setPaymentDetails(newCompanyDto.getPaymentDetails());
 
-        Mockito.when(companyRepository.save(Mockito.any(Company.class))).thenReturn(company);
+        when(companyRepository.save(Mockito.any(Company.class))).thenReturn(company);
 
         CompanyDto companyDto = companyService.createCompany(newCompanyDto);
 
@@ -104,13 +107,51 @@ class CompanyServiceTest {
 
     }
 
-   /* @Test
-    void updateCompany() {
+    @Test
+    void testUpdateCompany() {
 
-    }*/
+        Long id = 1L;
+        CompanyDto companyDto = new CompanyDto();
+
+        companyDto.setId(id);
+        companyDto.setCompanyName("The Three Hallows Inc.");
+        companyDto.setCompanyDetails("Halloweentown 666, 666666 New York, Brooklyn");
+        companyDto.setPaymentDetails("Halloweentown Bank, account number: 0987654321");
+
+        Company existingCompany = new Company();
+
+        existingCompany.setId(id);
+        existingCompany.setCompanyName("Up! Coop.");
+        existingCompany.setCompanyDetails("Balloon Street 453, 896306 Washington, D.C.");
+        existingCompany.setCompanyDetails("Up! Bank, account number: 826307839");
+
+        when(companyRepository.findById(id)).thenReturn(Optional.of(existingCompany));
+
+        CompanyDto updatedCompanyDto = companyService.updateCompany(id, companyDto);
+
+        verify(companyRepository, times(1)).findById(id);
+        verify(companyRepository, times(1)).save(any(Company.class)); // testing if the save method is called on the repository //
+
+        // Assert //
+        assertNotNull(updatedCompanyDto);
+        assertEquals(id, updatedCompanyDto.getId());
+        assertEquals(companyDto.getCompanyName(), updatedCompanyDto.getCompanyName());
+        assertEquals(companyDto.getCompanyDetails(), updatedCompanyDto.getCompanyDetails());
+        assertEquals(companyDto.getPaymentDetails(), updatedCompanyDto.getPaymentDetails());
+
+    }
 
     @Test
-    void deleteCompany() {
+    void testGetUpdatedCompanyNotFound() {
+
+        Long id = 1L;
+        when(companyRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(RecordNotFoundException.class, () -> companyService.updateCompany(id, new CompanyDto()));
+    }
+
+
+    @Test
+    void testDeleteCompany() {
         Long id = 1L;
         Company existingCompany = new Company();
         existingCompany.setId(id);
@@ -126,10 +167,17 @@ class CompanyServiceTest {
         Mockito.verify(companyRepository, times(1)).delete(existingCompany);
     }
 
-/*    @Test
+    @Test
+    void testGetObsoleteCompanyNotFound() {
+        Long id = 1L;
+        when(companyRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(RecordNotFoundException.class, () -> companyService.updateCompany(id, new CompanyDto()));
+    }
+
+    @Test
     void testAssignSubscriptionToCompany() {
         Long companyId = 1L;
-        Long subscriptionId = 2L; // Change this ID to a valid subscription ID
+        Long subscriptionId = 2L;
 
         Company existingCompany = new Company();
         existingCompany.setId(companyId);
@@ -148,8 +196,38 @@ class CompanyServiceTest {
 
         companyService.assignSubscriptionToCompany(companyId, subscriptionId);
 
-        Mockito.verify(existingCompany, Mockito.times(1)).setSubscription(existingSubscription);
-        Mockito.verify(companyRepository, Mockito.times(1)).save(existingCompany);*/
+        Mockito.verify(companyRepository, Mockito.times(1)).save(existingCompany);
 
+        assertEquals(existingSubscription, existingCompany.getSubscription());
     }
+
+    @Test
+    void testGetAssignedSubscriptionNotFound() {
+        Long id = 1L;
+        when(companyRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(RecordNotFoundException.class, () -> companyService.updateCompany(id, new CompanyDto()));
+    }
+
+    @Test
+    void testTransferCompanyDtoToCompany() {
+        CompanyDto companyDto = new CompanyDto();
+        companyDto.setId(1L);
+        companyDto.setCompanyName("Up! Coop.");
+        companyDto.setCompanyDetails("Balloon Street 453, 896306 Washington, D.C.");
+        companyDto.setPaymentDetails("Up! Bank, account number: 826307839");
+
+        Company company = companyService.transferCompanyDtoToCompany(companyDto);
+
+        assertEquals(companyDto.getId(), company.getId());
+        assertEquals(companyDto.getCompanyName(), company.getCompanyName());
+        assertEquals(companyDto.getCompanyDetails(), company.getCompanyDetails());
+        assertEquals(companyDto.getPaymentDetails(), company.getPaymentDetails());
+    }
+
+}
+
+
+
+
+
 
