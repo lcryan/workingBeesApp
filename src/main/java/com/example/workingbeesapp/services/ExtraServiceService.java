@@ -3,6 +3,7 @@ package com.example.workingbeesapp.services;
 import com.example.workingbeesapp.dtos.ExtraServiceDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.ExtraService;
+import com.example.workingbeesapp.models.ExtraService;
 import com.example.workingbeesapp.repositories.ExtraServiceRepository;
 import org.springframework.stereotype.Service;
 
@@ -55,19 +56,20 @@ public class ExtraServiceService {
 
     // FUNCTION TO UPDATE EXTRA-SERVICE //
     public ExtraServiceDto updateExtraService(Long id, ExtraServiceDto extraServiceDto) {
-        if (extraServiceRepository.findById(id).isPresent()) {
 
-            ExtraService extraService = extraServiceRepository.findById(id).get();
+        Optional<ExtraService> optionalExtraService = extraServiceRepository.findById(id);
 
-            ExtraService extraService1 = transferExtraServiceDtoToExtraService(extraServiceDto);
+        if (optionalExtraService.isPresent()) {
+            ExtraService extraService = optionalExtraService.get();
 
-            extraService1.setId(extraService.getId());
+            ExtraService updatedExtraService = transferExtraServiceDtoToExtraService(extraServiceDto);
+            updatedExtraService.setId(extraService.getId());
 
-            extraServiceRepository.save(extraService1);
+            extraServiceRepository.save(updatedExtraService);
 
-            return transferExtraServiceToExtraServiceDto(extraService1);
+            return transferExtraServiceToExtraServiceDto(updatedExtraService);
         } else {
-            throw new RecordNotFoundException("Item of type Extra-Service with id: " + id + " could not be found.");
+            throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
     }
 
@@ -96,7 +98,6 @@ public class ExtraServiceService {
         extraServiceDto.setServiceType(extraService.getServiceType());
         extraServiceDto.setServiceDuration(extraService.getServiceDuration());
         extraServiceDto.setServicePrice(extraService.getServicePrice());
-
 
         return extraServiceDto;
     }
