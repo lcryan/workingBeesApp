@@ -55,7 +55,7 @@ public class FileUploadController {
 
     //    get all names in directory //
     @GetMapping("/download/allNames")
-    List<String> downLoadMultipleFile() {
+    List<String> downLoadMultipleFileNames() {
 
         return fileStorageService.downLoad();
     }

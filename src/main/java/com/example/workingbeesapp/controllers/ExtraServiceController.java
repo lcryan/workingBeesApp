@@ -38,7 +38,7 @@ public class ExtraServiceController {
 
     // CREATE EXTRA-SERVICE --- functional //
     @PostMapping("")
-    public ResponseEntity<Object> createNewExtraService(@Validated @RequestBody ExtraServiceDto extraServiceDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> createExtraService(@Validated @RequestBody ExtraServiceDto extraServiceDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             StringBuilder sb = new StringBuilder();
             for (FieldError fe : bindingResult.getFieldErrors()) {

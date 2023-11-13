@@ -70,3 +70,6 @@ public class SubscriptionController {
         return ResponseEntity.noContent().build();
     }
 }
+
+
+// TODO : check why company name comes out as null in postman //

@@ -94,6 +94,7 @@ public class SubscriptionService {
         subscriptionDto.setId(subscription.getId());
         subscriptionDto.setTotalAmount(subscription.getTotalAmount());
         subscriptionDto.setCompanyName(subscription.getCompanyName());
+
         if (subscription.getWorkingSpaces() != null) {
             subscriptionDto.setWorkingSpaces(workingSpaceService.transferWorkingSpaceListToWorkingSpaceDtoList(subscription.getWorkingSpaces()));
         }
@@ -106,6 +107,7 @@ public class SubscriptionService {
 
         subscription.setId(subscriptionDto.getId());
         subscription.setTotalAmount(subscriptionDto.getTotalAmount());
+        subscription.setCompanyName(subscriptionDto.getCompanyName());
 
         return subscription;
     }
