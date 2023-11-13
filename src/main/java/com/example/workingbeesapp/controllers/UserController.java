@@ -1,7 +1,6 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.AccountDto;
-import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.services.UserService;
 import jakarta.validation.Valid;
@@ -21,7 +20,7 @@ public class UserController {
     }
 
     @PostMapping("") // POST /users
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody AccountDto accountDto) {
+    public ResponseEntity<UserDto> createUserWithAccount(@Valid @RequestBody AccountDto accountDto) {
         UserDto result = userService.createUserWithAccount(accountDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
@@ -33,3 +32,4 @@ public class UserController {
     }
 }
 
+// TODO : 1. Create a new user with account - is still not 100 % correct - needs adjustment in acocunt and user model & dto //
