@@ -2,6 +2,7 @@ package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.AccountDto;
 import com.example.workingbeesapp.dtos.UserDto;
+import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Account;
 import com.example.workingbeesapp.models.Role;
 import com.example.workingbeesapp.models.User;
@@ -47,23 +48,41 @@ public class UserService {
         return userDtos;
     }
 
-    // HELPER METHODS USER TO USER DTO AND USER DTO TO USER //
-    private static void userToUserDto(User user, UserDto userDto) {
-        userDto.setUsername(user.getUsername());
-        userDto.setPassword(user.getPassword());
-
-        ArrayList<String> roleList = new ArrayList<>();
-        for (Role role : user.getRoleList()) {
-            roleList.add(role.getRoleName());
+    public UserDto getUser(String username) {
+        UserDto userDto;
+        Optional<User> user = userRepository.findById(username);
+        if (user.isPresent()) {
+            userDto = new UserDto();
+            userToUserDto(user.get(), userDto);
+        } else {
+            throw new RecordNotFoundException("User with username: " + username + " not found");
         }
-        userDto.setRoleList(roleList.toArray(new String[0]));
+        return userDto;
     }
 
-    private static void userDtoToUser(User user, UserDto userDto) {
-        user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword());
+
+    public UserDto updateUser(String username, UserDto changeUser) {
+        Optional<User> optionalUser = userRepository.findById(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            userDtoToUser(user, changeUser);
+            userRepository.save(user);
+            UserDto userDto = new UserDto();
+            userToUserDto(user, userDto);
+            return userDto;
+        } else {
+            throw new RecordNotFoundException("User with username: " + username + " not found");
+        }
     }
 
+    public void deleteUser(String username) {
+        Optional<User> optionalUser = userRepository.findById(username);
+        if (optionalUser.isPresent()) {
+            userRepository.deleteById(username);
+        } else {
+            throw new RecordNotFoundException("User with username: " + username + " not found");
+        }
+    }
     // ------------------------------------------------------ //
 
     public UserDto createUserWithAccount(AccountDto accountDto) {
@@ -98,6 +117,23 @@ public class UserService {
         userToUserDto(user, savedUserDto);
 
         return savedUserDto;
+    }
+
+    // HELPER METHODS USER TO USER DTO AND USER DTO TO USER //
+    private static void userToUserDto(User user, UserDto userDto) {
+        userDto.setUsername(user.getUsername());
+        userDto.setPassword(user.getPassword());
+
+        ArrayList<String> roleList = new ArrayList<>();
+        for (Role role : user.getRoleList()) {
+            roleList.add(role.getRoleName());
+        }
+        userDto.setRoleList(roleList.toArray(new String[0]));
+    }
+
+    private static void userDtoToUser(User user, UserDto userDto) {
+        user.setUsername(userDto.getUsername());
+        user.setPassword(userDto.getPassword());
     }
 
     // Transfer method AccountDto to Account //
