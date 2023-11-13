@@ -31,19 +31,13 @@ public class UserController {
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/{username}") // GET /users/{username} // check
+    @GetMapping("/{username}")
     public ResponseEntity<UserDto> getUser(@PathVariable String username) {
         UserDto userDto = userService.getUser(username);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
-    @PutMapping("/{username}") // PUT /users/{username} // check
-    public ResponseEntity<UserDto> updateUser(@PathVariable String username, @Valid @RequestBody UserDto userDto) {
-        UserDto userDto1 = userService.updateUser(username, userDto);
-        return new ResponseEntity<>(userDto1, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/{username}") // DELETE /users/{username} // check
+    @DeleteMapping("/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable String username) {
         userService.deleteUser(username);
         return new ResponseEntity<>("User with username: " + username + " deleted", HttpStatus.OK);

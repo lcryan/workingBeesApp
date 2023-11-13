@@ -60,21 +60,6 @@ public class UserService {
         return userDto;
     }
 
-
-    public UserDto updateUser(String username, UserDto changeUser) {
-        Optional<User> optionalUser = userRepository.findById(username);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            userDtoToUser(user, changeUser);
-            userRepository.save(user);
-            UserDto userDto = new UserDto();
-            userToUserDto(user, userDto);
-            return userDto;
-        } else {
-            throw new RecordNotFoundException("User with username: " + username + " not found");
-        }
-    }
-
     public void deleteUser(String username) {
         Optional<User> optionalUser = userRepository.findById(username);
         if (optionalUser.isPresent()) {
