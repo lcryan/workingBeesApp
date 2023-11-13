@@ -1,5 +1,5 @@
 INSERT INTO teams (id, team_name, company_Name, team_size)
-VALUES (1, 'Pixar Inc. Creative Team', 'Pixar Inc.', 12),
+VALUES (5, 'Pixar Inc. Creative Team', 'Pixar Inc.', 12),
        (2, 'Carbonyde Marketing Team', 'Carbonyde', 45);
 
 INSERT INTO working_spaces(id, space_name, company_name, space_type, space_capacity, price_per_room, duration,
@@ -30,11 +30,11 @@ WHERE id = 2;
 
 UPDATE teams
 SET team_working_space = 99
-WHERE id = 1;
+WHERE id = 5;
 
 UPDATE teams
 SET company_id = 12
-WHERE id = 1;
+WHERE id = 5;
 
 UPDATE teams
 SET company_id = 12
@@ -57,7 +57,7 @@ SET team_id = 2
 WHERE id = 88;
 
 UPDATE extra_services
-SET team_id = 1
+SET team_id = 5
 WHERE id = 123;
 
 UPDATE working_spaces
