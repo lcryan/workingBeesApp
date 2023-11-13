@@ -41,5 +41,4 @@ public class AccountDto {
 
     @NotEmpty(message = "A role has to be assigned")
     private String[] roleList;
-
 }

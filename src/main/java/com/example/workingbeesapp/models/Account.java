@@ -35,6 +35,7 @@ public class Account {
 
     @Column(name = "username", unique = true)
     private String username;
+
     @Column(name = "role_list")
     private String roleList;
 
