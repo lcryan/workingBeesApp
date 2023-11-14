@@ -159,7 +159,7 @@ public class CompanyService {
 
 
     // -- ADD TEAM TO COMPANY METHOD  -- //
-// TODO : check if this is actually necessary ? //
+// TODO : need to change accordingly in model, dto and also in controller - otherwise this won't work !!! //
     private void addTeamToCompany(CompanyDto companyDto, Company company) {
         if (companyDto.getTeams() != null && !companyDto.getTeams().isEmpty()) {
             for (TeamDto teamDto : companyDto.getTeams()) {
