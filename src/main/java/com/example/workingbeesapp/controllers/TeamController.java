@@ -1,7 +1,11 @@
 package com.example.workingbeesapp.controllers;
 
+import com.example.workingbeesapp.dtos.ExtraServiceDto;
 import com.example.workingbeesapp.dtos.TeamDto;
+import com.example.workingbeesapp.models.Team;
+import com.example.workingbeesapp.repositories.TeamRepository;
 import com.example.workingbeesapp.services.TeamService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -16,9 +20,11 @@ import java.util.Optional;
 @RequestMapping("/teams")
 public class TeamController {
 
+    private final TeamRepository teamRepository;
     private final TeamService teamService;
 
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamRepository teamRepository, TeamService teamService) {
+        this.teamRepository = teamRepository;
         this.teamService = teamService;
     }
 
@@ -60,6 +66,23 @@ public class TeamController {
         } else {
             TeamDto teamDto1 = teamService.createTeam(teamDto);
             return ResponseEntity.created(null).body(teamDto1);
+        }
+    }
+
+    //ADD EXTRA SERVICE TO TEAM //
+    @PostMapping("/{teamId}/addExtraService")
+    public ResponseEntity<Object> addExtraServiceToTeam(@PathVariable Long teamId, @RequestBody List<ExtraServiceDto> extraServices) {
+        try {
+            Optional<Team> optionalTeam = teamRepository.findById(teamId);
+            if (optionalTeam.isPresent()) {
+                Team team = optionalTeam.get();
+                teamService.addExtraService(extraServices, team);
+                return ResponseEntity.ok("Extra services added successfully to the team.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding extra services to the team.");
         }
     }
 

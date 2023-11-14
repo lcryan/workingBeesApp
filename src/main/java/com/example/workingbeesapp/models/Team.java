@@ -43,6 +43,12 @@ public class Team {
     private int teamSize;
 
     @OneToMany(mappedBy = "team")
+
     private List<ExtraService> extraServices;
 
+    // here you want to have a method that adds an extraService to team //
+    public void addExtraService(ExtraService extraService) {
+        this.extraServices.add(extraService);
+        extraService.setTeam(this);
+    }
 }

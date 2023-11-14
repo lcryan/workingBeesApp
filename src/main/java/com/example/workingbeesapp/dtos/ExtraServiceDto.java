@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collection;
+
 @AllArgsConstructor
 @NoArgsConstructor
 
@@ -15,7 +17,11 @@ public class ExtraServiceDto {
 
     private Long id;
 
+    private String extraService;
+
     private String serviceName;
+
+    private Boolean isAvailable;
 
     private String companyName;
 

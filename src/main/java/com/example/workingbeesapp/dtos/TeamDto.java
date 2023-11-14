@@ -25,5 +25,5 @@ public class TeamDto {
 
     private int teamSize;
 
-    private List<ExtraServiceDto> extraService;
+    private List<ExtraServiceDto> extraServices;
 }

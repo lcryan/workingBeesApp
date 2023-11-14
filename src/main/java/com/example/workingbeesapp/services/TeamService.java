@@ -1,9 +1,12 @@
 package com.example.workingbeesapp.services;
 
+import com.example.workingbeesapp.dtos.ExtraServiceDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
+import com.example.workingbeesapp.models.ExtraService;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
+import com.example.workingbeesapp.repositories.ExtraServiceRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
 import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
@@ -25,13 +28,16 @@ public class TeamService {
 
     private final ExtraServiceService extraServiceService;
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService, ExtraServiceService extraServiceService) {
+    private final ExtraServiceRepository extraServiceRepository;
+
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService, ExtraServiceService extraServiceService, ExtraServiceRepository extraServiceRepository) {
         this.teamRepository = teamRepository;
         this.companyRepository = companyRepository;
 
         this.workingSpaceRepository = workingSpaceRepository;
         this.workingSpaceService = workingSpaceService;
         this.extraServiceService = extraServiceService;
+        this.extraServiceRepository = extraServiceRepository;
     }
 
     public List<TeamDto> getAllTeams() {
@@ -136,6 +142,18 @@ public class TeamService {
         }
     }
 
+    // method to add extra service to team - first try //
+
+    public void addExtraService(List<ExtraServiceDto> extraServices, Team team) {
+        for(ExtraServiceDto extraService : extraServices) {
+            if(!extraService.getExtraService().isEmpty()) {
+                ExtraService extraService1 = extraServiceService.transferExtraServiceDtoToExtraService(extraService);
+                extraService1.setTeam(team);
+                extraServiceRepository.save(extraService1);
+            }
+        }
+    }
+
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
     public TeamDto transferTeamToTeamDto(Team team) {
 
@@ -146,7 +164,7 @@ public class TeamService {
         teamDto.setCompanyName(team.getCompanyName());
         teamDto.setTeamSize(team.getTeamSize());
         if (team.getExtraServices() != null) {
-            teamDto.setExtraService(extraServiceService.transferExtraServiceListToExtraServiceListDto(team.getExtraServices()));
+            teamDto.setExtraServices(extraServiceService.transferExtraServiceListToExtraServiceListDto(team.getExtraServices()));
         }
         if (team.getWorkingSpace() != null) {
             teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
