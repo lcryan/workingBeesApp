@@ -124,7 +124,7 @@ public class TeamService {
         }
     }
 
-    // ASSIGNING WORKING SPACE TO TEAM //
+    // ASSIGNING WORKING SPACE TO TEAM - 1. TODO: addWorkingSpaceToTeam here instead of assign!! Make sure you call this in the controller too! //
 
     public void assignWorkingSpaceToTeam(Long id, Long workingSpaceId) {
         var optionalTeam = teamRepository.findById(id);
@@ -142,7 +142,7 @@ public class TeamService {
         }
     }
 
-    // method to add extra service to team - first try //
+    // method to add extra service to team - functional in postman //
 
     public void addExtraService(List<ExtraServiceDto> extraServices, Team team) {
         for(ExtraServiceDto extraService : extraServices) {

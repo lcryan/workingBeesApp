@@ -41,7 +41,8 @@ public class Company {
     @OneToMany(mappedBy = "company")
     private List<Team> teams;
 
-    //  TODO : check, if the method below is needed //
+    //1. TODO : addTeam still has to be added to controller! This has to be finalised //
+    //2. TODO: also it should be possible to add a subscription to a company - for the hub admin//
 
     public void addTeam(Team team) {
         this.teams.add(team);

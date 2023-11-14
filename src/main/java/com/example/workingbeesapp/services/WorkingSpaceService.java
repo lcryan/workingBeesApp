@@ -165,18 +165,18 @@ public class WorkingSpaceService {
     }
 
     // ASSIGN image to WorkingSpace //
-
+// has to be reviewed! //
     public void assignImageToWorkingSpace(String fileName, Long id) {
         Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
         Optional<FileDocument> fileUploadResponse = Optional.ofNullable(docFileRepository.findByFileName(fileName));
-// TODO: check, if this ofNullable will work out accordingly //
+// 1. TODO: check, if this ofNullable will work out accordingly //
         if (optionalWorkingSpace.isPresent() && fileUploadResponse.isPresent()) {
             FileDocument image = fileUploadResponse.get();
             WorkingSpace workingSpace = optionalWorkingSpace.get();
             workingSpace.setFile(image);
             workingSpaceRepository.save(workingSpace);
         }
-
+// 2. TODO: maybe also add and addImageToWorkingSpace method here //
     }
 }
 
