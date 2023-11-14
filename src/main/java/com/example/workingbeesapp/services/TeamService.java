@@ -40,6 +40,7 @@ public class TeamService {
         this.extraServiceRepository = extraServiceRepository;
     }
 
+    // FUNCTION FOR GET LIST OF TEAMS //
     public List<TeamDto> getAllTeams() {
         List<Team> teams = teamRepository.findAll();
         List<TeamDto> teamDtoList = new ArrayList<>();
@@ -50,14 +51,14 @@ public class TeamService {
         return teamDtoList;
     }
 
-    // function to GET TEAM BY COMPANY NAME //
+    // FUNCTION FOR GETTING TEAMS BY COMPANY NAME //
 
     public List<TeamDto> getTeamsByCompanyName(String companyName) {
         List<Team> teamList = teamRepository.findAllByCompanyNameEqualsIgnoreCase(companyName);
         return transferTeamListToTeamDtoList(teamList);
     }
 
-
+    // FUNCTION FOR GETTING ONE TEAM //
     public TeamDto getOneTeam(Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
         if (optionalTeam.isPresent()) {
@@ -68,7 +69,7 @@ public class TeamService {
         }
     }
 
-    // FUNCTION FOR CREATING ONE TEAM //
+    // FUNCTION FOR CREATING A TEAM //
 
     public TeamDto createTeam(TeamDto teamDto) {
         Team newTeam = transferTeamDtoToTeam(teamDto);
@@ -76,7 +77,7 @@ public class TeamService {
         return transferTeamToTeamDto(newTeam);
     }
 
-    // FUNCTION TO UPDATE TEAM //
+    // FUNCTION FOR UPDATING TEAM //
     public TeamDto updateTeam(Long id, TeamDto teamDto) {
         if (teamRepository.findById(id).isPresent()) {
 
@@ -94,7 +95,7 @@ public class TeamService {
         }
     }
 
-    // FUNCTION TO DELETE TEAM //
+    // FUNCTION FOR DELETING A TEAM //
     public void deleteTeam(Long id) {
         if (teamRepository.existsById(id)) {
             Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -124,7 +125,7 @@ public class TeamService {
         }
     }
 
-    // ASSIGNING WORKING SPACE TO TEAM - 1. TODO: addWorkingSpaceToTeam here instead of assign!! Make sure you call this in the controller too! //
+    // ASSIGNING WORKING SPACE TO TEAM //
 
     public void assignWorkingSpaceToTeam(Long id, Long workingSpaceId) {
         var optionalTeam = teamRepository.findById(id);
@@ -142,11 +143,13 @@ public class TeamService {
         }
     }
 
+   // 1. TODO: addWorkingSpaceToTeam here as well.  Make sure you call this in the controller too! //
+
     // method to add extra service to team - functional in postman //
 
     public void addExtraService(List<ExtraServiceDto> extraServices, Team team) {
-        for(ExtraServiceDto extraService : extraServices) {
-            if(!extraService.getExtraService().isEmpty()) {
+        for (ExtraServiceDto extraService : extraServices) {
+            if (!extraService.getExtraService().isEmpty()) {
                 ExtraService extraService1 = extraServiceService.transferExtraServiceDtoToExtraService(extraService);
                 extraService1.setTeam(team);
                 extraServiceRepository.save(extraService1);
@@ -186,7 +189,7 @@ public class TeamService {
 
 // transfer methods for TeamList to TeamListDto //
 
-    // TODO : if this one is not needed : delete it! :) //
+    // TODO : IF THIS ONE IS UNUSED - DELETE IT! :) //
     public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {
         List<Team> teams = new ArrayList<>();
         for (TeamDto teamsDto : teamDtoList) {
