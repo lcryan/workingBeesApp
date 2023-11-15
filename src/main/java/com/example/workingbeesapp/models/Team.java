@@ -22,8 +22,11 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+
     @Column(name = "id", nullable = false)
     private Long id;
+
+    private String team;
 
     @Column(name = "team_name")
     private String teamName;

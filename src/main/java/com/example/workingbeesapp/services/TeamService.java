@@ -164,6 +164,7 @@ public class TeamService {
         TeamDto teamDto = new TeamDto();
 
         teamDto.setId(team.getId());
+        teamDto.setTeam(team.getTeam());
         teamDto.setTeamName(team.getTeamName());
         teamDto.setCompanyName(team.getCompanyName());
         teamDto.setTeamSize(team.getTeamSize());
@@ -182,6 +183,7 @@ public class TeamService {
         Team team = new Team();
 
         team.setId(teamDto.getId());
+        team.setTeam(teamDto.getTeam());
         team.setTeamName(teamDto.getTeamName());
         team.setCompanyName(teamDto.getCompanyName());
         team.setTeamSize(teamDto.getTeamSize());
