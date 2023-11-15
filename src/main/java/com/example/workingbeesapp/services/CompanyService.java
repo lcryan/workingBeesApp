@@ -1,15 +1,20 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
+import com.example.workingbeesapp.dtos.ExtraServiceDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;;
+import com.example.workingbeesapp.models.ExtraService;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +33,7 @@ public class CompanyService {
 
     private final TeamRepository teamRepository;
 
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService, TeamRepository teamRepository1) {
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionService = subscriptionService;
@@ -114,6 +119,16 @@ public class CompanyService {
         }
     }
 
+    public void addTeam(List<TeamDto> teams, Company company) {
+        for (TeamDto teamDto : teams) {
+            if (!teamDto.getTeam().isEmpty()) {
+                Team team = teamService.transferTeamDtoToTeam(teamDto);
+                team.setCompany(company);
+                teamRepository.save(team);
+            }
+        }
+    }
+
     // ******* transfer helper methods ******* //
 
     public CompanyDto transferCompanyToCompanyDto(Company company) {
@@ -153,20 +168,5 @@ public class CompanyService {
             companies.add(transferCompanyDtoToCompany(companyDto));
         }
         return companies;
-    }
-
-    // --- ADDING METHODS : adding team - subscription - working space - extra service here --- //
-
-
-    // -- ADD TEAM TO COMPANY METHOD  -- //
-// TODO : need to change accordingly in model, dto and also in controller - otherwise this won't work !!! //
-    private void addTeamToCompany(CompanyDto companyDto, Company company) {
-        if (companyDto.getTeams() != null && !companyDto.getTeams().isEmpty()) {
-            for (TeamDto teamDto : companyDto.getTeams()) {
-                Team team = teamService.transferTeamDtoToTeam(teamDto);
-                team.setCompany(company);
-                teamRepository.save(team);
-            }
-        }
     }
 }

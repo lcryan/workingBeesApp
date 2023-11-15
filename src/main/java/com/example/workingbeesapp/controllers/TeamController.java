@@ -101,14 +101,14 @@ public class TeamController {
     }
 
     // ASSIGN COMPANY TO TEAM //
-    @PutMapping("/{id}/{companyId}")
+    @PutMapping("/{id}/assignCompany/{companyId}")
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
         teamService.assignsCompanyToTeam(id, companyId);
         return ResponseEntity.noContent().build();
     }
 
     // ASSIGN WORKING SPACE TO TEAM //
-    @PutMapping("/{id}/{workingSpaceId}")
+    @PutMapping("/{id}/assignWorkingSpace/{workingSpaceId}")
     public ResponseEntity<Object> assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
         teamService.assignWorkingSpaceToTeam(id, workingSpaceId);
         return ResponseEntity.noContent().build();

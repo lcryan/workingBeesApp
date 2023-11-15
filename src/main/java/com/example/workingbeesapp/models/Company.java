@@ -46,7 +46,7 @@ public class Company {
 
     public void addTeam(Team team) {
         this.teams.add(team);
+        team.setCompany(this);
     }
-
 }
 

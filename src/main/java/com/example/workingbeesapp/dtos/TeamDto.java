@@ -18,6 +18,8 @@ public class TeamDto {
 
     private Long id;
 
+    private String team;
+
     @NotEmpty(message = "Team name is required")
     private String teamName;
 

@@ -43,7 +43,6 @@ public class Team {
     private int teamSize;
 
     @OneToMany(mappedBy = "team")
-
     private List<ExtraService> extraServices;
 
     // here you want to have a method that adds an extraService to team //
@@ -52,5 +51,8 @@ public class Team {
         extraService.setTeam(this);
     }
 
-    // here I want to add a method call that adds a workingSpace to team //
+    public void addWorkingSpace(WorkingSpace workingSpace) {
+        this.workingSpace = workingSpace;
+        workingSpace.setTeam(this);
+    }
 }
