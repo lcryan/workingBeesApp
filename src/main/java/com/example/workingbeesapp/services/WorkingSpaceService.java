@@ -67,6 +67,7 @@ public class WorkingSpaceService {
         return transferWorkingSpaceToWorkingSpaceDto(newWorkingSpace);
     }
 
+    // TODO: has to be corrected! //
     // FUNCTION TO UPDATE COMPANY //
     public WorkingSpaceDto updateWorkingSpace(Long id, WorkingSpaceDto workingSpaceDto) {
         if (workingSpaceRepository.findById(id).isPresent()) {
