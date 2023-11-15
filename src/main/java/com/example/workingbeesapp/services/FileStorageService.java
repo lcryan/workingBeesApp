@@ -1,5 +1,6 @@
 package com.example.workingbeesapp.services;
 
+import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.FileDocument;
 import com.example.workingbeesapp.repositories.DocFileRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -89,5 +90,12 @@ public class FileStorageService {
             }
         }
         return list;
+    }
+
+    // Testing deleting file method //
+    public FileDocument deleteFile(Long id) {
+        FileDocument fileDocument = docFileRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("File with id " + id + "not found"));
+        docFileRepository.deleteById(id);
+        return fileDocument;
     }
 }
