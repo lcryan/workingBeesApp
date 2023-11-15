@@ -24,6 +24,8 @@ public class WorkingSpaceDto {
     @NotBlank(message = "Name of working space is required")
     private String name;
 
+    private String workingSpace;
+
     private String companyName;
 
     @NotBlank(message = "Type of working space is required")

@@ -1,10 +1,11 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.ExtraServiceDto;
+import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
+import com.example.workingbeesapp.dtos.WorkingSpaceDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
-import com.example.workingbeesapp.models.ExtraService;
-import com.example.workingbeesapp.models.Team;
+import com.example.workingbeesapp.models.*;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 import com.example.workingbeesapp.repositories.ExtraServiceRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
@@ -144,8 +145,34 @@ public class TeamService {
         }
     }
 
-    // 1. TODO: addWorkingSpaceToTeam here as well.  Make sure you call this in the controller too! //
+    public void addWorkingSpace(WorkingSpaceDto workingSpaceDto, Team team) {
+        if (workingSpaceDto != null) {
+            WorkingSpace workingSpace = workingSpaceService.transferWorkingSpaceDtoToWorkingSpace(workingSpaceDto);
+            if (team.getWorkingSpace() == null) {
+                workingSpace.setTeam(team);
+                team.setWorkingSpace(workingSpace);
+                workingSpaceRepository.save(workingSpace);
+                teamRepository.save(team);
+            } else {
+                System.out.println("Team already has a working space");
+            }
+        }
+    }
 
+
+/*    public void addSubscription(SubscriptionDto subscriptionDto, Company company) {
+        if (subscriptionDto != null) {
+            Subscription subscription = subscriptionService.transferSubscriptionDtoToSubscription(subscriptionDto);
+            if (company.getSubscription() == null) {
+                subscription.setCompany(company);
+                company.setSubscription(subscription);
+                subscriptionRepository.save(subscription);
+                companyRepository.save(company);
+            } else {
+                System.out.println("Company already has a subscription");
+            }
+        }
+    }*/
     // method to add extra service to team - functional in postman //
 
     public void addExtraService(List<ExtraServiceDto> extraServices, Team team) {

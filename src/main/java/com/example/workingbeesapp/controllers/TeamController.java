@@ -1,7 +1,10 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.ExtraServiceDto;
+import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
+import com.example.workingbeesapp.dtos.WorkingSpaceDto;
+import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.TeamRepository;
 import com.example.workingbeesapp.services.TeamService;
@@ -83,6 +86,22 @@ public class TeamController {
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding extra services to the team.");
+        }
+    }
+
+    @PostMapping("/{teamId}/addWorkingSpace")
+    public ResponseEntity<Object> addWorkingSpaceToTeam(@PathVariable Long teamId, @RequestBody WorkingSpaceDto workingSpaceDto) {
+        try {
+            Optional<Team> optionalTeam = teamRepository.findById(teamId);
+            if (optionalTeam.isPresent()) {
+                Team team = optionalTeam.get();
+                teamService.addWorkingSpace(workingSpaceDto, team);
+                return ResponseEntity.ok("Working Space has been added successfully to team.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding extra working space to team.");
         }
     }
 
