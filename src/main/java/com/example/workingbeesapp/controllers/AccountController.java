@@ -51,12 +51,6 @@ public class AccountController {
         }
     }
 
-/*    @PutMapping("/{id}")
-    public ResponseEntity<AccountDto> updateAccount(@PathVariable Long id, @Validated @RequestBody AccountDto newAccount) {
-        AccountDto accountDto1 = accountService.updateAccount(id, newAccount);
-        return ResponseEntity.ok().body(accountDto1);
-    }*/
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAccount(@PathVariable Long id) {
         accountService.deleteAccount(id);
