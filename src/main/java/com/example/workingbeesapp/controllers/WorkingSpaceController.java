@@ -78,8 +78,6 @@ public class WorkingSpaceController {
         return ResponseEntity.ok().body(workingSpaceDto1);
     }
 
-    // DELETE WORKING SPACE//
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteWorkingSpace(@PathVariable Long id) {
         workingSpaceService.deleteWorkingSpace(id);
@@ -92,7 +90,6 @@ public class WorkingSpaceController {
         workingSpaceService.assignSubscriptionToWorkingSpace(id, subscriptionId);
         return ResponseEntity.noContent().build();
     }
-    // Link image to a workinspace //
 
     @PostMapping("/{id}/image")
     public ResponseEntity<Object> assignImageToWorkingSpace(@PathVariable("id") Long id, @RequestBody MultipartFile multipartFile) {
