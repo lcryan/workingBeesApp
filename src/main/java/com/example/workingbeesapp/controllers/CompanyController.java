@@ -1,6 +1,7 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
+import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.repositories.CompanyRepository;
@@ -60,22 +61,6 @@ public class CompanyController {
         }
     }
 
-    @PostMapping("/{companyId}/addTeam")
-    public ResponseEntity<Object> addTeamsToCompany(@PathVariable Long companyId, @RequestBody List<TeamDto> teamDtoList) {
-        try {
-            Optional<Company> optionalCompany = companyRepository.findById(companyId);
-            if (optionalCompany.isPresent()) {
-                Company company = optionalCompany.get();
-                companyService.addTeam(teamDtoList, company);
-                return ResponseEntity.ok("Teams added to company");
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding teams to company.");
-        }
-    }
-
 
     // UPDATE COMPANY --- functional //
     @PutMapping("/{id}")
@@ -98,6 +83,38 @@ public class CompanyController {
     public ResponseEntity<Object> assignSubscriptionToCompany(@PathVariable("id") Long id, @PathVariable("subscriptionId") Long subscriptionId) {
         companyService.assignSubscriptionToCompany(id, subscriptionId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{companyId}/addTeam")
+    public ResponseEntity<Object> addTeamsToCompany(@PathVariable Long companyId, @RequestBody List<TeamDto> teamDtoList) {
+        try {
+            Optional<Company> optionalCompany = companyRepository.findById(companyId);
+            if (optionalCompany.isPresent()) {
+                Company company = optionalCompany.get();
+                companyService.addTeam(teamDtoList, company);
+                return ResponseEntity.ok("A Team has been successfully added to company");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding teams to company.");
+        }
+    }
+
+    @PostMapping("/{companyId}/addSubscription")
+    public ResponseEntity<Object> addSubscriptionToCompany(@PathVariable Long companyId, @RequestBody SubscriptionDto subscriptionDto) {
+        try {
+            Optional<Company> optionalCompany = companyRepository.findById(companyId);
+            if (optionalCompany.isPresent()) {
+                Company company = optionalCompany.get();
+                companyService.addSubscription(subscriptionDto, company);
+                return ResponseEntity.ok("A Subscription has been successfully added to company");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding subscription to company.");
+        }
     }
 }
 

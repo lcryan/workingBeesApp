@@ -23,6 +23,8 @@ public class Subscription {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    private String subscription;
+
     @Column(name = "company_name")
     private String companyName;
 
@@ -32,7 +34,7 @@ public class Subscription {
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
-    @OneToOne(mappedBy = "subscription")
+    @OneToOne(mappedBy = "subscription", cascade = CascadeType.ALL)
     private Company company;
 
     @OneToMany(mappedBy = "subscription")

@@ -18,6 +18,8 @@ public class SubscriptionDto {
 
     private Long id;
 
+    private String subscription;
+
     private String companyName;
 
     @NotEmpty(message = "Total amount is required")

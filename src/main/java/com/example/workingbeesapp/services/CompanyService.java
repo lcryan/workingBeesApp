@@ -2,10 +2,12 @@ package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
 import com.example.workingbeesapp.dtos.ExtraServiceDto;
+import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;;
 import com.example.workingbeesapp.models.ExtraService;
+import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
@@ -58,7 +60,8 @@ public class CompanyService {
     public CompanyDto getOneCompany(Long id) {
         Optional<Company> optionalCompany = companyRepository.findById(id);
         if (optionalCompany.isPresent()) {
-            return transferCompanyToCompanyDto(optionalCompany.get());
+            Company company = optionalCompany.get();
+            return transferCompanyToCompanyDto(company);
         } else {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
@@ -104,8 +107,8 @@ public class CompanyService {
     }
     // --- assigning subscription to company --- //
 
-    public void assignSubscriptionToCompany(Long id, Long subscriptionId) { // changed to id here instead of companyId //
-        var optionalCompany = companyRepository.findById(id);
+    public void assignSubscriptionToCompany(Long companyId, Long subscriptionId) { // changed to id here instead of companyId //
+        var optionalCompany = companyRepository.findById(companyId);
         var optionalSubscription = subscriptionRepository.findById(subscriptionId);
 
         if (optionalCompany.isPresent() && optionalSubscription.isPresent()) {
@@ -113,18 +116,36 @@ public class CompanyService {
             var subscription = optionalSubscription.get();
 
             company.setSubscription(subscription);
+            subscription.setCompany(company);
             companyRepository.save(company);
+            subscriptionRepository.save(subscription);
         } else {
             throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
         }
     }
 
+    // add one team or more teams to company //
     public void addTeam(List<TeamDto> teams, Company company) {
         for (TeamDto teamDto : teams) {
             if (!teamDto.getTeam().isEmpty()) {
                 Team team = teamService.transferTeamDtoToTeam(teamDto);
                 team.setCompany(company);
                 teamRepository.save(team);
+            }
+        }
+    }
+
+    // add one subscription to company //
+    public void addSubscription(SubscriptionDto subscriptionDto, Company company) {
+        if (subscriptionDto != null) {
+            Subscription subscription = subscriptionService.transferSubscriptionDtoToSubscription(subscriptionDto);
+            if (company.getSubscription() == null) {
+                subscription.setCompany(company);
+                company.setSubscription(subscription);
+                subscriptionRepository.save(subscription);
+                companyRepository.save(company);
+            } else {
+                System.out.println("Company already has a subscription");
             }
         }
     }

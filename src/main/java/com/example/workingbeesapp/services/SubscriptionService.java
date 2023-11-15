@@ -93,6 +93,7 @@ public class SubscriptionService {
         SubscriptionDto subscriptionDto = new SubscriptionDto();
 
         subscriptionDto.setId(subscription.getId());
+        subscriptionDto.setSubscription(subscription.getSubscription());
         subscriptionDto.setTotalAmount(subscription.getTotalAmount());
         subscriptionDto.setCompanyName(subscription.getCompanyName());
 
@@ -107,6 +108,7 @@ public class SubscriptionService {
         Subscription subscription = new Subscription();
 
         subscription.setId(subscriptionDto.getId());
+        subscription.setSubscription(subscriptionDto.getSubscription());
         subscription.setTotalAmount(subscriptionDto.getTotalAmount());
         subscription.setCompanyName(subscriptionDto.getCompanyName());
 

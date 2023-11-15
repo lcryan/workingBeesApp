@@ -34,19 +34,22 @@ public class Company {
     private String paymentDetails;
 
     // Relations //
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "your_subscriptions")
     public Subscription subscription;
 
     @OneToMany(mappedBy = "company")
     private List<Team> teams;
 
-    //1. TODO : addTeam still has to be added to controller! This has to be finalised //
-    //2. TODO: also it should be possible to add a subscription to a company - for the hub admin//
-
     public void addTeam(Team team) {
         this.teams.add(team);
         team.setCompany(this);
+    }
+
+    // this is for ADMIN only - a subscription can be then added to a company - the USER cannot do this with his authorization rights //
+    public void addSubscription(Subscription subscription) {
+        this.subscription = subscription;
+        subscription.setCompany(this);
     }
 }
 
