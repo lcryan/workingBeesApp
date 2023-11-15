@@ -19,10 +19,11 @@ public class ExtraServiceDto {
     private Long id;
 
     private String extraService;
+
     @NotBlank(message = "Service name is mandatory")
     private String serviceName;
 
-    private Boolean isAvailable;
+    private Boolean isAvailable; // TODO: CHECK, IF THIS IS NEEDED //
 
     @NotBlank(message = "Company name is mandatory")
     private String companyName;
