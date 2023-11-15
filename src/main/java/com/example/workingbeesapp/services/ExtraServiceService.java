@@ -112,7 +112,6 @@ public class ExtraServiceService {
         extraService.setServiceDuration(extraServiceDto.getServiceDuration());
         extraService.setServicePrice(extraServiceDto.getServicePrice());
 
-
         return extraService;
     }
 
