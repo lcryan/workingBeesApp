@@ -81,6 +81,11 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -94,6 +99,9 @@
                             <groupId>org.project-lombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
+                        <configuration>
+                            <excludeDevtools>true</excludeDevtools>
+                        </configuration>
                     </excludes>
                 </configuration>
             </plugin>

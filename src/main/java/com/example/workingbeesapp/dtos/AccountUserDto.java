@@ -1,10 +1,6 @@
 package com.example.workingbeesapp.dtos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
+
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +14,16 @@ import lombok.Setter;
 @Setter
 
 
-public class AccountDto {
+public class AccountUserDto {
 
-    private Long id;
+    @NotEmpty(message = "Username cannot be empty")
+    private String username;
+
+    @NotEmpty(message = "Password cannot be empty")
+    private String password;
+
+    @NotEmpty(message = "Email cannot be empty")
+    private String email;
 
     @NotEmpty(message = "First name cannot be empty")
     private String firstName;
@@ -31,6 +34,6 @@ public class AccountDto {
     @NotEmpty(message = "Company name cannot be empty")
     private String companyName;
 
-    @Email(message = "Email should be valid")
-    private String email;
+    @NotEmpty(message = "A role has to be assigned")
+    private String[] roleList;
 }

@@ -1,7 +1,6 @@
 package com.example.workingbeesapp.controllers;
 
-import com.example.workingbeesapp.dtos.AccountDto;
-import com.example.workingbeesapp.dtos.CompanyDto;
+import com.example.workingbeesapp.dtos.AccountUserDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.services.UserService;
 import jakarta.validation.Valid;
@@ -21,8 +20,8 @@ public class UserController {
     }
 
     @PostMapping("") // POST /users
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody AccountDto accountDto) {
-        UserDto result = userService.createUserWithAccount(accountDto);
+    public ResponseEntity<UserDto> createUserWithAccount(@Valid @RequestBody AccountUserDto accountUserDto) {
+        UserDto result = userService.createUserWithAccount(accountUserDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
@@ -31,5 +30,16 @@ public class UserController {
         List<UserDto> userDtoList = userService.getAllUsers();
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
-}
 
+    @GetMapping("/{username}")
+    public ResponseEntity<UserDto> getUser(@PathVariable String username) {
+        UserDto userDto = userService.getUser(username);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{username}")
+    public ResponseEntity<String> deleteUser(@PathVariable String username) {
+        userService.deleteUser(username);
+        return new ResponseEntity<>("User with username: " + username + " deleted", HttpStatus.OK);
+    }
+}

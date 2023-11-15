@@ -26,6 +26,8 @@ public class WorkingSpace {
     @Column(name = "space_name")
     private String name;
 
+    private String workingSpace;
+
     @Column(name = "space_type")
     private String type;
 
@@ -40,8 +42,6 @@ public class WorkingSpace {
 
     @Column(name = "companyName")
     private String companyName;
-
-    // TODO 2: workingSpace and Subscription might need a OneToMany relation //
 
     @Column(name = "start_date")
     private LocalDate startDate;

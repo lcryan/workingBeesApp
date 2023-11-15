@@ -23,17 +23,18 @@ public class Subscription {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    private String subscription;
+
     @Column(name = "company_name")
     private String companyName;
 
     @Column(name = "total_amount")
     private double totalAmount;
 
-    // TODO : make a relation of workingSpaces here : oneToMany //
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
-    @OneToOne(mappedBy = "subscription")
+    @OneToOne(mappedBy = "subscription", cascade = CascadeType.ALL)
     private Company company;
 
     @OneToMany(mappedBy = "subscription")

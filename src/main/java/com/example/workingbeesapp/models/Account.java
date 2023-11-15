@@ -1,10 +1,13 @@
 package com.example.workingbeesapp.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+@AllArgsConstructor
+@NoArgsConstructor
 
 @Getter
 @Setter
@@ -30,14 +33,8 @@ public class Account {
 
     @Column(name = "companyName")
     private String companyName;
-
-    private String password;
-
-    @Column(name = "username", unique = true)
-    private String username;
-    @Column(name = "role_list")
-    private String roleList;
-
-    @OneToOne
+    // relation with Account //
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_username", referencedColumnName = "username")
     User user;
 }

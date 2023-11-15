@@ -1,6 +1,7 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.AccountDto;
+import com.example.workingbeesapp.dtos.AccountUserDto;
 import com.example.workingbeesapp.services.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -34,7 +35,7 @@ public class AccountController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> createNewAccount(@Validated @RequestBody AccountDto accountDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> createNewAccount(@Validated @RequestBody AccountUserDto accountUserDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             StringBuilder sb = new StringBuilder();
             for (FieldError fe : bindingResult.getFieldErrors()) {
@@ -45,15 +46,9 @@ public class AccountController {
             }
             return ResponseEntity.badRequest().body(sb.toString());
         } else {
-            AccountDto accountDto1 = accountService.createAccount(accountDto);
-            return ResponseEntity.created(null).body(accountDto1);
+            AccountDto accountDto = accountService.createAccount(accountUserDto);
+            return ResponseEntity.created(null).body(accountDto);
         }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<AccountDto> updateAccount(@PathVariable Long id, @Validated @RequestBody AccountDto newAccount) {
-        AccountDto accountDto1 = accountService.updateAccount(id, newAccount);
-        return ResponseEntity.ok().body(accountDto1);
     }
 
     @DeleteMapping("/{id}")

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@AllArgsConstructor // TODO : take this into consideration for TECHNICAL DECISIONS : why didn't I use @Data //
+@AllArgsConstructor
 @NoArgsConstructor
 
 @Getter

@@ -7,6 +7,6 @@ public class IdNotFoundException extends RuntimeException {
     }
 
     public IdNotFoundException(String message, Throwable cause) {
-        super(message, cause); // TODO : still need a cause here //
+        super(message, cause);
     }
 }

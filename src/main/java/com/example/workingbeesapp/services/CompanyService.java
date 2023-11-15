@@ -1,15 +1,22 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
+import com.example.workingbeesapp.dtos.ExtraServiceDto;
+import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;;
+import com.example.workingbeesapp.models.ExtraService;
+import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
 
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +35,7 @@ public class CompanyService {
 
     private final TeamRepository teamRepository;
 
-    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService, TeamRepository teamRepository1) {
+    public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionService = subscriptionService;
@@ -53,7 +60,8 @@ public class CompanyService {
     public CompanyDto getOneCompany(Long id) {
         Optional<Company> optionalCompany = companyRepository.findById(id);
         if (optionalCompany.isPresent()) {
-            return transferCompanyToCompanyDto(optionalCompany.get());
+            Company company = optionalCompany.get();
+            return transferCompanyToCompanyDto(company);
         } else {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
@@ -64,27 +72,23 @@ public class CompanyService {
     public CompanyDto createCompany(CompanyDto companyDto) {
         Company newCompany = transferCompanyDtoToCompany(companyDto);
         Company savedCompany = companyRepository.save(newCompany);
-
-        // Add teams to the company // //TODO : check, if this is actually needed :) //
-        addTeamToCompany(companyDto, savedCompany);
-
         return transferCompanyToCompanyDto(savedCompany);
     }
 
 
     // FUNCTION TO UPDATE COMPANY //
     public CompanyDto updateCompany(Long id, CompanyDto companyDto) {
-        if (companyRepository.findById(id).isPresent()) {
+        Optional<Company> optionalCompany = companyRepository.findById(id);
 
-            Company company = companyRepository.findById(id).get();
+        if (optionalCompany.isPresent()) {
+            Company company = optionalCompany.get();
 
-            Company company1 = transferCompanyDtoToCompany(companyDto);
+            Company updatedCompany = transferCompanyDtoToCompany(companyDto);
+            updatedCompany.setId(company.getId());
 
-            company1.setId(company.getId());
+            companyRepository.save(updatedCompany);
 
-            companyRepository.save(company1);
-
-            return transferCompanyToCompanyDto(company1);
+            return transferCompanyToCompanyDto(updatedCompany);
         } else {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
@@ -101,10 +105,10 @@ public class CompanyService {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
     }
-    // --- assigning SUBSCRIPTION TO COMPANY --- //
+    // --- assigning subscription to company --- //
 
-    public void assignSubscriptionToCompany(Long id, Long subscriptionId) { // changed to id here instead of companyId //
-        var optionalCompany = companyRepository.findById(id);
+    public void assignSubscriptionToCompany(Long companyId, Long subscriptionId) { // changed to id here instead of companyId //
+        var optionalCompany = companyRepository.findById(companyId);
         var optionalSubscription = subscriptionRepository.findById(subscriptionId);
 
         if (optionalCompany.isPresent() && optionalSubscription.isPresent()) {
@@ -112,13 +116,41 @@ public class CompanyService {
             var subscription = optionalSubscription.get();
 
             company.setSubscription(subscription);
+            subscription.setCompany(company);
             companyRepository.save(company);
+            subscriptionRepository.save(subscription);
         } else {
             throw new RecordNotFoundException("Item with id " + subscriptionId + " could not be found.");
         }
     }
 
-    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
+    // add one team or more teams to company //
+    public void addTeam(List<TeamDto> teams, Company company) {
+        for (TeamDto teamDto : teams) {
+            if (!teamDto.getTeam().isEmpty()) {
+                Team team = teamService.transferTeamDtoToTeam(teamDto);
+                team.setCompany(company);
+                teamRepository.save(team);
+            }
+        }
+    }
+
+    // add one subscription to company //
+    public void addSubscription(SubscriptionDto subscriptionDto, Company company) {
+        if (subscriptionDto != null) {
+            Subscription subscription = subscriptionService.transferSubscriptionDtoToSubscription(subscriptionDto);
+            if (company.getSubscription() == null) {
+                subscription.setCompany(company);
+                company.setSubscription(subscription);
+                subscriptionRepository.save(subscription);
+                companyRepository.save(company);
+            } else {
+                System.out.println("Company already has a subscription");
+            }
+        }
+    }
+
+    // ******* transfer helper methods ******* //
 
     public CompanyDto transferCompanyToCompanyDto(Company company) {
 
@@ -150,27 +182,12 @@ public class CompanyService {
         return company;
     }
 
-    // --- TRANSFER COMPANY LIST DTO TO LIST --- // //TODO : check, if this is still necessary ? //
+    // --- TRANSFER COMPANY LIST DTO TO LIST ---
     public List<Company> transferCompanyDtoListToCompanyList(List<CompanyDto> companiesDtos) {
         List<Company> companies = new ArrayList<>();
         for (CompanyDto companyDto : companiesDtos) {
             companies.add(transferCompanyDtoToCompany(companyDto));
         }
         return companies;
-    }
-
-    // --- ADDING METHODS : adding team - subscription - working space - extra service here --- //
-
-
-    // -- ADD TEAM TO COMPANY METHOD  -- //
-// TODO : check if this is actually necessary ? //
-    private void addTeamToCompany(CompanyDto companyDto, Company company) {
-        if (companyDto.getTeams() != null && !companyDto.getTeams().isEmpty()) {
-            for (TeamDto teamDto : companyDto.getTeams()) {
-                Team team = teamService.transferTeamDtoToTeam(teamDto);
-                team.setCompany(company);
-                teamRepository.save(team);
-            }
-        }
     }
 }

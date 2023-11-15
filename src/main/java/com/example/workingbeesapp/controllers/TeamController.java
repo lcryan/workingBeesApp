@@ -1,7 +1,14 @@
 package com.example.workingbeesapp.controllers;
 
+import com.example.workingbeesapp.dtos.ExtraServiceDto;
+import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
+import com.example.workingbeesapp.dtos.WorkingSpaceDto;
+import com.example.workingbeesapp.models.Company;
+import com.example.workingbeesapp.models.Team;
+import com.example.workingbeesapp.repositories.TeamRepository;
 import com.example.workingbeesapp.services.TeamService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -16,9 +23,11 @@ import java.util.Optional;
 @RequestMapping("/teams")
 public class TeamController {
 
+    private final TeamRepository teamRepository;
     private final TeamService teamService;
 
-    public TeamController(TeamService teamService) {
+    public TeamController(TeamRepository teamRepository, TeamService teamService) {
+        this.teamRepository = teamRepository;
         this.teamService = teamService;
     }
 
@@ -63,6 +72,39 @@ public class TeamController {
         }
     }
 
+    //ADD EXTRA SERVICE TO TEAM //
+    @PostMapping("/{teamId}/addExtraService")
+    public ResponseEntity<Object> addExtraServiceToTeam(@PathVariable Long teamId, @RequestBody List<ExtraServiceDto> extraServices) {
+        try {
+            Optional<Team> optionalTeam = teamRepository.findById(teamId);
+            if (optionalTeam.isPresent()) {
+                Team team = optionalTeam.get();
+                teamService.addExtraService(extraServices, team);
+                return ResponseEntity.ok("Extra services added successfully to the team.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding extra services to the team.");
+        }
+    }
+
+    @PostMapping("/{teamId}/addWorkingSpace")
+    public ResponseEntity<Object> addWorkingSpaceToTeam(@PathVariable Long teamId, @RequestBody WorkingSpaceDto workingSpaceDto) {
+        try {
+            Optional<Team> optionalTeam = teamRepository.findById(teamId);
+            if (optionalTeam.isPresent()) {
+                Team team = optionalTeam.get();
+                teamService.addWorkingSpace(workingSpaceDto, team);
+                return ResponseEntity.ok("Working Space has been added successfully to team.");
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding extra working space to team.");
+        }
+    }
+
     // UPDATING TEAM //
     @PutMapping("/{id}")
     public ResponseEntity<TeamDto> updateTeam(@PathVariable Long id, @Validated @RequestBody TeamDto newTeam) {
@@ -74,22 +116,22 @@ public class TeamController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTeam(@PathVariable Long id) {
         teamService.deleteTeam(id);
-
         return ResponseEntity.noContent().build();
     }
 
     // ASSIGN COMPANY TO TEAM //
-    @PutMapping("/{id}/{companyId}")
+    @PutMapping("/{id}/assignCompany/{companyId}")
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
         teamService.assignsCompanyToTeam(id, companyId);
         return ResponseEntity.noContent().build();
     }
 
     // ASSIGN WORKING SPACE TO TEAM //
-    @PutMapping("/{id}/{workingSpaceId}")
+    @PutMapping("/{id}/assignWorkingSpace/{workingSpaceId}")
     public ResponseEntity<Object> assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
         teamService.assignWorkingSpaceToTeam(id, workingSpaceId);
         return ResponseEntity.noContent().build();
     }
 }
 
+// TODO : check on this - this comes out as ambiguous mapping in postman //

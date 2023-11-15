@@ -22,8 +22,11 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
+
     @Column(name = "id", nullable = false)
     private Long id;
+
+    private String team;
 
     @Column(name = "team_name")
     private String teamName;
@@ -45,4 +48,14 @@ public class Team {
     @OneToMany(mappedBy = "team")
     private List<ExtraService> extraServices;
 
+    // here you want to have a method that adds an extraService to team //
+    public void addExtraService(ExtraService extraService) {
+        this.extraServices.add(extraService);
+        extraService.setTeam(this);
+    }
+
+    public void addWorkingSpace(WorkingSpace workingSpace) {
+        this.workingSpace = workingSpace;
+        workingSpace.setTeam(this);
+    }
 }

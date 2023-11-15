@@ -1,9 +1,13 @@
 package com.example.workingbeesapp.services;
 
+import com.example.workingbeesapp.dtos.ExtraServiceDto;
+import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
+import com.example.workingbeesapp.dtos.WorkingSpaceDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
-import com.example.workingbeesapp.models.Team;
+import com.example.workingbeesapp.models.*;
 import com.example.workingbeesapp.repositories.CompanyRepository;
+import com.example.workingbeesapp.repositories.ExtraServiceRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
 import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
@@ -25,15 +29,19 @@ public class TeamService {
 
     private final ExtraServiceService extraServiceService;
 
-    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService, ExtraServiceService extraServiceService) {
+    private final ExtraServiceRepository extraServiceRepository;
+
+    public TeamService(TeamRepository teamRepository, CompanyRepository companyRepository, WorkingSpaceRepository workingSpaceRepository, WorkingSpaceService workingSpaceService, ExtraServiceService extraServiceService, ExtraServiceRepository extraServiceRepository) {
         this.teamRepository = teamRepository;
         this.companyRepository = companyRepository;
 
         this.workingSpaceRepository = workingSpaceRepository;
         this.workingSpaceService = workingSpaceService;
         this.extraServiceService = extraServiceService;
+        this.extraServiceRepository = extraServiceRepository;
     }
 
+    // FUNCTION FOR GET LIST OF TEAMS //
     public List<TeamDto> getAllTeams() {
         List<Team> teams = teamRepository.findAll();
         List<TeamDto> teamDtoList = new ArrayList<>();
@@ -44,14 +52,14 @@ public class TeamService {
         return teamDtoList;
     }
 
-    // function to GET TEAM BY COMPANY NAME //
+    // FUNCTION FOR GETTING TEAMS BY COMPANY NAME //
 
     public List<TeamDto> getTeamsByCompanyName(String companyName) {
         List<Team> teamList = teamRepository.findAllByCompanyNameEqualsIgnoreCase(companyName);
         return transferTeamListToTeamDtoList(teamList);
     }
 
-
+    // FUNCTION FOR GETTING ONE TEAM //
     public TeamDto getOneTeam(Long id) {
         Optional<Team> optionalTeam = teamRepository.findById(id);
         if (optionalTeam.isPresent()) {
@@ -62,7 +70,7 @@ public class TeamService {
         }
     }
 
-    // FUNCTION FOR CREATING ONE TEAM //
+    // FUNCTION FOR CREATING A TEAM //
 
     public TeamDto createTeam(TeamDto teamDto) {
         Team newTeam = transferTeamDtoToTeam(teamDto);
@@ -70,25 +78,26 @@ public class TeamService {
         return transferTeamToTeamDto(newTeam);
     }
 
-    // FUNCTION TO UPDATE TEAM //
+    // FUNCTION FOR UPDATING TEAM //
     public TeamDto updateTeam(Long id, TeamDto teamDto) {
-        if (teamRepository.findById(id).isPresent()) {
+        Optional<Team> optionalTeam = teamRepository.findById(id);
+        if (optionalTeam.isPresent()) {
 
-            Team team = teamRepository.findById(id).get();
+            Team team = optionalTeam.get();
 
-            Team company1 = transferTeamDtoToTeam(teamDto);
+            Team updatedTeam = transferTeamDtoToTeam(teamDto);
 
-            company1.setId(team.getId());
+            updatedTeam.setId(team.getId());
 
-            teamRepository.save(company1);
+            teamRepository.save(updatedTeam);
 
-            return transferTeamToTeamDto(company1);
+            return transferTeamToTeamDto(updatedTeam);
         } else {
             throw new RecordNotFoundException("Item of type Team with id: " + id + " could not be found.");
         }
     }
 
-    // FUNCTION TO DELETE TEAM //
+    // FUNCTION FOR DELETING A TEAM //
     public void deleteTeam(Long id) {
         if (teamRepository.existsById(id)) {
             Optional<Team> optionalTeam = teamRepository.findById(id);
@@ -136,17 +145,58 @@ public class TeamService {
         }
     }
 
+    public void addWorkingSpace(WorkingSpaceDto workingSpaceDto, Team team) {
+        if (workingSpaceDto != null) {
+            WorkingSpace workingSpace = workingSpaceService.transferWorkingSpaceDtoToWorkingSpace(workingSpaceDto);
+            if (team.getWorkingSpace() == null) {
+                workingSpace.setTeam(team);
+                team.setWorkingSpace(workingSpace);
+                workingSpaceRepository.save(workingSpace);
+                teamRepository.save(team);
+            } else {
+                System.out.println("Team already has a working space");
+            }
+        }
+    }
+
+
+/*    public void addSubscription(SubscriptionDto subscriptionDto, Company company) {
+        if (subscriptionDto != null) {
+            Subscription subscription = subscriptionService.transferSubscriptionDtoToSubscription(subscriptionDto);
+            if (company.getSubscription() == null) {
+                subscription.setCompany(company);
+                company.setSubscription(subscription);
+                subscriptionRepository.save(subscription);
+                companyRepository.save(company);
+            } else {
+                System.out.println("Company already has a subscription");
+            }
+        }
+    }*/
+    // method to add extra service to team - functional in postman //
+
+    public void addExtraService(List<ExtraServiceDto> extraServices, Team team) {
+        for (ExtraServiceDto extraService : extraServices) {
+            if (!extraService.getExtraService().isEmpty()) {
+                ExtraService extraService1 = extraServiceService.transferExtraServiceDtoToExtraService(extraService);
+                extraService1.setTeam(team);
+                extraServiceRepository.save(extraService1);
+            }
+        }
+    }
+
     // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
     public TeamDto transferTeamToTeamDto(Team team) {
 
         TeamDto teamDto = new TeamDto();
 
         teamDto.setId(team.getId());
+        teamDto.setTeam(team.getTeam());
         teamDto.setTeamName(team.getTeamName());
         teamDto.setCompanyName(team.getCompanyName());
         teamDto.setTeamSize(team.getTeamSize());
         if (team.getExtraServices() != null) {
-            teamDto.setExtraService(extraServiceService.transferExtraServiceListToExtraServiceListDto(team.getExtraServices()));
+            teamDto.setExtraServices(extraServiceService.transferExtraServiceListToExtraServiceListDto(team.getExtraServices()));
         }
         if (team.getWorkingSpace() != null) {
             teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
@@ -160,6 +210,7 @@ public class TeamService {
         Team team = new Team();
 
         team.setId(teamDto.getId());
+        team.setTeam(teamDto.getTeam());
         team.setTeamName(teamDto.getTeamName());
         team.setCompanyName(teamDto.getCompanyName());
         team.setTeamSize(teamDto.getTeamSize());
@@ -168,7 +219,7 @@ public class TeamService {
 
 // transfer methods for TeamList to TeamListDto //
 
-    // TODO : if this one is not needed : delete it! :) //
+    // TODO : IF THIS ONE IS UNUSED - DELETE IT! :) //
     public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {
         List<Team> teams = new ArrayList<>();
         for (TeamDto teamsDto : teamDtoList) {
