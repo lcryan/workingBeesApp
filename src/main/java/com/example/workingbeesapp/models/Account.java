@@ -33,15 +33,8 @@ public class Account {
 
     @Column(name = "companyName")
     private String companyName;
-
-    private String password;
-
-    @Column(name = "username", unique = true)
-    private String username;
-
-    @Column(name = "role_list")
-    private String roleList;
-
-    @OneToOne
+    // relation with Account //
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_username", referencedColumnName = "username")
     User user;
 }

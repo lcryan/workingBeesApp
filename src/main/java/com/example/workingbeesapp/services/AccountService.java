@@ -1,6 +1,7 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.AccountDto;
+import com.example.workingbeesapp.dtos.AccountUserDto;
 import com.example.workingbeesapp.exceptions.IdNotFoundException;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Account;
@@ -17,8 +18,10 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
 
+
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
+
     }
 
 
@@ -27,11 +30,15 @@ public class AccountService {
     public AccountDto getOneAccount(Long id) {
         Optional<Account> optionalAccount = accountRepository.findById(id);
         if (optionalAccount.isPresent()) {
-            return transferAccountToAccountDto(optionalAccount.get());
+            Account account = optionalAccount.get();
+            AccountDto accountDto = new AccountDto();
+            transferAccountToAccountDto(account, accountDto);
+            return (accountDto);
         } else {
-            throw new IdNotFoundException("Account with id: " + id + " could not be found.");
+            throw new IdNotFoundException("Item of type Account with id: " + id + " could not be found.");
         }
     }
+
 
     // Get all accounts //
     public List<AccountDto> getAllAccounts() {
@@ -40,39 +47,27 @@ public class AccountService {
         List<AccountDto> accountDtoList = new ArrayList<>();
 
         for (Account account : accountList) {
-            AccountDto accountDto = transferAccountToAccountDto(account);
+            AccountDto accountDto = new AccountDto();
+            transferAccountToAccountDto(account, accountDto);
+
             accountDtoList.add(accountDto);
         }
         return accountDtoList;
     }
 
     // Create account //
-    public AccountDto createAccount(AccountDto accountDto) {
+    public AccountDto createAccount(AccountUserDto accountUserDto) {
         Account account = new Account();
-        Account newAccount = transferAccountDtoToAccount(accountDto);
-        Account savedAccount = accountRepository.save(newAccount);
+        AccountUserDtoToAccount(accountUserDto, account);
 
-        return transferAccountToAccountDto(savedAccount);
+        Account storedAccount = accountRepository.save(account);
+
+        AccountDto storedAccountDto = new AccountDto();
+        transferAccountToAccountDto(storedAccount, storedAccountDto);
+
+        return storedAccountDto;
     }
 
-    // Update account //
-
-    public AccountDto updateAccount(Long id, AccountDto accountDto) {
-
-        Optional<Account> optionalAccount = accountRepository.findById(id);
-
-        if (optionalAccount.isPresent()) {
-
-            Account account = optionalAccount.get();
-            Account updatedAccount = transferAccountDtoToAccount(accountDto);
-            updatedAccount.setId(account.getId());
-            accountRepository.save(updatedAccount);
-
-            return transferAccountToAccountDto(updatedAccount);
-        } else {
-            throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
-        }
-    }
 
     // Delete account //
     public void deleteAccount(Long id) {
@@ -88,35 +83,33 @@ public class AccountService {
 
     // transfer methods model to dto and back //
 
-    public AccountDto transferAccountToAccountDto(Account account) {
-        var accountDto = new AccountDto();
+    // this is the adjusted new method for the accountUserDto //
+    private void AccountUserDtoToAccount(AccountUserDto accountUserDto, Account account) {
+        /*       account.setId(accountDto.getId());*/
+        account.setFirstName(accountUserDto.getFirstName());
+        account.setLastName(accountUserDto.getLastName());
+        account.setEmail(accountUserDto.getEmail());
+        account.setCompanyName(accountUserDto.getCompanyName());
+    }
 
+
+    private static void transferAccountToAccountDto(Account account, AccountDto accountDto) {
         accountDto.setId(account.getId());
         accountDto.setFirstName(account.getFirstName());
         accountDto.setLastName(account.getLastName());
         accountDto.setEmail(account.getEmail());
         accountDto.setCompanyName(account.getCompanyName());
-        accountDto.setPassword(account.getPassword());
-        accountDto.setUsername(account.getUsername());
-
-        return accountDto;
     }
 
-    public Account transferAccountDtoToAccount(AccountDto accountDto) {
-        var account = new Account();
-
-        account.setId(accountDto.getId());
+/*    private void transferAccountDtoToAccount(AccountDto accountDto, Account account) {
+        *//* account.setId(accountDto.getId());*//*
         account.setFirstName(accountDto.getFirstName());
         account.setLastName(accountDto.getLastName());
         account.setEmail(accountDto.getEmail());
         account.setCompanyName(accountDto.getCompanyName());
-        account.setPassword(accountDto.getPassword());
-        account.setUsername(accountDto.getUsername());
+    }*/
 
-        return account;
-    }
-
-    public List<Account> transferAccountDtoListToAccountList(List<AccountDto> allAccounts) {
+/*    public List<Account> transferAccountDtoListToAccountList(List<AccountDto> allAccounts) {
         List<Account> accountList = new ArrayList<>();
 
         for (AccountDto accountDto : allAccounts) {
@@ -124,5 +117,5 @@ public class AccountService {
             accountList.add(account);
         }
         return accountList;
-    }
+    }*/
 }

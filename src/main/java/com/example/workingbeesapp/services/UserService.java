@@ -1,6 +1,6 @@
 package com.example.workingbeesapp.services;
 
-import com.example.workingbeesapp.dtos.AccountDto;
+import com.example.workingbeesapp.dtos.AccountUserDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Account;
@@ -22,7 +22,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-
     private final AccountRepository accountRepository;
 
 
@@ -41,7 +40,7 @@ public class UserService {
 
         for (User user : userList) {
             UserDto userDto = new UserDto();
-            userToUserDto(user, userDto);
+            transferUserToUserDto(user, userDto);
 
             userDtos.add(userDto);
         }
@@ -53,7 +52,7 @@ public class UserService {
         Optional<User> user = userRepository.findById(username);
         if (user.isPresent()) {
             userDto = new UserDto();
-            userToUserDto(user.get(), userDto);
+            transferUserToUserDto(user.get(), userDto);
         } else {
             throw new RecordNotFoundException("User with username: " + username + " not found");
         }
@@ -70,42 +69,40 @@ public class UserService {
     }
     // ------------------------------------------------------ //
 
-    public UserDto createUserWithAccount(AccountDto accountDto) {
+    public UserDto createUserWithAccount(AccountUserDto accountUserDto) {
 
         UserDto userDto = new UserDto();
-        userDto.setUsername(accountDto.getUsername());
-        userDto.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        userDto.setUsername(accountUserDto.getUsername());
+        userDto.setPassword(passwordEncoder.encode(accountUserDto.getPassword()));
 
         User user = new User();
-        if (accountDto.getRoleList() != null) {
+        if (accountUserDto.getRoleList() != null) {
             List<Role> userRoles = new ArrayList<>();
-            for (String roleName : accountDto.getRoleList()) {
+            for (String roleName : accountUserDto.getRoleList()) {
                 Optional<Role> optionalRole = roleRepository.findById("ROLE_" + roleName);
                 optionalRole.ifPresent(userRoles::add);
             }
-            userDtoToUser(user, userDto);
+            transferUserDtoToUser(user, userDto);
             user.setRoleList(userRoles);
         }
 
         Account account = new Account();
-        accountDtoToAccount(accountDto, account);
+        transferAccountDtoToAccount(accountUserDto, account);
 
-        accountRepository.save(account);
-        userRepository.save(user);
-
+        account.setUser(user);
         user.setAccount(account);
 
         userRepository.save(user);
         accountRepository.save(account);
 
-        UserDto savedUserDto = new UserDto();
-        userToUserDto(user, savedUserDto);
+        UserDto storedUserDto = new UserDto();
+        transferUserToUserDto(user, storedUserDto);
 
-        return savedUserDto;
+        return storedUserDto;
     }
 
     // HELPER METHODS USER TO USER DTO AND USER DTO TO USER //
-    private static void userToUserDto(User user, UserDto userDto) {
+    private static void transferUserToUserDto(User user, UserDto userDto) {
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
 
@@ -116,16 +113,16 @@ public class UserService {
         userDto.setRoleList(roleList.toArray(new String[0]));
     }
 
-    private static void userDtoToUser(User user, UserDto userDto) {
+    private static void transferUserDtoToUser(User user, UserDto userDto) {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
     }
 
-    // Transfer method AccountDto to Account //
-    private void accountDtoToAccount(AccountDto accountDto, Account account) {
-        account.setCompanyName(accountDto.getCompanyName());
-        account.setUsername(accountDto.getUsername());
-        account.setPassword(accountDto.getPassword());
-        account.setRoleList(account.getRoleList());
+    // Transfer method AccountDto to Account using AccountUserDto //
+    private void transferAccountDtoToAccount(AccountUserDto accountUserDto, Account account) {
+        account.setFirstName(accountUserDto.getFirstName());
+        account.setLastName(accountUserDto.getLastName());
+        account.setEmail(accountUserDto.getEmail());
+        account.setCompanyName(accountUserDto.getCompanyName());
     }
 }

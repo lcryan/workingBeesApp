@@ -1,6 +1,6 @@
 package com.example.workingbeesapp.controllers;
 
-import com.example.workingbeesapp.dtos.AccountDto;
+import com.example.workingbeesapp.dtos.AccountUserDto;
 import com.example.workingbeesapp.dtos.UserDto;
 import com.example.workingbeesapp.services.UserService;
 import jakarta.validation.Valid;
@@ -20,8 +20,8 @@ public class UserController {
     }
 
     @PostMapping("") // POST /users
-    public ResponseEntity<UserDto> createUserWithAccount(@Valid @RequestBody AccountDto accountDto) {
-        UserDto result = userService.createUserWithAccount(accountDto);
+    public ResponseEntity<UserDto> createUserWithAccount(@Valid @RequestBody AccountUserDto accountUserDto) {
+        UserDto result = userService.createUserWithAccount(accountUserDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
@@ -43,5 +43,3 @@ public class UserController {
         return new ResponseEntity<>("User with username: " + username + " deleted", HttpStatus.OK);
     }
 }
-
-// TODO : 1. Create a new user with account - is still not 100 % correct - needs adjustment in acocunt and user model & dto //

@@ -28,18 +28,9 @@ public class AccountDto {
     @NotEmpty(message = "Last name cannot be empty")
     private String lastName;
 
-    @Email(message = "Email should be valid")
-    private String email;
-
-    @NotEmpty(message = "Username cannot be empty")
-    private String username;
-
     @NotEmpty(message = "Company name cannot be empty")
     private String companyName;
 
-    @NotEmpty(message = "Password cannot be empty")
-    private String password;
-
-    @NotEmpty(message = "A role has to be assigned")
-    private String[] roleList;
+    @Email(message = "Email should be valid")
+    private String email;
 }
