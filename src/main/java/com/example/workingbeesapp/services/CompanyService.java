@@ -97,7 +97,7 @@ public class CompanyService {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
     }
-    // --- assigning SUBSCRIPTION TO COMPANY --- //
+    // --- assigning subscription to company --- //
 
     public void assignSubscriptionToCompany(Long id, Long subscriptionId) { // changed to id here instead of companyId //
         var optionalCompany = companyRepository.findById(id);
@@ -114,7 +114,7 @@ public class CompanyService {
         }
     }
 
-    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
+    // ******* transfer helper methods ******* //
 
     public CompanyDto transferCompanyToCompanyDto(Company company) {
 
