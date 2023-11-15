@@ -102,4 +102,3 @@ public class WorkingSpaceController {
         return ResponseEntity.noContent().build();
     }
 }
-
