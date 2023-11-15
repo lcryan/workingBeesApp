@@ -79,17 +79,18 @@ public class TeamService {
 
     // FUNCTION FOR UPDATING TEAM //
     public TeamDto updateTeam(Long id, TeamDto teamDto) {
-        if (teamRepository.findById(id).isPresent()) {
+        Optional<Team> optionalTeam = teamRepository.findById(id);
+        if (optionalTeam.isPresent()) {
 
-            Team team = teamRepository.findById(id).get();
+            Team team = optionalTeam.get();
 
-            Team company1 = transferTeamDtoToTeam(teamDto);
+            Team updatedTeam = transferTeamDtoToTeam(teamDto);
 
-            company1.setId(team.getId());
+            updatedTeam.setId(team.getId());
 
-            teamRepository.save(company1);
+            teamRepository.save(updatedTeam);
 
-            return transferTeamToTeamDto(company1);
+            return transferTeamToTeamDto(updatedTeam);
         } else {
             throw new RecordNotFoundException("Item of type Team with id: " + id + " could not be found.");
         }
@@ -143,7 +144,7 @@ public class TeamService {
         }
     }
 
-   // 1. TODO: addWorkingSpaceToTeam here as well.  Make sure you call this in the controller too! //
+    // 1. TODO: addWorkingSpaceToTeam here as well.  Make sure you call this in the controller too! //
 
     // method to add extra service to team - functional in postman //
 
