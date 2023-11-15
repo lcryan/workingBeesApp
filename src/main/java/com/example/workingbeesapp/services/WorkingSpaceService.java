@@ -70,20 +70,21 @@ public class WorkingSpaceService {
     // TODO: has to be corrected! //
     // FUNCTION TO UPDATE COMPANY //
     public WorkingSpaceDto updateWorkingSpace(Long id, WorkingSpaceDto workingSpaceDto) {
-        if (workingSpaceRepository.findById(id).isPresent()) {
 
-            WorkingSpace workingSpace = workingSpaceRepository.findById(id).get();
+        Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
 
-            WorkingSpace workingSpace1 = transferWorkingSpaceDtoToWorkingSpace(workingSpaceDto);
+        if (optionalWorkingSpace.isPresent()) {
 
-            workingSpace1.setId(workingSpace.getId());
+            WorkingSpace workingSpace = optionalWorkingSpace.get();
+            WorkingSpace updatedWorkingSpace = transferWorkingSpaceDtoToWorkingSpace(workingSpaceDto);
+            updatedWorkingSpace.setId(workingSpace.getId());
+            workingSpaceRepository.save(updatedWorkingSpace);
 
-            workingSpaceRepository.save(workingSpace1);
-
-            return transferWorkingSpaceToWorkingSpaceDto(workingSpace1);
+            return transferWorkingSpaceToWorkingSpaceDto(updatedWorkingSpace);
         } else {
             throw new RecordNotFoundException("Item of type WorkingSpace with id: " + id + " could not be found.");
         }
+
     }
 
     // FUNCTION TO DELETE COMPANY //

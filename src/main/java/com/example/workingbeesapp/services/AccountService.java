@@ -62,11 +62,10 @@ public class AccountService {
         Optional<Account> optionalAccount = accountRepository.findById(id);
 
         if (optionalAccount.isPresent()) {
-            Account account = optionalAccount.get();
 
+            Account account = optionalAccount.get();
             Account updatedAccount = transferAccountDtoToAccount(accountDto);
             updatedAccount.setId(account.getId());
-
             accountRepository.save(updatedAccount);
 
             return transferAccountToAccountDto(updatedAccount);
