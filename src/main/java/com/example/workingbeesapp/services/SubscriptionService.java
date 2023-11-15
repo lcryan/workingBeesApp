@@ -56,17 +56,18 @@ public class SubscriptionService {
 
     // FUNCTION TO UPDATE COMPANY //
     public SubscriptionDto updateSubscription(Long id, SubscriptionDto subscriptionDto) {
-        if (subscriptionRepository.findById(id).isPresent()) {
 
-            Subscription subscription = subscriptionRepository.findById(id).get();
+        Optional<Subscription> optionalSubscription = subscriptionRepository.findById(id);
+        if (optionalSubscription.isPresent()) {
 
-            Subscription company1 = transferSubscriptionDtoToSubscription(subscriptionDto);
+            Subscription subscription = optionalSubscription.get();
 
-            company1.setId(subscription.getId());
+            Subscription updatedSubscription = transferSubscriptionDtoToSubscription(subscriptionDto);
+            updatedSubscription.setId(subscription.getId());
 
-            subscriptionRepository.save(company1);
+            subscriptionRepository.save(updatedSubscription);
 
-            return transferSubscriptionToSubscriptionDto(company1);
+            return transferSubscriptionToSubscriptionDto(updatedSubscription);
         } else {
             throw new RecordNotFoundException("Item of type Subscription with id: " + id + " could not be found.");
         }
