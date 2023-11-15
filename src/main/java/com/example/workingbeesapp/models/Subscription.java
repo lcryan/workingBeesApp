@@ -29,7 +29,6 @@ public class Subscription {
     @Column(name = "total_amount")
     private double totalAmount;
 
-    // TODO : make a relation of workingSpaces here : oneToMany //
     @Column(name = "working_space_type")
     private String workingSpaceType;
 
