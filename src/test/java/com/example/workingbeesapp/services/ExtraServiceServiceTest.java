@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,12 +47,32 @@ class ExtraServiceServiceTest {
         extraServiceTwo.setServicePrice(1000);
         extraServiceTwo.setServiceDuration("7 days");
 
-        List<ExtraService> testExtraServices = extraServiceService.transferExtraServiceDtoListToExtraServiceList(extraServiceService.getAllExtraServices());
+        List<ExtraService> testExtraServices = new ArrayList<>();
         testExtraServices.add(extraServiceOne);
         testExtraServices.add(extraServiceTwo);
 
+        ExtraServiceRepository extraServiceRepositoryFake = mock(ExtraServiceRepository.class);
+        when(extraServiceRepositoryFake.findAll()).thenReturn(testExtraServices);
+
+        ExtraServiceService extraServiceService = new ExtraServiceService(extraServiceRepositoryFake);
+
+        // ACT//
         List<ExtraServiceDto> result = extraServiceService.getAllExtraServices();
 
+
+        // ASSERT //
+        assertEquals(testExtraServices.size(), result.size());
+
+        // verify //
+
+        verify(extraServiceRepositoryFake, times(1)).findAll();
+
+        assertEquals(extraServiceOne.getId(), result.get(0).getId());
+        assertEquals(extraServiceOne.getServiceName(), result.get(0).getServiceName());
+        assertEquals(extraServiceOne.getCompanyName(), result.get(0).getCompanyName());
+        assertEquals(extraServiceOne.getServiceType(), result.get(0).getServiceType());
+        assertEquals(extraServiceOne.getServicePrice(), result.get(0).getServicePrice());
+        assertEquals(extraServiceOne.getServiceDuration(), result.get(0).getServiceDuration());
     }
 
     @Test
@@ -75,7 +96,13 @@ class ExtraServiceServiceTest {
         assertEquals(extraServiceDto.getServiceType(), result.getServiceType());
         assertEquals(extraServiceDto.getServicePrice(), result.getServicePrice());
         assertEquals(extraServiceDto.getServiceDuration(), result.getServiceDuration());
+    }
 
+    @Test
+    void getOneExtraServiceNotFound() {
+        Long id = 1L;
+        when(extraServiceRepository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(RecordNotFoundException.class, () -> extraServiceService.getOneExtraService(id));
     }
 
     @Test
@@ -235,34 +262,30 @@ class ExtraServiceServiceTest {
     @Test
     void transferExtraServiceListToExtraServiceListDto() {
 
-        ExtraServiceDto extraServiceDtoOne = new ExtraServiceDto();
-        extraServiceDtoOne.setId(1L);
-        extraServiceDtoOne.setServiceName("Breakfast Team Brunch");
-        extraServiceDtoOne.setCompanyName("Pixie Dust Inc.");
-        extraServiceDtoOne.setServiceType("breakfast");
-        extraServiceDtoOne.setServicePrice(1000);
-        extraServiceDtoOne.setServiceDuration("7 days");
+        ExtraService extraService1 = new ExtraService();
+        extraService1.setId(1L);
+        extraService1.setServiceName("Breakfast Team Brunch");
+        extraService1.setCompanyName("Pixie Dust Inc.");
+        extraService1.setServiceType("breakfast");
+        extraService1.setServicePrice(1000);
+        extraService1.setServiceDuration("7 days");
 
-        ExtraServiceDto extraServiceDtoTwo = new ExtraServiceDto();
-        extraServiceDtoTwo.setId(2L);
-        extraServiceDtoTwo.setServiceName("Lunch Team Brunch");
-        extraServiceDtoTwo.setCompanyName("Pixie Dust Inc.");
-        extraServiceDtoTwo.setServiceType("lunch");
-        extraServiceDtoTwo.setServicePrice(1000);
-        extraServiceDtoTwo.setServiceDuration("7 days");
-
-        List<ExtraServiceDto> extraServiceDtoList = List.of(extraServiceDtoOne, extraServiceDtoTwo);
-
-        List<ExtraService> extraServiceList = extraServiceService.transferExtraServiceDtoListToExtraServiceList(extraServiceDtoList);
-
-        assertEquals(extraServiceDtoList.get(0).getId(), extraServiceList.get(0).getId());
-        assertEquals(extraServiceDtoList.get(0).getServiceName(), extraServiceList.get(0).getServiceName());
-        assertEquals(extraServiceDtoList.get(0).getCompanyName(), extraServiceList.get(0).getCompanyName());
-        assertEquals(extraServiceDtoList.get(0).getServiceType(), extraServiceList.get(0).getServiceType());
-        assertEquals(extraServiceDtoList.get(0).getServicePrice(), extraServiceList.get(0).getServicePrice());
-        assertEquals(extraServiceDtoList.get(0).getServiceDuration(), extraServiceList.get(0).getServiceDuration());
+        ExtraService extraService2 = new ExtraService();
+        extraService2.setId(2L);
+        extraService2.setServiceName("Lunch Team Brunch");
+        extraService2.setCompanyName("Pixie Dust Inc.");
+        extraService2.setServiceType("lunch");
+        extraService2.setServicePrice(1000);
+        extraService2.setServiceDuration("7 days");
 
 
+        List<ExtraService> extraServiceList = new ArrayList<>();
+        extraServiceList.add(extraService1);
+        extraServiceList.add(extraService2);
+
+        List<ExtraServiceDto> extraServiceDtoList = extraServiceService.transferExtraServiceListToExtraServiceListDto(extraServiceList);
+
+        assertEquals(extraServiceDtoList.size(), extraServiceList.size());
     }
 
     @Test
