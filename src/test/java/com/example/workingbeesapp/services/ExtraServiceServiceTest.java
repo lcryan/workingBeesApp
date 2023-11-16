@@ -33,7 +33,7 @@ class ExtraServiceServiceTest {
 
         ExtraService extraServiceOne = new ExtraService();
         extraServiceOne.setId(1L);
-        extraServiceOne.setServiceName("Breakfast Team Brunch");
+        extraServiceOne.setExtraService("Breakfast Team Brunch");
         extraServiceOne.setCompanyName("Pixie Dust Inc.");
         extraServiceOne.setServiceType("breakfast");
         extraServiceOne.setServicePrice(1000);
@@ -41,7 +41,7 @@ class ExtraServiceServiceTest {
 
         ExtraService extraServiceTwo = new ExtraService();
         extraServiceTwo.setId(2L);
-        extraServiceTwo.setServiceName("Lunch Team Brunch");
+        extraServiceTwo.setExtraService("Lunch Team Brunch");
         extraServiceTwo.setCompanyName("Pixie Dust Inc.");
         extraServiceTwo.setServiceType("lunch");
         extraServiceTwo.setServicePrice(1000);
@@ -68,7 +68,7 @@ class ExtraServiceServiceTest {
         verify(extraServiceRepositoryFake, times(1)).findAll();
 
         assertEquals(extraServiceOne.getId(), result.get(0).getId());
-        assertEquals(extraServiceOne.getServiceName(), result.get(0).getServiceName());
+        assertEquals(extraServiceOne.getExtraService(), result.get(0).getExtraService());
         assertEquals(extraServiceOne.getCompanyName(), result.get(0).getCompanyName());
         assertEquals(extraServiceOne.getServiceType(), result.get(0).getServiceType());
         assertEquals(extraServiceOne.getServicePrice(), result.get(0).getServicePrice());
@@ -81,7 +81,7 @@ class ExtraServiceServiceTest {
         Long id = 1L;
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
         extraServiceDto.setId(id);
-        extraServiceDto.setServiceName("Breakfast Team Brunch");
+        extraServiceDto.setExtraService("Breakfast Team Brunch");
         extraServiceDto.setCompanyName("Pixie Dust Inc.");
         extraServiceDto.setServiceType("breakfast");
         extraServiceDto.setServicePrice(1000);
@@ -91,7 +91,7 @@ class ExtraServiceServiceTest {
         ExtraServiceDto result = extraServiceService.getOneExtraService(id);
 
         assertEquals(extraServiceDto.getId(), result.getId());
-        assertEquals(extraServiceDto.getServiceName(), result.getServiceName());
+        assertEquals(extraServiceDto.getExtraService(), result.getExtraService());
         assertEquals(extraServiceDto.getCompanyName(), result.getCompanyName());
         assertEquals(extraServiceDto.getServiceType(), result.getServiceType());
         assertEquals(extraServiceDto.getServicePrice(), result.getServicePrice());
@@ -109,14 +109,14 @@ class ExtraServiceServiceTest {
     void createExtraService() {
 
         ExtraServiceDto newExtraServiceDto = new ExtraServiceDto();
-        newExtraServiceDto.setServiceName("Breakfast Team Brunch");
+        newExtraServiceDto.setExtraService("Breakfast Team Brunch");
         newExtraServiceDto.setCompanyName("Pixie Dust Inc.");
         newExtraServiceDto.setServiceType("breakfast");
         newExtraServiceDto.setServicePrice(1000);
         newExtraServiceDto.setServiceDuration("7 days");
 
         ExtraService expectedExtraService = new ExtraService();
-        expectedExtraService.setServiceName("Breakfast Team Brunch");
+        expectedExtraService.setExtraService("Breakfast Team Brunch");
         expectedExtraService.setCompanyName("Pixie Dust Inc.");
         expectedExtraService.setServiceType("breakfast");
         expectedExtraService.setServicePrice(1000);
@@ -126,7 +126,7 @@ class ExtraServiceServiceTest {
 
         ExtraServiceDto result = extraServiceService.createExtraService(newExtraServiceDto);
 
-        assertEquals(expectedExtraService.getServiceName(), result.getServiceName());
+        assertEquals(expectedExtraService.getExtraService(), result.getExtraService());
         assertEquals(expectedExtraService.getCompanyName(), result.getCompanyName());
         assertEquals(expectedExtraService.getServiceType(), result.getServiceType());
         assertEquals(expectedExtraService.getServicePrice(), result.getServicePrice());
@@ -141,7 +141,7 @@ class ExtraServiceServiceTest {
         Long id = 1L;
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
         extraServiceDto.setId(id);
-        extraServiceDto.setServiceName("Breakfast Team Brunch");
+        extraServiceDto.setExtraService("Breakfast Team Brunch");
         extraServiceDto.setCompanyName("Pixie Dust Inc.");
         extraServiceDto.setServiceType("breakfast");
         extraServiceDto.setServicePrice(1000);
@@ -150,7 +150,7 @@ class ExtraServiceServiceTest {
         ExtraService existingExtraService = new ExtraService();
 
         existingExtraService.setId(id);
-        existingExtraService.setServiceName("Breakfast Team Brunch");
+        existingExtraService.setExtraService("Breakfast Team Brunch");
         existingExtraService.setCompanyName("Pixie Dust Inc.");
         existingExtraService.setServiceType("breakfast");
         existingExtraService.setServicePrice(1000);
@@ -165,7 +165,7 @@ class ExtraServiceServiceTest {
 
         assertNotNull(updatedExtraService);
         assertEquals(existingExtraService.getId(), updatedExtraService.getId());
-        assertEquals(existingExtraService.getServiceName(), updatedExtraService.getServiceName());
+        assertEquals(existingExtraService.getExtraService(), updatedExtraService.getExtraService());
         assertEquals(existingExtraService.getCompanyName(), updatedExtraService.getCompanyName());
         assertEquals(existingExtraService.getServiceType(), updatedExtraService.getServiceType());
         assertEquals(existingExtraService.getServicePrice(), updatedExtraService.getServicePrice());
@@ -184,7 +184,7 @@ class ExtraServiceServiceTest {
         Long id = 1L;
         ExtraService existingExtraService = new ExtraService();
         existingExtraService.setId(id);
-        existingExtraService.setServiceName("Breakfast Team Brunch");
+        existingExtraService.setExtraService("Breakfast Team Brunch");
         existingExtraService.setCompanyName("Pixie Dust Inc.");
         existingExtraService.setServiceType("breakfast");
         existingExtraService.setServicePrice(1000);
@@ -221,7 +221,7 @@ class ExtraServiceServiceTest {
 
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
         extraServiceDto.setId(1L);
-        extraServiceDto.setServiceName("Breakfast Team Brunch");
+        extraServiceDto.setExtraService("Breakfast Team Brunch");
         extraServiceDto.setCompanyName("Pixie Dust Inc.");
         extraServiceDto.setServiceType("breakfast");
         extraServiceDto.setServicePrice(1000);
@@ -230,7 +230,7 @@ class ExtraServiceServiceTest {
         ExtraService extraService = extraServiceService.transferExtraServiceDtoToExtraService(extraServiceDto);
 
         assertEquals(extraServiceDto.getId(), extraService.getId());
-        assertEquals(extraServiceDto.getServiceName(), extraService.getServiceName());
+        assertEquals(extraServiceDto.getExtraService(), extraService.getExtraService());
         assertEquals(extraServiceDto.getCompanyName(), extraService.getCompanyName());
         assertEquals(extraServiceDto.getServiceType(), extraService.getServiceType());
         assertEquals(extraServiceDto.getServicePrice(), extraService.getServicePrice());
@@ -243,7 +243,7 @@ class ExtraServiceServiceTest {
 
         ExtraService extraService = new ExtraService();
         extraService.setId(1L);
-        extraService.setServiceName("Breakfast Team Brunch");
+        extraService.setExtraService("Breakfast Team Brunch");
         extraService.setCompanyName("Pixie Dust Inc.");
         extraService.setServiceType("breakfast");
         extraService.setServicePrice(1000);
@@ -252,7 +252,7 @@ class ExtraServiceServiceTest {
         ExtraServiceDto extraServiceDto = extraServiceService.transferExtraServiceToExtraServiceDto(extraService);
 
         assertEquals(extraService.getId(), extraServiceDto.getId());
-        assertEquals(extraService.getServiceName(), extraServiceDto.getServiceName());
+        assertEquals(extraService.getExtraService(), extraServiceDto.getExtraService());
         assertEquals(extraService.getCompanyName(), extraServiceDto.getCompanyName());
         assertEquals(extraService.getServiceType(), extraServiceDto.getServiceType());
         assertEquals(extraService.getServicePrice(), extraServiceDto.getServicePrice());
@@ -264,7 +264,7 @@ class ExtraServiceServiceTest {
 
         ExtraService extraService1 = new ExtraService();
         extraService1.setId(1L);
-        extraService1.setServiceName("Breakfast Team Brunch");
+        extraService1.setExtraService("Breakfast Team Brunch");
         extraService1.setCompanyName("Pixie Dust Inc.");
         extraService1.setServiceType("breakfast");
         extraService1.setServicePrice(1000);
@@ -272,7 +272,7 @@ class ExtraServiceServiceTest {
 
         ExtraService extraService2 = new ExtraService();
         extraService2.setId(2L);
-        extraService2.setServiceName("Lunch Team Brunch");
+        extraService2.setExtraService("Lunch Team Brunch");
         extraService2.setCompanyName("Pixie Dust Inc.");
         extraService2.setServiceType("lunch");
         extraService2.setServicePrice(1000);
@@ -293,7 +293,7 @@ class ExtraServiceServiceTest {
 
         ExtraServiceDto extraServiceDtoOne = new ExtraServiceDto();
         extraServiceDtoOne.setId(1L);
-        extraServiceDtoOne.setServiceName("Breakfast Team Brunch");
+        extraServiceDtoOne.setExtraService("Breakfast Team Brunch");
         extraServiceDtoOne.setCompanyName("Pixie Dust Inc.");
         extraServiceDtoOne.setServiceType("breakfast");
         extraServiceDtoOne.setServicePrice(1000);
@@ -301,7 +301,7 @@ class ExtraServiceServiceTest {
 
         ExtraServiceDto extraServiceDtoTwo = new ExtraServiceDto();
         extraServiceDtoTwo.setId(2L);
-        extraServiceDtoTwo.setServiceName("Lunch Team Brunch");
+        extraServiceDtoTwo.setExtraService("Lunch Team Brunch");
         extraServiceDtoTwo.setCompanyName("Pixie Dust Inc.");
         extraServiceDtoTwo.setServiceType("lunch");
         extraServiceDtoTwo.setServicePrice(1000);

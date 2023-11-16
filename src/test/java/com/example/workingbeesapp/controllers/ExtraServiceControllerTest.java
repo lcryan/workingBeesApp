@@ -44,7 +44,7 @@ class ExtraServiceControllerTest {
 
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
         extraServiceDto.setId(1L);
-        extraServiceDto.setServiceName("Fancy Dinner Gala");
+        extraServiceDto.setExtraService("Fancy Dinner Gala");
         extraServiceDto.setCompanyName("Pixar Inc.");
         extraServiceDto.setServiceType("Dinner");
         extraServiceDto.setServiceDuration("2 hours");
@@ -57,7 +57,7 @@ class ExtraServiceControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.serviceName").value("Fancy Dinner Gala"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.extraService").value("Fancy Dinner Gala"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("Pixar Inc."))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.serviceType").value("Dinner"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.serviceDuration").value("2 hours"))
@@ -69,7 +69,7 @@ class ExtraServiceControllerTest {
 
         ExtraService extraService = new ExtraService();
         extraService.setId(1L);
-        extraService.setServiceName("Fancy Dinner Gala");
+        extraService.setExtraService("Fancy Dinner Gala");
         extraService.setCompanyName("Pixar Inc.");
         extraService.setServiceType("Dinner");
         extraService.setServiceDuration("2 hours");
@@ -79,7 +79,7 @@ class ExtraServiceControllerTest {
 
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
 
-        extraServiceDto.setServiceName(extraService.getServiceName());
+        extraServiceDto.setExtraService(extraService.getExtraService());
         extraServiceDto.setCompanyName(extraService.getCompanyName());
         extraServiceDto.setServiceType(extraService.getServiceType());
         extraServiceDto.setServiceDuration(extraService.getServiceDuration());
