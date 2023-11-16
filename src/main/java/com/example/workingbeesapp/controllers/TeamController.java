@@ -1,10 +1,8 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.ExtraServiceDto;
-import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.dtos.WorkingSpaceDto;
-import com.example.workingbeesapp.models.Company;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.TeamRepository;
 import com.example.workingbeesapp.services.TeamService;
@@ -22,7 +20,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/teams")
 public class TeamController {
-
     private final TeamRepository teamRepository;
     private final TeamService teamService;
 
@@ -31,7 +28,7 @@ public class TeamController {
         this.teamService = teamService;
     }
 
-    // GET LIST OF TEAMS ALPHABETICALLY SORTED BY COMPANY NAME, IF COMPANY NAME APPLICABLE //
+    //--- get list of teams sorted alphabetically by company name, if applicable ---//
     @GetMapping("")
     public ResponseEntity<List<TeamDto>> getTeamsByCompanyName(@RequestParam(value = "companyName", required = false) Optional<String> companyName) {
         List<TeamDto> teamDtos;
@@ -40,21 +37,19 @@ public class TeamController {
         } else {
             teamDtos = teamService.getTeamsByCompanyName(companyName.get());
         }
-        // sorting teams alphabetically //
+        //--- sorting teams alphabetically here ---//
         teamDtos.sort(Comparator.comparing(TeamDto::getCompanyName));
-
         return ResponseEntity.ok().body(teamDtos);
     }
 
-    // GET ONE TEAM BY ID//
+    //--- get team ---//
     @GetMapping("/{id}")
     public ResponseEntity<TeamDto> getTeam(@PathVariable Long id) {
         TeamDto teamDto = teamService.getOneTeam(id);
         return ResponseEntity.ok(teamDto);
     }
 
-
-    // CREATE TEAM //
+    //--- create team ---//
     @PostMapping("")
     public ResponseEntity<Object> createNewTeam(@Validated @RequestBody TeamDto teamDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -72,7 +67,21 @@ public class TeamController {
         }
     }
 
-    //ADD EXTRA SERVICE TO TEAM //
+    //--- update team ---//
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamDto> updateTeam(@PathVariable Long id, @Validated @RequestBody TeamDto newTeam) {
+        TeamDto teamDto1 = teamService.updateTeam(id, newTeam);
+        return ResponseEntity.ok().body(teamDto1);
+    }
+
+    //--- delete team ---//
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteTeam(@PathVariable Long id) {
+        teamService.deleteTeam(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    //--- add extra service to team ---//
     @PostMapping("/{teamId}/addExtraService")
     public ResponseEntity<Object> addExtraServiceToTeam(@PathVariable Long teamId, @RequestBody List<ExtraServiceDto> extraServices) {
         try {
@@ -89,6 +98,7 @@ public class TeamController {
         }
     }
 
+    //--- add working space to team ---//
     @PostMapping("/{teamId}/addWorkingSpace")
     public ResponseEntity<Object> addWorkingSpaceToTeam(@PathVariable Long teamId, @RequestBody WorkingSpaceDto workingSpaceDto) {
         try {
@@ -105,33 +115,17 @@ public class TeamController {
         }
     }
 
-    // UPDATING TEAM //
-    @PutMapping("/{id}")
-    public ResponseEntity<TeamDto> updateTeam(@PathVariable Long id, @Validated @RequestBody TeamDto newTeam) {
-        TeamDto teamDto1 = teamService.updateTeam(id, newTeam);
-        return ResponseEntity.ok().body(teamDto1);
-    }
-
-    // DELETING TEAM //
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteTeam(@PathVariable Long id) {
-        teamService.deleteTeam(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    // ASSIGN COMPANY TO TEAM //
+    //--- assign company to team ---//
     @PutMapping("/{id}/assignCompany/{companyId}")
     public ResponseEntity<Object> assignCompanyToTeam(@PathVariable("id") Long id, @PathVariable("companyId") Long companyId) {
         teamService.assignsCompanyToTeam(id, companyId);
         return ResponseEntity.noContent().build();
     }
 
-    // ASSIGN WORKING SPACE TO TEAM //
+    //--- assign working space to team ---//
     @PutMapping("/{id}/assignWorkingSpace/{workingSpaceId}")
     public ResponseEntity<Object> assignWorkingSpaceToTeam(@PathVariable("id") Long id, @PathVariable("workingSpaceId") Long workingSpaceId) {
         teamService.assignWorkingSpaceToTeam(id, workingSpaceId);
         return ResponseEntity.noContent().build();
     }
 }
-
-// TODO : check on this - this comes out as ambiguous mapping in postman //
