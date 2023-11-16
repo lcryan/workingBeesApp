@@ -33,7 +33,8 @@ public class Account {
 
     @Column(name = "companyName")
     private String companyName;
-    // relation with Account //
+
+    //--- relation with user ---//
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_username", referencedColumnName = "username")
     User user;
