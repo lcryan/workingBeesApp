@@ -19,7 +19,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false) // make sure to add id to db //
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "first_name")
