@@ -91,22 +91,6 @@ public class WorkingSpaceService {
         }
     }
 
-    //--- assign subscription to working space ---//
-    public void assignSubscriptionToWorkingSpace(Long id, Long subscriptionId) {
-        var optionalWorkingSpace = workingSpaceRepository.findById(id);
-        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
-
-        if (optionalWorkingSpace.isPresent() && optionalSubscription.isPresent()) {
-            var workingSpace = optionalWorkingSpace.get();
-            var subscription = optionalSubscription.get();
-
-            workingSpace.setSubscription(subscription);
-            workingSpaceRepository.save(workingSpace);
-        } else {
-            throw new RecordNotFoundException("Item not found.");
-        }
-    }
-
     //--- transfer helper method for working space to working space dto ---//
     public WorkingSpaceDto transferWorkingSpaceToWorkingSpaceDto(WorkingSpace workingSpace) {
 
@@ -157,6 +141,22 @@ public class WorkingSpaceService {
         return workingSpaceDtoList;
     }
 
+    //--- assign subscription to working space ---//
+    public void assignSubscriptionToWorkingSpace(Long id, Long subscriptionId) {
+        var optionalWorkingSpace = workingSpaceRepository.findById(id);
+        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
+
+        if (optionalWorkingSpace.isPresent() && optionalSubscription.isPresent()) {
+            var workingSpace = optionalWorkingSpace.get();
+            var subscription = optionalSubscription.get();
+
+            workingSpace.setSubscription(subscription);
+            workingSpaceRepository.save(workingSpace);
+        } else {
+            throw new RecordNotFoundException("Item not found.");
+        }
+    }
+
     //--- assign image to working space ---//
     public void assignImageToWorkingSpace(String fileName, Long id) {
         Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
@@ -165,17 +165,6 @@ public class WorkingSpaceService {
             FileDocument image = fileUploadResponse.get();
             WorkingSpace workingSpace = optionalWorkingSpace.get();
             workingSpace.setFile(image);
-            workingSpaceRepository.save(workingSpace);
-        }
-    }
-
-    //--- delete image from working space ---//
-    //TODO: delete image ? Do I really want to do this ?//
-    public void deleteImageFromWorkingSpace(Long id) {
-        Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
-        if (optionalWorkingSpace.isPresent()) {
-            WorkingSpace workingSpace = optionalWorkingSpace.get();
-            workingSpace.setFile(null);
             workingSpaceRepository.save(workingSpace);
         }
     }
