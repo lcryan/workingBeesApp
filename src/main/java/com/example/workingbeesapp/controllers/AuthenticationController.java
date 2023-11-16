@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authentication") // REMEMBER TO PASS AUTHENTICATION IN THE HEADER!!! AND NOT AUTH !!! // POST /authentication
-public class AuthenticationController {
+@RequestMapping("/authentication")
 
-    private final AuthenticationManager authenticationManager; // Spring Security
+public class AuthenticationController {
+    private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     public AuthenticationController(AuthenticationManager man, JwtService jwtService) {
@@ -28,11 +28,10 @@ public class AuthenticationController {
         this.jwtService = jwtService;
     }
 
-    @PostMapping  // POST /authentication
+    @PostMapping
     public ResponseEntity<Object> signIn(@Valid @RequestBody AuthenticationDto authenticationDto) {
         UsernamePasswordAuthenticationToken up =
                 new UsernamePasswordAuthenticationToken(authenticationDto.getUsername(), authenticationDto.getPassword());
-
         try {
             Authentication authentication = authenticationManager.authenticate(up);
 
