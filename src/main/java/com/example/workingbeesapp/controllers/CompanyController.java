@@ -19,7 +19,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/companies")
 public class CompanyController {
-
     private final CompanyService companyService;
     private final CompanyRepository companyRepository;
 
@@ -28,22 +27,21 @@ public class CompanyController {
         this.companyRepository = companyRepository;
     }
 
-    // GET COMPANY LIST - BY NAME IF APPLICABLE //
+    //--- get all companies ---//
     @GetMapping("")
     public ResponseEntity<List<CompanyDto>> getAllCompanies() {
         List<CompanyDto> companyDtoList = companyService.getAllCompanies();
         return ResponseEntity.ok(companyDtoList);
     }
 
-    // GET ONE COMPANY BY ID //
+    //--- get company ---//
     @GetMapping("/{id}")
     public ResponseEntity<CompanyDto> getCompany(@PathVariable Long id) {
         CompanyDto companyDto = companyService.getOneCompany(id);
         return ResponseEntity.ok(companyDto);
     }
 
-
-    // CREATE COMPANY //
+    //--- create company ---//
     @PostMapping("")
     public ResponseEntity<Object> createNewCompany(@Validated @RequestBody CompanyDto companyDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -61,16 +59,14 @@ public class CompanyController {
         }
     }
 
-
-    // UPDATE COMPANY --- functional //
+    //--- update company ---//
     @PutMapping("/{id}")
     public ResponseEntity<CompanyDto> updateCompany(@PathVariable Long id, @Validated @RequestBody CompanyDto newCompany) {
         CompanyDto companyDto1 = companyService.updateCompany(id, newCompany);
         return ResponseEntity.ok().body(companyDto1);
     }
 
-    // DELETE COMPANY --- functional //
-
+    //--- delete company ---//
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteCompany(@PathVariable Long id) {
         companyService.deleteCompany(id);
@@ -78,13 +74,14 @@ public class CompanyController {
         return ResponseEntity.noContent().build();
     }
 
-    // ASSIGN SUBSCRIPTION TO COMPANY //
+    //--- assign subscription to company ---//
     @PutMapping("/{id}/{subscriptionId}")
     public ResponseEntity<Object> assignSubscriptionToCompany(@PathVariable("id") Long id, @PathVariable("subscriptionId") Long subscriptionId) {
         companyService.assignSubscriptionToCompany(id, subscriptionId);
         return ResponseEntity.noContent().build();
     }
 
+    //--- add team to company ---//
     @PostMapping("/{companyId}/addTeam")
     public ResponseEntity<Object> addTeamsToCompany(@PathVariable Long companyId, @RequestBody List<TeamDto> teamDtoList) {
         try {
@@ -101,6 +98,7 @@ public class CompanyController {
         }
     }
 
+    //--- add subscription to company ---//
     @PostMapping("/{companyId}/addSubscription")
     public ResponseEntity<Object> addSubscriptionToCompany(@PathVariable Long companyId, @RequestBody SubscriptionDto subscriptionDto) {
         try {
