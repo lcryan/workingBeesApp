@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Service
 public class WorkingSpaceService {
-
     private final WorkingSpaceRepository workingSpaceRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final DocFileRepository docFileRepository;
@@ -109,7 +108,6 @@ public class WorkingSpaceService {
     }
 
     //--- transfer helper method for working space to working space dto ---//
-
     public WorkingSpaceDto transferWorkingSpaceToWorkingSpaceDto(WorkingSpace workingSpace) {
 
         WorkingSpaceDto workingSpaceDto = new WorkingSpaceDto();
@@ -167,6 +165,17 @@ public class WorkingSpaceService {
             FileDocument image = fileUploadResponse.get();
             WorkingSpace workingSpace = optionalWorkingSpace.get();
             workingSpace.setFile(image);
+            workingSpaceRepository.save(workingSpace);
+        }
+    }
+
+    //--- delete image from working space ---//
+    //TODO: delete image ? Do I really want to do this ?//
+    public void deleteImageFromWorkingSpace(Long id) {
+        Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
+        if (optionalWorkingSpace.isPresent()) {
+            WorkingSpace workingSpace = optionalWorkingSpace.get();
+            workingSpace.setFile(null);
             workingSpaceRepository.save(workingSpace);
         }
     }
