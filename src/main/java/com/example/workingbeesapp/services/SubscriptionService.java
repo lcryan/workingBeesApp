@@ -4,6 +4,7 @@ import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
+import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class SubscriptionService {
     public SubscriptionService(SubscriptionRepository subscriptionRepository, WorkingSpaceService workingSpaceService) {
         this.subscriptionRepository = subscriptionRepository;
         this.workingSpaceService = workingSpaceService;
+
     }
 
     //--- get all subscriptions ---//
@@ -109,4 +111,3 @@ public class SubscriptionService {
         return subscription;
     }
 }
-

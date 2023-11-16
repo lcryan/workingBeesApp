@@ -1,6 +1,7 @@
 package com.example.workingbeesapp.controllers;
 
 import com.example.workingbeesapp.dtos.SubscriptionDto;
+import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import com.example.workingbeesapp.services.SubscriptionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,7 +16,7 @@ import java.util.List;
 public class SubscriptionController {
     private final SubscriptionService subscriptionService;
 
-    public SubscriptionController(SubscriptionService subscriptionService) {
+    public SubscriptionController(SubscriptionService subscriptionService, SubscriptionRepository subscriptionRepository) {
         this.subscriptionService = subscriptionService;
     }
 
@@ -68,5 +69,3 @@ public class SubscriptionController {
     }
 }
 
-
-// TODO : check why company name comes out as null in postman //
