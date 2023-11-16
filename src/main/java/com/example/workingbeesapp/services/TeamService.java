@@ -17,7 +17,6 @@ import java.util.Optional;
 
 @Service
 public class TeamService {
-
     private final TeamRepository teamRepository;
     private final CompanyRepository companyRepository;
     private final WorkingSpaceRepository workingSpaceRepository;
@@ -173,7 +172,6 @@ public class TeamService {
         if (team.getWorkingSpace() != null) {
             teamDto.setWorkingSpace(workingSpaceService.transferWorkingSpaceToWorkingSpaceDto(team.getWorkingSpace()));
         }
-
         return teamDto;
     }
 
@@ -187,16 +185,6 @@ public class TeamService {
         team.setCompanyName(teamDto.getCompanyName());
         team.setTeamSize(teamDto.getTeamSize());
         return team;
-    }
-
-    // transfer methods for team list to team dto //
-    // TODO : IF THIS ONE IS UNUSED - DELETE IT! :) //
-    public List<Team> transferTeamDtoListToTeamList(List<TeamDto> teamDtoList) {
-        List<Team> teams = new ArrayList<>();
-        for (TeamDto teamsDto : teamDtoList) {
-            teams.add(transferTeamDtoToTeam(teamsDto));
-        }
-        return teams;
     }
 
     //--- transfer helper method team list to team dto list ---//
