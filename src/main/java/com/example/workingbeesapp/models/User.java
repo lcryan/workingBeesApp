@@ -25,12 +25,11 @@ public class User {
     private String username;
     private String password;
 
-    // RELATION WITH COMPANY ONE TO ONE //
+    //--- relation with account ---//
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     Account account;
 
-    // RELATION WITH ROLE MANY TO MANY //
+    //--- relation with role ---//
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roleList = new ArrayList<>();
-
 }
