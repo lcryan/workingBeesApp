@@ -23,7 +23,6 @@ import java.util.Objects;
 
 @Service
 public class FileStorageService {
-
     private Path fileStoragePath;
     private final String fileStorageLocation;
     private final DocFileRepository docFileRepository;
@@ -45,7 +44,6 @@ public class FileStorageService {
     public String storeFile(MultipartFile file, String url, Long id) {
 
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-
         Path filePath = Paths.get(fileStoragePath + File.separator + fileName);
 
         try {
@@ -55,14 +53,12 @@ public class FileStorageService {
         }
 
         docFileRepository.save(new FileDocument(id, file.getContentType(), url, fileName));
-
         return fileName;
     }
 
     public Resource downLoadFile(String fileName) {
 
         Path path = Paths.get(fileStorageLocation).toAbsolutePath().resolve(fileName);
-
         Resource resource;
 
         try {
@@ -93,10 +89,10 @@ public class FileStorageService {
     }
 
     // Testing deleting file method //
+    //TODO : check on this in the controller - is this needed ? //
     public FileDocument deleteFile(Long id) {
         FileDocument fileDocument = docFileRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("File with id " + id + "not found"));
         docFileRepository.deleteById(id);
         return fileDocument;
     }
-    // TODO : add this to the controller ! //
 }
