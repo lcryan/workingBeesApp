@@ -21,6 +21,7 @@ public class FileDocument {
     private Long id;
 
     private String fileName;
+
     private String contentType;
 
     private String url;
