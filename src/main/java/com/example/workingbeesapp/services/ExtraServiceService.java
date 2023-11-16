@@ -12,15 +12,13 @@ import java.util.Optional;
 
 @Service
 public class ExtraServiceService {
-
     private final ExtraServiceRepository extraServiceRepository;
-
 
     public ExtraServiceService(ExtraServiceRepository extraServiceRepository) {
         this.extraServiceRepository = extraServiceRepository;
     }
 
-    // FUNCTION FOR GETTING EXTRA-SERVICE LIST --- functional //
+    //--- get all extra services ---//
     public List<ExtraServiceDto> getAllExtraServices() {
         List<ExtraService> extraServices = extraServiceRepository.findAll();
         List<ExtraServiceDto> extraServiceDtoList = new ArrayList<>();
@@ -31,9 +29,7 @@ public class ExtraServiceService {
         return extraServiceDtoList;
     }
 
-
-    // FUNCTION FOR GET ONE EXTRA-SERVICE //
-
+    //--- get extra service ---//
     public ExtraServiceDto getOneExtraService(Long id) {
         Optional<ExtraService> optionalExtraService = extraServiceRepository.findById(id);
         if (optionalExtraService.isPresent()) {
@@ -44,16 +40,14 @@ public class ExtraServiceService {
         }
     }
 
-
-    // FUNCTION FOR CREATING ONE EXTRA-SERVICE //
-
+    //--- create extra service ---//
     public ExtraServiceDto createExtraService(ExtraServiceDto extraServiceDto) {
         ExtraService newExtraService = transferExtraServiceDtoToExtraService(extraServiceDto);
         extraServiceRepository.save(newExtraService);
         return transferExtraServiceToExtraServiceDto(newExtraService);
     }
 
-    // FUNCTION TO UPDATE EXTRA-SERVICE //
+    //--- update extra service ---//
     public ExtraServiceDto updateExtraService(Long id, ExtraServiceDto extraServiceDto) {
 
         Optional<ExtraService> optionalExtraService = extraServiceRepository.findById(id);
@@ -63,7 +57,6 @@ public class ExtraServiceService {
 
             ExtraService updatedExtraService = transferExtraServiceDtoToExtraService(extraServiceDto);
             updatedExtraService.setId(extraService.getId());
-
             extraServiceRepository.save(updatedExtraService);
 
             return transferExtraServiceToExtraServiceDto(updatedExtraService);
@@ -72,7 +65,7 @@ public class ExtraServiceService {
         }
     }
 
-    // FUNCTION TO DELETE EXTRA-SERVICE //
+    //--- delete extra service ---//
     public void deleteExtraService(Long id) {
         if (extraServiceRepository.existsById(id)) {
             Optional<ExtraService> optionalExtraService = extraServiceRepository.findById(id);
@@ -84,9 +77,7 @@ public class ExtraServiceService {
         }
     }
 
-
-    // ******* TRANSFER HELPER METHODS HERE  ******* //
-
+    //--- transfer extra service to extra service dto ---//
     public ExtraServiceDto transferExtraServiceToExtraServiceDto(ExtraService extraService) {
 
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
@@ -101,6 +92,7 @@ public class ExtraServiceService {
         return extraServiceDto;
     }
 
+    //--- transfer extra service dto to extra service ---//
     public ExtraService transferExtraServiceDtoToExtraService(ExtraServiceDto extraServiceDto) {
 
         ExtraService extraService = new ExtraService();
@@ -115,7 +107,7 @@ public class ExtraServiceService {
         return extraService;
     }
 
-    // TRANSFER METHOD FOR LIST EXTRA SERVICE //
+    //--- transfer extra service list to extra service list dto ---//
     public List<ExtraServiceDto> transferExtraServiceListToExtraServiceListDto(List<ExtraService> extraServiceList) {
         List<ExtraServiceDto> extraServiceDtoList = new ArrayList<>();
         for (ExtraService extraServices : extraServiceList) {
@@ -124,7 +116,7 @@ public class ExtraServiceService {
         return extraServiceDtoList;
     }
 
-    // TODO : check, if you need this function at all - if not : remove it - obsolete! //
+    //--- transfer extra service dto list to extra service list ---//
     public List<ExtraService> transferExtraServiceDtoListToExtraServiceList(List<ExtraServiceDto> extraServiceDtoList) {
         List<ExtraService> extraServiceList1 = new ArrayList<>();
         for (ExtraServiceDto extraServiceDtos : extraServiceDtoList) {
@@ -132,5 +124,4 @@ public class ExtraServiceService {
         }
         return extraServiceList1;
     }
-
 }
