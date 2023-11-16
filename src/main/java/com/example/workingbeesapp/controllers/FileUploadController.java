@@ -16,14 +16,13 @@ import java.util.List;
 
 @RestController
 public class FileUploadController {
-
     private final FileStorageService fileStorageService;
 
     public FileUploadController(FileStorageService fileStorageService) {
         this.fileStorageService = fileStorageService;
     }
 
-    //    post for single upload //
+    //--- single upload ---//
     @PostMapping("single/upload")
     public FileUploadResponse singleFileUpload(@RequestParam("file") MultipartFile file, Long id) {
 
@@ -35,25 +34,22 @@ public class FileUploadController {
         return new FileUploadResponse(fileName, contentType, url);
     }
 
-    //    get for single download //
+    //--- single download ---//
     @GetMapping("/download/{fileName}")
     ResponseEntity<Resource> downLoadSingleFile(@PathVariable String fileName, HttpServletRequest request) {
 
         Resource resource = fileStorageService.downLoadFile(fileName);
-
         String mimeType;
-
         try {
             mimeType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException e) {
             mimeType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
         }
 
-
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(mimeType)).header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename()).body(resource);
     }
 
-    //    get all names in directory //
+    //--- get all file names ---//
     @GetMapping("/download/allNames")
     List<String> downLoadMultipleFileNames() {
 
