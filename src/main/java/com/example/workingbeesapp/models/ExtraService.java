@@ -21,8 +21,8 @@ public class ExtraService {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "service_name")
-    private String serviceName;
+    @Column(name = "extra_service_name")
+    private String extraService;
 
     @Column(name = "company_name")
     private String companyName;
@@ -36,6 +36,7 @@ public class ExtraService {
     @Column(name = "service_duration")
     private String serviceDuration;
 
+    //--- relation with team ---//
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Team team;

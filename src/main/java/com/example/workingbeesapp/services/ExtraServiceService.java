@@ -92,7 +92,7 @@ public class ExtraServiceService {
         ExtraServiceDto extraServiceDto = new ExtraServiceDto();
 
         extraServiceDto.setId(extraService.getId());
-        extraServiceDto.setServiceName(extraService.getServiceName());
+        extraServiceDto.setExtraService(extraService.getExtraService());
         extraServiceDto.setCompanyName(extraService.getCompanyName());
         extraServiceDto.setServiceType(extraService.getServiceType());
         extraServiceDto.setServiceDuration(extraService.getServiceDuration());
@@ -106,7 +106,7 @@ public class ExtraServiceService {
         ExtraService extraService = new ExtraService();
 
         extraService.setId(extraServiceDto.getId());
-        extraService.setServiceName(extraServiceDto.getServiceName());
+        extraService.setExtraService(extraServiceDto.getExtraService());
         extraService.setCompanyName(extraServiceDto.getCompanyName());
         extraService.setServiceType(extraServiceDto.getServiceType());
         extraService.setServiceDuration(extraServiceDto.getServiceDuration());

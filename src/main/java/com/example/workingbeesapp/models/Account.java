@@ -19,7 +19,7 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false) // make sure to add id to db //
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "first_name")
@@ -33,7 +33,8 @@ public class Account {
 
     @Column(name = "companyName")
     private String companyName;
-    // relation with Account //
+
+    //--- relation with user ---//
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_username", referencedColumnName = "username")
     User user;

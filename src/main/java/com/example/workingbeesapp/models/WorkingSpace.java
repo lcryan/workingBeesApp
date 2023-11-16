@@ -17,15 +17,13 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "working_spaces")
 public class WorkingSpace {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(name = "space_name")
-    private String name;
-
     private String workingSpace;
 
     @Column(name = "space_type")
@@ -49,13 +47,16 @@ public class WorkingSpace {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    //---relation with team---//
     @OneToOne(mappedBy = "workingSpace")
     private Team team;
 
+    //---relation with subscription---//
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
 
+    //---relation with file---//
     @OneToOne
     FileDocument file;
 }

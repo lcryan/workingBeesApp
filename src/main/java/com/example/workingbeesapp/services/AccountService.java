@@ -100,22 +100,4 @@ public class AccountService {
         accountDto.setEmail(account.getEmail());
         accountDto.setCompanyName(account.getCompanyName());
     }
-
-/*    private void transferAccountDtoToAccount(AccountDto accountDto, Account account) {
-        *//* account.setId(accountDto.getId());*//*
-        account.setFirstName(accountDto.getFirstName());
-        account.setLastName(accountDto.getLastName());
-        account.setEmail(accountDto.getEmail());
-        account.setCompanyName(accountDto.getCompanyName());
-    }*/
-
-/*    public List<Account> transferAccountDtoListToAccountList(List<AccountDto> allAccounts) {
-        List<Account> accountList = new ArrayList<>();
-
-        for (AccountDto accountDto : allAccounts) {
-            Account account = transferAccountDtoToAccount(accountDto);
-            accountList.add(account);
-        }
-        return accountList;
-    }*/
 }

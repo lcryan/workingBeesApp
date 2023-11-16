@@ -180,8 +180,8 @@ class CompanyServiceTest {
 
         Subscription existingSubscription = new Subscription();
         existingSubscription.setId(subscriptionId);
+        existingSubscription.setSubscription("Up! Rental Agreement");
         existingSubscription.setCompanyName("Up! Coop.");
-        existingSubscription.setWorkingSpaceType("Tokyo Valley CEO meeting room");
         existingSubscription.setTotalAmount(1000);
 
         when(companyRepository.findById(companyId)).thenReturn(Optional.of(existingCompany));

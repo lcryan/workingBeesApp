@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfiguration {
-
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
@@ -51,8 +50,6 @@ public class SpringSecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        // defining the authorization rules below per entity //
-
 
                         // for authentication //
                         .requestMatchers(HttpMethod.POST, "/authentication").permitAll()
@@ -80,6 +77,9 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/companies/{id}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT, "/companies/{id}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.DELETE, "/companies/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/companies/{companyId}/addSubscription").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/companies/{companyId}/addTeam").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/companies/{companyId}/{subscriptionId}").hasRole("ADMIN")
 
                         // for working spaces //
                         .requestMatchers(HttpMethod.POST, "/workingSpaces").hasRole("ADMIN") // only admin assigns working spaces //
@@ -87,6 +87,8 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/workingSpaces/{workingSpaceId}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT, "/workingSpaces/{workingSpaceId}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/workingSpaces/{workingSpaceId}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/workingSpaces/{workingSpaceId}/{subscriptionId}").hasRole("ADMIN")
+
 
                         // for subscriptions //
                         .requestMatchers(HttpMethod.POST, "/subscriptions").hasRole("ADMIN")
@@ -96,15 +98,16 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/subscriptions/{subscriptionId}").hasRole("ADMIN")
 
                         // for extra services //
-                        .requestMatchers(HttpMethod.POST, "/extraservices").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.POST, "/extraservices").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/extraservices").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.GET, "/extraservices/{extraServiceId}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT, "/extraservices/{extraServiceId}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.DELETE, "/extraservices/{extraServiceId}").hasRole("ADMIN")
 
+
                         // for file upload and download //
-                        .requestMatchers(HttpMethod.POST, "/single/fileUpload").hasRole("ADMIN") // single upload
-                        .requestMatchers(HttpMethod.GET, "/download/{fileName}").hasAnyRole("ADMIN", "USER") // single download
+                        .requestMatchers(HttpMethod.POST, "/single/fileUpload").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/download/{fileName}").hasAnyRole("ADMIN", "USER")
 
                         // for teams //
                         .requestMatchers(HttpMethod.POST, "/teams").hasAnyRole("ADMIN", "USER")
@@ -112,13 +115,15 @@ public class SpringSecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/teams/{teamId}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.PUT, "/teams/{teamId}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.DELETE, "/teams/{teamId}").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.POST, "/teams/{workingSpaceId}/addWorkingSpace").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.POST, "/teams/{extraServiceId}/addExtraService").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.PUT, "/teams/{teamId}/{companyId}").hasAnyRole("ADMIN", "USER")
 
                         .anyRequest().permitAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf -> csrf.disable())
-                .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class); // This will be solved once the JWT service is set up, hopefully //
-
+                .addFilterBefore(new JwtRequestFilter(jwtService, userDetailsService()), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
