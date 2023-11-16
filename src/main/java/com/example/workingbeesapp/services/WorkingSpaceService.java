@@ -17,11 +17,8 @@ import java.util.Optional;
 public class WorkingSpaceService {
 
     private final WorkingSpaceRepository workingSpaceRepository;
-
     private final SubscriptionRepository subscriptionRepository;
-
     private final DocFileRepository docFileRepository;
-
 
     public WorkingSpaceService(WorkingSpaceRepository workingSpaceRepository, SubscriptionRepository subscriptionRepository, DocFileRepository docFileRepository) {
         this.workingSpaceRepository = workingSpaceRepository;
@@ -29,7 +26,7 @@ public class WorkingSpaceService {
         this.docFileRepository = docFileRepository;
     }
 
-    // GET LIST OF WORKING SPACES //
+    //--- get all working spaces ---//
     public List<WorkingSpaceDto> getAllWorkingSpaces() {
         List<WorkingSpace> workingSpaces = workingSpaceRepository.findAll();
         List<WorkingSpaceDto> workingSpaceDtoList = new ArrayList<>();
@@ -40,15 +37,13 @@ public class WorkingSpaceService {
         return workingSpaceDtoList;
     }
 
-    // GET LIST OF WORKING SPACES BY COMPANY NAME //
-
+    //--- get all working spaces by company name ---//
     public List<WorkingSpaceDto> getWorkingSpacesByCompanyName(String companyName) {
         List<WorkingSpace> workingSpaceList = workingSpaceRepository.findAllByCompanyNameEqualsIgnoreCase(companyName);
         return transferWorkingSpaceListToWorkingSpaceDtoList(workingSpaceList);
     }
 
-    // FUNCTION FOR GET ONE COMPANY //
-
+    //--- get one working space by id ---//
     public WorkingSpaceDto getOneWorkingSpace(Long id) {
         Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
         if (optionalWorkingSpace.isPresent()) {
@@ -59,15 +54,14 @@ public class WorkingSpaceService {
         }
     }
 
-    // FUNCTION FOR CREATING ONE COMPANY //
-
+    //--- create working space ---//
     public WorkingSpaceDto createWorkingSpace(WorkingSpaceDto workingSpaceDto) {
         WorkingSpace newWorkingSpace = transferWorkingSpaceDtoToWorkingSpace(workingSpaceDto);
         workingSpaceRepository.save(newWorkingSpace);
         return transferWorkingSpaceToWorkingSpaceDto(newWorkingSpace);
     }
 
-    // FUNCTION TO UPDATE COMPANY //
+    //--- update working space ---//
     public WorkingSpaceDto updateWorkingSpace(Long id, WorkingSpaceDto workingSpaceDto) {
 
         Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
@@ -86,7 +80,7 @@ public class WorkingSpaceService {
 
     }
 
-    // FUNCTION TO DELETE COMPANY //
+    //--- delete working space ---//
     public void deleteWorkingSpace(Long id) {
         if (workingSpaceRepository.existsById(id)) {
             Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
@@ -98,8 +92,7 @@ public class WorkingSpaceService {
         }
     }
 
-    // ASSIGN SUBSCRIPTION TO WORKING SPACE //
-
+    //--- assign subscription to working space ---//
     public void assignSubscriptionToWorkingSpace(Long id, Long subscriptionId) {
         var optionalWorkingSpace = workingSpaceRepository.findById(id);
         var optionalSubscription = subscriptionRepository.findById(subscriptionId);
@@ -115,14 +108,14 @@ public class WorkingSpaceService {
         }
     }
 
-    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
+    //--- transfer helper method for working space to working space dto ---//
 
     public WorkingSpaceDto transferWorkingSpaceToWorkingSpaceDto(WorkingSpace workingSpace) {
 
         WorkingSpaceDto workingSpaceDto = new WorkingSpaceDto();
 
         workingSpaceDto.setId(workingSpace.getId());
-        workingSpaceDto.setName(workingSpace.getName());
+        workingSpaceDto.setWorkingSpace(workingSpace.getWorkingSpace());
         workingSpaceDto.setType(workingSpace.getType());
         workingSpaceDto.setCapacity(workingSpace.getCapacity());
         workingSpaceDto.setDuration(workingSpace.getDuration());
@@ -137,26 +130,27 @@ public class WorkingSpaceService {
         return workingSpaceDto;
     }
 
+    //--- transfer helper method for working space dto to working space ---//
     public WorkingSpace transferWorkingSpaceDtoToWorkingSpace(WorkingSpaceDto workingSpaceDto) {
 
         WorkingSpace workingSpace = new WorkingSpace();
 
         workingSpace.setId(workingSpaceDto.getId());
-        workingSpace.setName(workingSpaceDto.getName());
+        workingSpace.setWorkingSpace(workingSpaceDto.getWorkingSpace());
         workingSpace.setType(workingSpaceDto.getType());
         workingSpace.setCapacity(workingSpaceDto.getCapacity());
         workingSpace.setDuration(workingSpaceDto.getDuration());
         workingSpace.setStartDate(workingSpaceDto.getStartDate());
-        workingSpace.setEndDate(workingSpace.getEndDate());
-        workingSpace.setRentalPrice(workingSpace.getRentalPrice());
-        workingSpace.setCompanyName(workingSpace.getCompanyName());
+        workingSpace.setEndDate(workingSpaceDto.getEndDate());
+        workingSpace.setRentalPrice(workingSpaceDto.getRentalPrice());
+        workingSpace.setCompanyName(workingSpaceDto.getCompanyName());
 
         workingSpace.setFile(workingSpaceDto.getFile());
 
         return workingSpace;
     }
 
-    // TRANSFER WORKING SPACE LIST TO WORKING SPACE DTO LIST //
+    //---transfer helper method from working space list to working space dto list ---//
     public List<WorkingSpaceDto> transferWorkingSpaceListToWorkingSpaceDtoList(List<WorkingSpace> workingSpaceList) {
         List<WorkingSpaceDto> workingSpaceDtoList = new ArrayList<>();
         for (WorkingSpace workingSpaces : workingSpaceList) {
@@ -165,8 +159,7 @@ public class WorkingSpaceService {
         return workingSpaceDtoList;
     }
 
-    // ASSIGN image to WorkingSpace //
-// has to be reviewed! //
+    //--- assign image to working space ---//
     public void assignImageToWorkingSpace(String fileName, Long id) {
         Optional<WorkingSpace> optionalWorkingSpace = workingSpaceRepository.findById(id);
         Optional<FileDocument> fileUploadResponse = Optional.ofNullable(docFileRepository.findByFileName(fileName));
@@ -178,5 +171,3 @@ public class WorkingSpaceService {
         }
     }
 }
-
-// TODO : workingSpace check on addWorkingSpace to Team : here some of the fields are still on null - check why //

@@ -22,15 +22,15 @@ public class WorkingSpaceDto {
     private Long id;
 
     @NotBlank(message = "Name of working space is required")
-    private String name;
-
     private String workingSpace;
 
+    @NotBlank(message = "Name of company is required")
     private String companyName;
 
     @NotBlank(message = "Type of working space is required")
     private String type;
 
+    @NotBlank(message = "Capacity of working space is required")
     @Min(1)
     @Max(200)
     private int capacity;
@@ -45,5 +45,4 @@ public class WorkingSpaceDto {
     private LocalDate endDate;
 
     private FileDocument file;
-
 }

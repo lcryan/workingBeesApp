@@ -4,8 +4,8 @@ VALUES (5, 'Pixar Inc. Creative Team', 'Pixar Inc.', 12),
 
 INSERT INTO working_spaces(id, space_name, company_name, space_type, space_capacity, price_per_room, duration,
                            start_date, end_date)
-VALUES (67, 'Tokyo Valley', 'Pixar Inc.', 'conference room', 100, 1000.00, '3 months', '12/1/2024', '12/4/2024'),
-       (99, 'Amsterdam Grachten', 'Carbonyde GmbH', 'meeting room', 30, 2000.00, '1 month', '1/3/2024', '1/4/2024');
+VALUES (67, 'Tokyo Valley', 'Pixar Inc.', 'conference room', 100, 1000.00, '3 months', '2024/01/01', '2024/04/01'),
+       (99, 'Amsterdam Grachten', 'Carbonyde GmbH', 'meeting room', 30, 2000.00, '1 month', '2024-03-01', '2024/04/01');
 
 INSERT INTO file_uploads(id, file_name, content_type, url)
 VALUES (11, 'Stockholm_PresentationRoom_CEOLevel .jpg', 'image/jpeg',
