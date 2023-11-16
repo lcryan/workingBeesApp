@@ -12,31 +12,29 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/extraservices")
-
 public class ExtraServiceController {
-
     private final ExtraServiceService extraServiceService;
 
     public ExtraServiceController(ExtraServiceService extraServiceService) {
         this.extraServiceService = extraServiceService;
     }
 
-    // GETTING EXTRA SERVICE LIST --- functional //
 
+    //--- get all extra-services ---//
     @GetMapping("")
     public ResponseEntity<List<ExtraServiceDto>> getAllExtraServices() {
         List<ExtraServiceDto> extraServiceDtoList = extraServiceService.getAllExtraServices();
         return ResponseEntity.ok(extraServiceDtoList);
     }
 
-    // GETTING ONE EXTRA-SERVICE --- functional //
+    //--- get one extra-service ---//
     @GetMapping("/{id}")
     public ResponseEntity<ExtraServiceDto> getExtraService(@PathVariable Long id) {
         ExtraServiceDto extraServiceDto = extraServiceService.getOneExtraService(id);
         return ResponseEntity.ok(extraServiceDto);
     }
 
-    // CREATE EXTRA-SERVICE --- functional //
+    //--- create extra-service ---//
     @PostMapping("")
     public ResponseEntity<Object> createExtraService(@Validated @RequestBody ExtraServiceDto extraServiceDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -54,16 +52,14 @@ public class ExtraServiceController {
         }
     }
 
-    // UPDATING EXTRA-SERVICE --- functional//
+    //--- update extra-service ---//
     @PutMapping("/{id}")
     public ResponseEntity<ExtraServiceDto> updateExtraService(@PathVariable Long id, @Validated @RequestBody ExtraServiceDto newExtraService) {
         ExtraServiceDto extraServiceDto1 = extraServiceService.updateExtraService(id, newExtraService);
         return ResponseEntity.ok().body(extraServiceDto1);
     }
 
-
-    // DELETING EXTRA-SERVICE --- functional //
-
+    //--- delete extra-service ---//
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteExtraService(@PathVariable Long id) {
         extraServiceService.deleteExtraService(id);
