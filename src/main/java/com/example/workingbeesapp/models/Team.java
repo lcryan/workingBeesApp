@@ -22,40 +22,29 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-
     @Column(name = "id", nullable = false)
     private Long id;
 
-    private String team;
-
     @Column(name = "team_name")
-    private String teamName;
-
-    @Column(name = "company_name")
-    private String companyName;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "company_id")
-    private Company company;
-
-    @OneToOne
-    @JoinColumn(name = "team_working_space")
-    private WorkingSpace workingSpace;
+    private String team;
 
     @Column(name = "team_size")
     private int teamSize;
 
+    @Column(name = "company_name")
+    private String companyName;
+
+    //--- relation with company ---//
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    //--- relation with working space ---//
+    @OneToOne
+    @JoinColumn(name = "team_working_space")
+    private WorkingSpace workingSpace;
+
+    //--- relation with extra services ---//
     @OneToMany(mappedBy = "team")
     private List<ExtraService> extraServices;
-
-    // here you want to have a method that adds an extraService to team //
-    public void addExtraService(ExtraService extraService) {
-        this.extraServices.add(extraService);
-        extraService.setTeam(this);
-    }
-
-    public void addWorkingSpace(WorkingSpace workingSpace) {
-        this.workingSpace = workingSpace;
-        workingSpace.setTeam(this);
-    }
 }

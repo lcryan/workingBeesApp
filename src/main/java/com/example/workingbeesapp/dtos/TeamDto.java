@@ -18,11 +18,10 @@ public class TeamDto {
 
     private Long id;
 
+    @NotEmpty(message = "Team name is required")
     private String team;
 
-    @NotEmpty(message = "Team name is required")
-    private String teamName;
-
+    @NotEmpty(message = "Company name is required")
     private String companyName;
 
     private WorkingSpaceDto workingSpace;
