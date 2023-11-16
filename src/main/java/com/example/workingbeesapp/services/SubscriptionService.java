@@ -4,7 +4,6 @@ import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
-import com.example.workingbeesapp.repositories.WorkingSpaceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -80,7 +79,6 @@ public class SubscriptionService {
             throw new RecordNotFoundException("Item of type Subscription with id: " + id + " could not be found.");
         }
     }
-
 
     //--- transfer helper method for subscription to subscriptionDto ---//
     public SubscriptionDto transferSubscriptionToSubscriptionDto(Subscription subscription) {
