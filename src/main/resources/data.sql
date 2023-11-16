@@ -11,9 +11,9 @@ INSERT INTO file_uploads(id, file_name, content_type, url)
 VALUES (11, 'Stockholm_PresentationRoom_CEOLevel .jpg', 'image/jpeg',
         'http://localhost:8080/download/org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@79e61b33');
 
-INSERT INTO subscriptions (id, total_amount, company_name, working_space_type)
-VALUES (45, 290.00, 'Pixar Inc.', 'Conference room'),
-       (55, 5600.00, 'Carbonyde GmbH', 'Meeting room');
+INSERT INTO subscriptions (id, subscription_name ,total_amount, company_name)
+VALUES (45,'Pixar Rental Agreement' , 290.00, 'Pixar Inc.'),
+       (55, 'Carbonyde Rental Agreement',5600.00, 'Carbonyde GmbH');
 
 INSERT INTO extra_services (id, extra_service_name, company_name, service_type, service_price, service_duration)
 VALUES (88, 'Pixar Team Up!Lunch Buffet', 'Pixar Inc.', 'catering buffet', 3150.00, '7 days'),

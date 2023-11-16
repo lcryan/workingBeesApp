@@ -23,6 +23,7 @@ public class Subscription {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(name = "subscription_name")
     private String subscription;
 
     @Column(name = "company_name")
@@ -31,13 +32,11 @@ public class Subscription {
     @Column(name = "total_amount")
     private double totalAmount;
 
-    @Column(name = "working_space_type")
-    private String workingSpaceType;
-
+    //--- relation with company ---//
     @OneToOne(mappedBy = "subscription", cascade = CascadeType.ALL)
     private Company company;
 
+    //--- relation with working space ---//
     @OneToMany(mappedBy = "subscription")
     private List<WorkingSpace> workingSpaces;
-
 }
