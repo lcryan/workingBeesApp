@@ -50,10 +50,15 @@ VALUES (22, 'Tokyo Valley', 'Pixar Inc.', 'open office and media', 15, 2000.00, 
 
 INSERT
 INTO file_uploads(id, file_name, content_type, url)
-VALUES (11, 'Stockholm_PresentationRoom_CEOLevel .jpg', 'image/jpeg',
-        'http://localhost:8080/download/org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@79e61b33');
+VALUES (110, 'Copenhagen_Streets .jpg', 'image/jpeg',
+        'http://localhost:8080/download/org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@79e61b33'),
+       (111, 'Helsinki_Sea_View.jpg', 'image/jpeg', 'http://localhost:8080/download/Helsinki_Sea_View.jpg');
+(112, )
 
-INSERT INTO subscriptions (id, subscription_name, total_amount, company_name)
+
+
+INSERT
+INTO subscriptions (id, subscription_name, total_amount, company_name)
 VALUES (1, 'Pixar Rental Agreement', 5850.00, 'Pixar Inc.'),
        (2, 'Penguin Books Rental Agreement', 7750.00, 'Penguin Books'),
        (3, 'Netflix Rental Agreement', 3350.00, 'Netflix'),
@@ -72,7 +77,7 @@ VALUES (31, 'Pixar Monsters Team Breakfast', 'Pixar Inc.', 'breakfast buffet', 1
        (36, 'Grown-Ups Team Coffee & Tea', 'Penguin Books', 'coffee/tea daily service', 1500.00, '30 days'),
 /*Netflix extra services*/
        (37, 'Stranger Things Team Coffee & Tea', 'Netflix', 'coffee/tea daily service', 525.00, '3 days'),
-       (38, 'Stranger Things Team', 'Netflix', 'lunch buffet', 2.400, '3 days'),
+       (38, 'Stranger Things Team Lunch', 'Netflix', 'lunch buffet', 2.400, '3 days'),
        (39, 'Robbie Williams Docu Team Teatime', 'Netflix', 'high tea', 4000.00, '10 days'),
        (40, 'Derry Girls Team Lunch', 'Netflix', 'lunch buffet', 585.00, '2 days'),
 /*Marvel Comics extra services*/
@@ -145,37 +150,74 @@ SET company_id =
             END;
 
 UPDATE companies
-SET your_subscriptions =
-
-
-
-UPDATE companies
-SET your_subscriptions = 45
-WHERE id = 12;
-
-UPDATE companies
-SET your_subscriptions = 55
-WHERE id = 15;
+SET your_subscription =
+        CASE
+            WHEN id = 11 THEN 1
+            WHEN id = 76 THEN 2
+            WHEN id = 89 THEN 3
+            WHEN id = 79 THEN 4
+            WHEN id = 93 THEN 5
+            END;
 
 UPDATE extra_services
-SET team_id = 2
-WHERE id = 88;
+SET team_id =
+        CASE
+            WHEN id = 31 THEN 11
+            WHEN id = 32 THEN 12
+            WHEN id = 33 THEN 13
 
-UPDATE extra_services
-SET team_id = 5
-WHERE id = 123;
+            WHEN id = 34 THEN 76
+            WHEN id = 35 THEN 77
+            WHEN id = 36 THEN 78
+
+            WHEN id = 41 THEN 89
+            WHEN id = 42 THEN 90
+            WHEN id = 43 THEN 91
+
+            WHEN id = 37 THEN 79
+            WHEN id = 38 THEN 79
+            WHEN id = 39 THEN 80
+            WHEN id = 40 THEN 81
+
+            WHEN id = 44 THEN 93
+            WHEN id = 45 THEN 94
+            END;
 
 UPDATE working_spaces
-SET subscription_id = 45
-WHERE id = 67;
+SET subscription_id =
+        CASE
+            WHEN id = 22 THEN 1
+            WHEN id = 23 THEN 1
+            WHEN id = 24 THEN 1
+
+            WHEN id = 25 THEN 2
+            WHEN id = 26 THEN 2
+            WHEN id = 27 THEN 2
+
+            WHEN id = 15 THEN 3
+            WHEN id = 16 THEN 3
+            WHEN id = 17 THEN 3
+
+            WHEN id = 18 THEN 4
+            WHEN id = 19 THEN 4
+            WHEN id = 20 THEN 4
+
+            WHEN id = 21 THEN 5
+            WHEN id = 33 THEN 5
+            END;
 
 UPDATE working_spaces
-SET subscription_id = 55
-WHERE id = 99;
+SET file_id =
+        CASE
+            /*    WHEN id = 22 THEN
+                WHEN id = 23 THEN*/
+            WHEN id = 24 THEN 110
+/*
 
-UPDATE working_spaces
-SET file_id = 11
-WHERE id = 99;
+            WHEN id =    THEN*/
+            END;
+
+
 
 INSERT INTO roles (role_name)
 VALUES ('ROLE_USER'),
