@@ -54,12 +54,27 @@ VALUES (110, 'Copenhagen_Streets .jpg', 'image/jpeg',
         'http://localhost:8080/download/org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@79e61b33'),
        (111, 'Helsinki_Sea_View.jpg', 'image/jpg', 'http://localhost:8080/download/Helsinki_Sea_View.jpg'),
        (112, 'Tokyo_Valley.jpg', 'image/jpg', 'http://localhost:8080/download/Tokyo_Valley.jpg'),
-       (113, 'Berlin_Beats.jpg','image/jpg', 'http://localhost:8080/download/Berlin_Beats.jpg');
-/*       (114, '', )
-    (115, '',)*/
-    INSERT
+       (113, 'Berlin_Beats.jpg', 'image/jpg', 'http://localhost:8080/download/Berlin_Beats.jpg'),
+       (114, 'Lima_Miraflores.jpeg', 'image/jpg', 'http://localhost:8080/download/Lima_Miraflores.jpeg'),
+       (115, 'Barcelona_Sky_jpg', 'image/jpg', 'http://localhost:8080/download/Barcelona_Sky_jpg'),
+       (116, 'Toronto_Teal.jpg', 'image/jpg', 'http://localhost:8080/download/Toronto_Teal.jpg'),
+       (117, 'New_York_Big_Apple.jpg', 'image/jpg', 'http://localhost:8080/download/New_York_Big_Apple.jpg'),
+       (118, 'Dublin_Docks.jpg', 'image/jpg', 'http://localhost:8080/download/Dublin_Docks.jpg'),
+       (119, 'Sydney_Opera.jpg', 'image/jpg', 'http://localhost:8080/download/Sydney_Opera.jpg'),
+       (120, 'Madrid_Milagros.jpg', 'image/jpg', 'http://localhost:8080/download/Madrid_Milagros.jpg'),
+       (121, 'Chengdu_Station.jpg', 'image/jpg', 'http://localhost:8080/download/Chengdu_Station.jpg'),
+       (122, 'San_Fransisco_City.jpg', 'image/jpg', 'http://localhost:8080/download/San_Fransisco_City.jpg'),
+       (123, 'California_Sea.jpg', 'image/jpg', 'http://localhost:8080/download/California_Sea.jpg');
+
+
+INSERT
 INTO subscriptions (id, subscription_name, total_amount, company_name)
-VALUES (1, 'Pixar Rental Agreement', 5850.00, 'Pixar Inc.'), (2, 'Penguin Books Rental Agreement', 7750.00, 'Penguin Books'), (3, 'Netflix Rental Agreement', 3350.00, 'Netflix'), (4, 'Marvel Comics Rental Agreement', 4850.00, 'Marvel Comics'), (5, 'Geffen Records Rental Agreement', 3500.00, 'Geffen Records'); /*still have to add up total amount extra services here!!!*/
+VALUES (1, 'Pixar Rental Agreement', 5850.00, 'Pixar Inc.'),
+       (2, 'Penguin Books Rental Agreement', 7750.00, 'Penguin Books'),
+       (3, 'Netflix Rental Agreement', 3350.00, 'Netflix'),
+       (4, 'Marvel Comics Rental Agreement', 4850.00, 'Marvel Comics'),
+       (5, 'Geffen Records Rental Agreement', 3500.00,
+        'Geffen Records'); /*still have to add up total amount extra services here!!!*/
 
 INSERT INTO extra_services (id, extra_service_name, company_name, service_type, service_price, service_duration)
 /*Pixar extra services*/
@@ -208,9 +223,20 @@ SET file_id =
             WHEN id = 23 THEN 111
             WHEN id = 24 THEN 110
 
-/*            WHEN id = 25 THEN 115
+            WHEN id = 25 THEN 115
             WHEN id = 26 THEN 114
-            WHEN id = 27 THEN 113*/
+            WHEN id = 27 THEN 113
+
+            WHEN id = 15 THEN 116
+            WHEN id = 16 THEN 117
+            WHEN id = 17 THEN 118
+
+            WHEN id = 18 THEN 119
+            WHEN id = 19 THEN 120
+            WHEN id = 20 THEN 121
+
+            WHEN id = 21 THEN 122
+            WHEN id = 33 THEN 123
             END;
 
 
