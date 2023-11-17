@@ -240,12 +240,12 @@ SET file_id =
             END;
 
 INSERT INTO users (username, password)
-VALUES ('JimMo', 'Is_890'),
-       ('MarkusD', 'GOM_1988'),
-       ('StanTheOne', 'KickAss_99'),
-       ('Min-Young', 'Netflix_Lover_223'),
-       ('RachelLe', 'Nirvana_1967'),
-       ('LRyan', '$2a$12$0mJ3gFYnq0cczDekoNEF.utOrgH0Troafcrs00oEI8qe8nvuE75Qy');
+VALUES ('JimMo', '$2a$12$PIEjrWCwq05jOe6ddQO5T.m5mIuJc8UCEdBpytWH8pmVYHoM5txfG'),
+       ('MarkusD', '$2a$12$61dCmUQ1wYB32VMVsp0j0u5XgLRlB/nIEonSoplejxj0641Hpp8Ba'),
+       ('StanTheOne', '$2a$12$TmxPe2g330H3HoZ1qSJ1ueiPh8e5Mt3IRaCJn1aCxkQCywjVrNyuC'),
+       ('Min-Young', '$2a$12$H0z0gWRvmSA2ZcESVJ0FteGp.4.d9xW9/YRL.67rBFL3vYeHgzvmG'),
+       ('RachelLe', '$2a$12$NTjAFfUNYSJjoPCZw6o3DuPs9u6ZV7V9sEsDO3wERZibFbtSYK8d2'),
+       ('LRyan', '$2a$12$/tHNCW4PO3LXooK8DCZ7WuO0pRnz3.w9oXadhVKerWnJ4axVp/0la');
 
 
 INSERT INTO roles (role_name)
