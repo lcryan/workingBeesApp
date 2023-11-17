@@ -143,13 +143,13 @@ SET company_id =
             WHEN id = 12 THEN 11
             WHEN id = 13 THEN 11
 
-            WHEN id = 76 THEN 89
-            WHEN id = 77 THEN 89
-            WHEN id = 78 THEN 89
+            WHEN id = 76 THEN 76
+            WHEN id = 77 THEN 76
+            WHEN id = 78 THEN 76
 
-            WHEN id = 89 THEN 79
-            WHEN id = 90 THEN 79
-            WHEN id = 91 THEN 79
+            WHEN id = 89 THEN 89
+            WHEN id = 90 THEN 89
+            WHEN id = 91 THEN 89
 
             WHEN id = 79 THEN 79
             WHEN id = 80 THEN 79
@@ -239,8 +239,38 @@ SET file_id =
             WHEN id = 33 THEN 123
             END;
 
+INSERT INTO users (username, password)
+VALUES ('JimMo', 'Is_890'),
+       ('MarkusD', 'GOM_1988'),
+       ('StanTheOne', 'KickAss_99'),
+       ('Min-Young', 'Netflix_Lover_223'),
+       ('RachelLe', 'Nirvana_1967'),
+       ('LRyan', '$2a$12$0mJ3gFYnq0cczDekoNEF.utOrgH0Troafcrs00oEI8qe8nvuE75Qy');
 
 
 INSERT INTO roles (role_name)
 VALUES ('ROLE_USER'),
        ('ROLE_ADMIN');
+
+INSERT INTO users_role_list (role_list_role_name, user_list_username)
+VALUES ('ROLE_USER', 'JimMo'),
+       ('ROLE_USER', 'MarkusD'),
+       ('ROLE_USER', 'StanTheOne'),
+       ('ROLE_USER', 'Min-Young'),
+       ('ROLE_USER', 'RachelLe'),
+       ('ROLE_ADMIN', 'LRyan');
+
+
+INSERT INTO accounts(id, company_name, email, first_name, last_name, user_username)
+VALUES (45, 'Pixar Inc.', 'jimmorris@pixar.com', 'Jim', 'Morris', 'JimMo'),
+       (46, 'Penguin Books', 'markus.dohle@penguin-books.com', 'Markus', 'Dohle', 'MarkusD'),
+       (47, 'Marvel Comics', 'stanlee@marvel-comics.com', 'Stan', 'Lee', 'StanTheOne'),
+       (48, 'Netflix', 'min-young-kim@netflix.com', 'Min-Young', 'Kim', 'Min-Young'),
+       (49, 'Geffen Records', 'rachelLevy@geffen-records.com', 'Rachel', 'Levy', 'RachelLe'),
+       (50, 'WorkingBeesHub', 'luciaRyan@workingBeesHub.com', 'Lucia', 'Ryan', 'LRyan');
+
+
+
+
+
+
