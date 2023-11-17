@@ -52,19 +52,14 @@ INSERT
 INTO file_uploads(id, file_name, content_type, url)
 VALUES (110, 'Copenhagen_Streets .jpg', 'image/jpeg',
         'http://localhost:8080/download/org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@79e61b33'),
-       (111, 'Helsinki_Sea_View.jpg', 'image/jpeg', 'http://localhost:8080/download/Helsinki_Sea_View.jpg');
-(112, )
-
-
-
-INSERT
+       (111, 'Helsinki_Sea_View.jpg', 'image/jpg', 'http://localhost:8080/download/Helsinki_Sea_View.jpg'),
+       (112, 'Tokyo_Valley.jpg', 'image/jpg', 'http://localhost:8080/download/Tokyo_Valley.jpg'),
+       (113, 'Berlin_Beats.jpg','image/jpg', 'http://localhost:8080/download/Berlin_Beats.jpg');
+/*       (114, '', )
+    (115, '',)*/
+    INSERT
 INTO subscriptions (id, subscription_name, total_amount, company_name)
-VALUES (1, 'Pixar Rental Agreement', 5850.00, 'Pixar Inc.'),
-       (2, 'Penguin Books Rental Agreement', 7750.00, 'Penguin Books'),
-       (3, 'Netflix Rental Agreement', 3350.00, 'Netflix'),
-       (4, 'Marvel Comics Rental Agreement', 4850.00, 'Marvel Comics'),
-       (5, 'Geffen Records Rental Agreement', 3500.00,
-        'Geffen Records'); /*still have to add up total amount extra services here!!!*/
+VALUES (1, 'Pixar Rental Agreement', 5850.00, 'Pixar Inc.'), (2, 'Penguin Books Rental Agreement', 7750.00, 'Penguin Books'), (3, 'Netflix Rental Agreement', 3350.00, 'Netflix'), (4, 'Marvel Comics Rental Agreement', 4850.00, 'Marvel Comics'), (5, 'Geffen Records Rental Agreement', 3500.00, 'Geffen Records'); /*still have to add up total amount extra services here!!!*/
 
 INSERT INTO extra_services (id, extra_service_name, company_name, service_type, service_price, service_duration)
 /*Pixar extra services*/
@@ -209,12 +204,13 @@ SET subscription_id =
 UPDATE working_spaces
 SET file_id =
         CASE
-            /*    WHEN id = 22 THEN
-                WHEN id = 23 THEN*/
+            WHEN id = 22 THEN 112
+            WHEN id = 23 THEN 111
             WHEN id = 24 THEN 110
-/*
 
-            WHEN id =    THEN*/
+/*            WHEN id = 25 THEN 115
+            WHEN id = 26 THEN 114
+            WHEN id = 27 THEN 113*/
             END;
 
 
