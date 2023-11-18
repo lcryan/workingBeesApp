@@ -69,11 +69,11 @@ VALUES (110, 'Copenhagen_Streets .jpg', 'image/jpeg',
 
 INSERT
 INTO subscriptions (id, subscription_name, total_amount, company_name)
-VALUES (1, 'Pixar Rental Agreement', 5850.00, 'Pixar Inc.'),
-       (2, 'Penguin Books Rental Agreement', 7750.00, 'Penguin Books'),
-       (3, 'Netflix Rental Agreement', 3350.00, 'Netflix'),
-       (4, 'Marvel Comics Rental Agreement', 4850.00, 'Marvel Comics'),
-       (5, 'Geffen Records Rental Agreement', 3500.00,
+VALUES (41, 'Pixar Rental Agreement', 5850.00, 'Pixar Inc.'),
+       (42, 'Penguin Books Rental Agreement', 7750.00, 'Penguin Books'),
+       (43, 'Netflix Rental Agreement', 3350.00, 'Netflix'),
+       (44, 'Marvel Comics Rental Agreement', 4850.00, 'Marvel Comics'),
+       (45, 'Geffen Records Rental Agreement', 3500.00,
         'Geffen Records'); /*still have to add up total amount extra services here!!!*/
 
 INSERT INTO extra_services (id, extra_service_name, company_name, service_type, service_price, service_duration)
@@ -162,11 +162,11 @@ SET company_id =
 UPDATE companies
 SET your_subscription =
         CASE
-            WHEN id = 11 THEN 1
-            WHEN id = 76 THEN 2
-            WHEN id = 89 THEN 3
-            WHEN id = 79 THEN 4
-            WHEN id = 93 THEN 5
+            WHEN id = 11 THEN 41
+            WHEN id = 76 THEN 42
+            WHEN id = 89 THEN 43
+            WHEN id = 79 THEN 44
+            WHEN id = 93 THEN 45
             END;
 
 UPDATE extra_services
@@ -196,24 +196,24 @@ SET team_id =
 UPDATE working_spaces
 SET subscription_id =
         CASE
-            WHEN id = 22 THEN 1
-            WHEN id = 23 THEN 1
-            WHEN id = 24 THEN 1
+            WHEN id = 22 THEN 41
+            WHEN id = 23 THEN 41
+            WHEN id = 24 THEN 41
 
-            WHEN id = 25 THEN 2
-            WHEN id = 26 THEN 2
-            WHEN id = 27 THEN 2
+            WHEN id = 25 THEN 42
+            WHEN id = 26 THEN 42
+            WHEN id = 27 THEN 42
 
-            WHEN id = 15 THEN 3
-            WHEN id = 16 THEN 3
-            WHEN id = 17 THEN 3
+            WHEN id = 15 THEN 43
+            WHEN id = 16 THEN 43
+            WHEN id = 17 THEN 43
 
-            WHEN id = 18 THEN 4
-            WHEN id = 19 THEN 4
-            WHEN id = 20 THEN 4
+            WHEN id = 18 THEN 44
+            WHEN id = 19 THEN 44
+            WHEN id = 20 THEN 44
 
-            WHEN id = 21 THEN 5
-            WHEN id = 33 THEN 5
+            WHEN id = 21 THEN 45
+            WHEN id = 33 THEN 45
             END;
 
 UPDATE working_spaces
