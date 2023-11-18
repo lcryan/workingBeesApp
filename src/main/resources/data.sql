@@ -20,33 +20,40 @@ VALUES (11, 'Monsters Inc. Design Team', 'Pixar Inc.', 10),
        (94, 'Live Concert NBT Planning Team', 'Geffen Records', 30);
 
 INSERT
-INTO working_spaces(id, space_name, company_name, space_type, space_capacity, price_per_room, duration,
+INTO working_spaces(id, space_name, company_name, space_type, space_capacity, price_per_room, duration, is_available,
                     start_date, end_date)
 
 /*working spaces for Pixar Inc.*/
-VALUES (22, 'Tokyo Valley', 'Pixar Inc.', 'open office and media', 15, 2000.00, '10 days', '2024-01-01', '2024-01-11'),
-       (23, 'Helsinki Sea View', 'Pixar Inc.', 'conference room', 30, 2800.00, '14 days', '2024-03-04', '2024-03-18'),
-       (24, 'Copenhagen Streets', 'Pixar Inc.', 'meeting room medium', 25, 1050.00, '7 days', '2024-05-09',
+VALUES (22, 'Tokyo Valley', 'Pixar Inc.', 'open office and media', 15, 2000.00, '10 days', true, '2024-01-01',
+        '2024-01-11'),
+       (23, 'Helsinki Sea View', 'Pixar Inc.', 'conference room', 30, 2800.00, '14 days', true, '2024-03-04',
+        '2024-03-18'),
+       (24, 'Copenhagen Streets', 'Pixar Inc.', 'meeting room medium', 25, 1050.00, '7 days', true, '2024-05-09',
         '2024-05-16'),
 /*working spaces for Penguin Books*/
-       (25, 'Barcelona Sky', 'Penguin Books.', 'open office medium', 30, 750.00, '5 days', '2024-05-09', '2024-05-14'),
-       (26, 'Lima Miraflores', 'Penguin Books', 'media presentation room', 65, 2500.00, '1 day', '2024-07-03',
+       (25, 'Barcelona Sky', 'Penguin Books.', 'open office medium', 30, 750.00, '5 days', true, '2024-05-09',
+        '2024-05-14'),
+       (26, 'Lima Miraflores', 'Penguin Books', 'media presentation room', 65, 2500.00, '1 day', true, '2024-07-03',
         '2023-07-03'),
-       (27, 'Berlin Beats', 'Penguin Books', 'open office small', 20, 4500.00, '30 days', '2023-11-20', '2023-12-20'),
+       (27, 'Berlin Beats', 'Penguin Books', 'open office small', 20, 4500.00, '30 days', true, '2023-11-20',
+        '2023-12-20'),
 /*working spaces for Netflix*/
-       (15, 'Toronto Teal', 'Netflix', 'conference room', 40, 1800.00, '3 days', '2024-06-29', '2024-07-02'),
-       (16, 'New York Big Apple', 'Netflix', 'open office large', 40, 1200.00, '10 days', '2024-10-10', '2024-10-20'),
-       (17, 'Dublin Docks', 'Netflix', 'open office small', 15, 350.00, '2 days', '2024-05-02', '2024-05-4'),
+       (15, 'Toronto Teal', 'Netflix', 'conference room', 40, 1800.00, '3 days', true, '2024-06-29', '2024-07-02'),
+       (16, 'New York Big Apple', 'Netflix', 'open office large', 40, 1200.00, '10 days', true, '2024-10-10',
+        '2024-10-20'),
+       (17, 'Dublin Docks', 'Netflix', 'open office small', 15, 350.00, '2 days', true, '2024-05-02', '2024-05-4'),
 /*working spaces for Marvel Comics*/
-       (18, 'Sydney Opera', 'Marvel Comics', 'conference hall large', 120, 2300.00, '1 day', '2024-08-08',
+       (18, 'Sydney Opera', 'Marvel Comics', 'conference hall large', 120, 2300.00, '1 day', true, '2024-08-08',
         '2024-08-08'),
-       (19, 'Madrid Milagros', 'Marvel Comics', 'open office medium', 35, 1500.00, '10 days', '2024-02-10',
+       (19, 'Madrid Milagros', 'Marvel Comics', 'open office medium', 35, 1500.00, '10 days', true, '2024-02-10',
         '2024-02-20'),
-       (20, 'Chengdu Station', 'Marvel Comics', 'office small', 10, 1050.00, '7 days', '2024-01-18', '2024-01-25'),
+       (20, 'Chengdu Station', 'Marvel Comics', 'office small', 10, 1050.00, '7 days', true, '2024-01-18',
+        '2024-01-25'),
 /*working spaces for Geffen Records*/
-       (21, 'San Fransisco City', 'Geffen Records', 'open office medium', 30, 2100.00, '14 days', '2024-03-10',
+       (21, 'San Fransisco City', 'Geffen Records', 'open office medium', 30, 2100.00, '14 days', true, '2024-03-10',
         '2023-03-24'),
-       (33, 'California Sea', 'Geffen Records', 'open office large', 40, 1400.00, '7 days', '2024-03-10', '2023-03-17');
+       (33, 'California Sea', 'Geffen Records', 'open office large', 40, 1400.00, '7 days', true, '2024-03-10',
+        '2023-03-17');
 
 INSERT
 INTO file_uploads(id, file_name, content_type, url)
