@@ -47,6 +47,9 @@ public class WorkingSpace {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Column(name = "is_available")
+    private Boolean isAvailable;
+
     //---relation with team---//
     @OneToOne(mappedBy = "workingSpace")
     private Team team;
