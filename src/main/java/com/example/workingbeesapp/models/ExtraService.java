@@ -31,7 +31,7 @@ public class ExtraService {
     private String serviceType;
 
     @Column(name = "service_price")
-    private int servicePrice;
+    private double servicePrice;
 
     @Column(name = "service_duration")
     private String serviceDuration;
