@@ -254,7 +254,6 @@ VALUES ('JimMo', '$2a$12$PIEjrWCwq05jOe6ddQO5T.m5mIuJc8UCEdBpytWH8pmVYHoM5txfG')
        ('RachelLe', '$2a$12$NTjAFfUNYSJjoPCZw6o3DuPs9u6ZV7V9sEsDO3wERZibFbtSYK8d2'),
        ('LRyan', '$2a$12$/tHNCW4PO3LXooK8DCZ7WuO0pRnz3.w9oXadhVKerWnJ4axVp/0la');
 
-
 INSERT INTO roles (role_name)
 VALUES ('ROLE_USER'),
        ('ROLE_ADMIN');
