@@ -2,6 +2,10 @@
 
 This is the WorkingBeesHub project I made as a final project for my backend study
 
+The link to my github project is : 
+
+https://github.com/lcryan/workingBeesApp
+
 ## 1. About the application 
 
 At "WorkingBeesHub," companies can rent office, meeting, and conference rooms for a specified period. Companies can register with multiple teams for different spaces by signing lease subscriptions for a certain period. All companies can create an account through the system and manage their business and team details.
