@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -32,7 +31,7 @@ public class UserService {
         this.accountRepository = accountRepository;
     }
 
-    // GET ALL USERS //
+    //--- get all users ---//
     public List<UserDto> getAllUsers() {
 
         List<User> userList = userRepository.findAll();
@@ -47,6 +46,7 @@ public class UserService {
         return userDtos;
     }
 
+    //--- getUser ---//
     public UserDto getUser(String username) {
         UserDto userDto;
         Optional<User> user = userRepository.findById(username);
@@ -59,6 +59,7 @@ public class UserService {
         return userDto;
     }
 
+    //--- delete user ---//
     public void deleteUser(String username) {
         Optional<User> optionalUser = userRepository.findById(username);
         if (optionalUser.isPresent()) {
@@ -67,8 +68,8 @@ public class UserService {
             throw new RecordNotFoundException("User with username: " + username + " not found");
         }
     }
-    // ------------------------------------------------------ //
 
+    //--- create user with account ---//
     public UserDto createUserWithAccount(AccountUserDto accountUserDto) {
 
         UserDto userDto = new UserDto();
@@ -101,7 +102,7 @@ public class UserService {
         return storedUserDto;
     }
 
-    // HELPER METHODS USER TO USER DTO AND USER DTO TO USER //
+    //--- helper methods for user to user dto ---//
     private static void transferUserToUserDto(User user, UserDto userDto) {
         userDto.setUsername(user.getUsername());
         userDto.setPassword(user.getPassword());
@@ -113,12 +114,13 @@ public class UserService {
         userDto.setRoleList(roleList.toArray(new String[0]));
     }
 
+    //--- helper methods for user dto to user ---//
     private static void transferUserDtoToUser(User user, UserDto userDto) {
         user.setUsername(userDto.getUsername());
         user.setPassword(userDto.getPassword());
     }
 
-    // Transfer method AccountDto to Account using AccountUserDto //
+    //--- transfer method for account dto to account dto - passing through account user dto ---//
     private void transferAccountDtoToAccount(AccountUserDto accountUserDto, Account account) {
         account.setFirstName(accountUserDto.getFirstName());
         account.setLastName(accountUserDto.getLastName());

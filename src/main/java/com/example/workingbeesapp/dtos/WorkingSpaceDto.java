@@ -44,5 +44,7 @@ public class WorkingSpaceDto {
 
     private LocalDate endDate;
 
+    private boolean isAvailable;
+
     private FileDocument file;
 }

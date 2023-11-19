@@ -35,7 +35,7 @@ public class Company {
 
     //--- relation with subscription ---//
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "your_subscriptions")
+    @JoinColumn(name = "your_subscription")
     public Subscription subscription;
 
     //--- relation with team ---//

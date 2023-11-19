@@ -14,26 +14,27 @@ import java.util.List;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-
     private final AccountService accountService;
 
     public AccountController(AccountService accountService) {
         this.accountService = accountService;
     }
 
-    // Get Account List //
+    //--- get all accounts ---//
     @GetMapping("")
     public ResponseEntity<List<AccountDto>> getAllAccounts() {
         List<AccountDto> accountDtoList = accountService.getAllAccounts();
         return ResponseEntity.ok(accountDtoList);
     }
 
+    //--- get account ---//
     @GetMapping("/{id}")
     public ResponseEntity<AccountDto> getAccount(@PathVariable Long id) {
         AccountDto accountDto = accountService.getOneAccount(id);
         return ResponseEntity.ok(accountDto);
     }
 
+    //--- create new account ---//
     @PostMapping("")
     public ResponseEntity<Object> createNewAccount(@Validated @RequestBody AccountUserDto accountUserDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
@@ -51,6 +52,7 @@ public class AccountController {
         }
     }
 
+    //--- delete account ---//
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteAccount(@PathVariable Long id) {
         accountService.deleteAccount(id);

@@ -28,7 +28,7 @@ public class ExtraServiceDto {
     private String serviceType;
 
     @NotBlank(message = "Service price is mandatory")
-    private int servicePrice;
+    private double servicePrice;
 
     @NotBlank(message = "Service duration is mandatory")
     private String serviceDuration;

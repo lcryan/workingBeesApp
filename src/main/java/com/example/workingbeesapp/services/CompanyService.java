@@ -1,22 +1,16 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.CompanyDto;
-import com.example.workingbeesapp.dtos.ExtraServiceDto;
 import com.example.workingbeesapp.dtos.SubscriptionDto;
 import com.example.workingbeesapp.dtos.TeamDto;
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Company;;
-import com.example.workingbeesapp.models.ExtraService;
 import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.models.Team;
 import com.example.workingbeesapp.repositories.CompanyRepository;
-
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
 import com.example.workingbeesapp.repositories.TeamRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,28 +18,21 @@ import java.util.Optional;
 
 @Service
 public class CompanyService {
-
     private final CompanyRepository companyRepository;
-
     private final SubscriptionRepository subscriptionRepository;
-
     private final SubscriptionService subscriptionService;
-
     private final TeamService teamService;
-
     private final TeamRepository teamRepository;
 
     public CompanyService(CompanyRepository companyRepository, SubscriptionRepository subscriptionRepository, SubscriptionService subscriptionService, TeamRepository teamRepository, TeamService teamService) {
         this.companyRepository = companyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.subscriptionService = subscriptionService;
-
         this.teamService = teamService;
         this.teamRepository = teamRepository;
     }
 
-
-    // FUNCTION FOR GET COMPANY LIST //
+    //--- get all companies ---//
     public List<CompanyDto> getAllCompanies() {
         List<Company> companies = companyRepository.findAll();
         List<CompanyDto> companyDtoList = new ArrayList<>(); // watch out: in case you have a list, don't forget to use plural - here: televisions//
@@ -56,7 +43,7 @@ public class CompanyService {
         return companyDtoList;
     }
 
-    // FUNCTION FOR GET ONE COMPANY //
+    //--- get company ---//
     public CompanyDto getOneCompany(Long id) {
         Optional<Company> optionalCompany = companyRepository.findById(id);
         if (optionalCompany.isPresent()) {
@@ -67,25 +54,23 @@ public class CompanyService {
         }
     }
 
-    // FUNCTION FOR CREATING ONE COMPANY //
-
+    //--- create company ---//
     public CompanyDto createCompany(CompanyDto companyDto) {
         Company newCompany = transferCompanyDtoToCompany(companyDto);
         Company savedCompany = companyRepository.save(newCompany);
         return transferCompanyToCompanyDto(savedCompany);
     }
 
-
-    // FUNCTION TO UPDATE COMPANY //
+    //--- update company ---//
     public CompanyDto updateCompany(Long id, CompanyDto companyDto) {
+
         Optional<Company> optionalCompany = companyRepository.findById(id);
 
         if (optionalCompany.isPresent()) {
-            Company company = optionalCompany.get();
 
+            Company company = optionalCompany.get();
             Company updatedCompany = transferCompanyDtoToCompany(companyDto);
             updatedCompany.setId(company.getId());
-
             companyRepository.save(updatedCompany);
 
             return transferCompanyToCompanyDto(updatedCompany);
@@ -94,7 +79,7 @@ public class CompanyService {
         }
     }
 
-    // FUNCTION TO DELETE COMPANY //
+    //--- delete company ---//
     public void deleteCompany(Long id) {
         if (companyRepository.existsById(id)) {
             Optional<Company> optionalCompany = companyRepository.findById(id);
@@ -105,8 +90,8 @@ public class CompanyService {
             throw new RecordNotFoundException("Item of type Company with id: " + id + " could not be found.");
         }
     }
-    // --- assigning subscription to company --- //
 
+    // --- assign subscription to company --- //
     public void assignSubscriptionToCompany(Long companyId, Long subscriptionId) { // changed to id here instead of companyId //
         var optionalCompany = companyRepository.findById(companyId);
         var optionalSubscription = subscriptionRepository.findById(subscriptionId);
@@ -124,7 +109,7 @@ public class CompanyService {
         }
     }
 
-    // add one team or more teams to company //
+    //--- add team to company ---//
     public void addTeam(List<TeamDto> teams, Company company) {
         for (TeamDto teamDto : teams) {
             if (!teamDto.getTeam().isEmpty()) {
@@ -135,7 +120,7 @@ public class CompanyService {
         }
     }
 
-    // add one subscription to company //
+    //--- add subscription to company ---//
     public void addSubscription(SubscriptionDto subscriptionDto, Company company) {
         if (subscriptionDto != null) {
             Subscription subscription = subscriptionService.transferSubscriptionDtoToSubscription(subscriptionDto);
@@ -150,7 +135,7 @@ public class CompanyService {
         }
     }
 
-    // ******* transfer helper methods ******* //
+    //--- helper method for transfer company to company dto ---//
 
     public CompanyDto transferCompanyToCompanyDto(Company company) {
 
@@ -165,11 +150,11 @@ public class CompanyService {
         }
         if (company.getTeams() != null) {
             companyDto.setTeams(teamService.transferTeamListToTeamDtoList(company.getTeams()));
-
         }
         return companyDto;
     }
 
+    //--- transfer helper method for company dto to company ---//
     public Company transferCompanyDtoToCompany(CompanyDto dto) {
 
         Company company = new Company();
@@ -182,7 +167,7 @@ public class CompanyService {
         return company;
     }
 
-    // --- TRANSFER COMPANY LIST DTO TO LIST ---
+    // --- transfer helper method for company dto list to company list ---//
     public List<Company> transferCompanyDtoListToCompanyList(List<CompanyDto> companiesDtos) {
         List<Company> companies = new ArrayList<>();
         for (CompanyDto companyDto : companiesDtos) {

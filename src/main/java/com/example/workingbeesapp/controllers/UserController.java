@@ -19,24 +19,28 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("") // POST /users
+    //--- create a user with account ---//
+    @PostMapping("")
     public ResponseEntity<UserDto> createUserWithAccount(@Valid @RequestBody AccountUserDto accountUserDto) {
         UserDto result = userService.createUserWithAccount(accountUserDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @GetMapping // GET /users //
+    //--- get all users ---//
+    @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
         List<UserDto> userDtoList = userService.getAllUsers();
         return new ResponseEntity<>(userDtoList, HttpStatus.OK);
     }
 
+    //--- get user by username ---//
     @GetMapping("/{username}")
     public ResponseEntity<UserDto> getUser(@PathVariable String username) {
         UserDto userDto = userService.getUser(username);
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
+    //--- delete user ---//
     @DeleteMapping("/{username}")
     public ResponseEntity<String> deleteUser(@PathVariable String username) {
         userService.deleteUser(username);

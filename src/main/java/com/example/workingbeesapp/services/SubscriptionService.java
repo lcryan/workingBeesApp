@@ -1,7 +1,6 @@
 package com.example.workingbeesapp.services;
 
 import com.example.workingbeesapp.dtos.SubscriptionDto;
-
 import com.example.workingbeesapp.exceptions.RecordNotFoundException;
 import com.example.workingbeesapp.models.Subscription;
 import com.example.workingbeesapp.repositories.SubscriptionRepository;
@@ -13,17 +12,16 @@ import java.util.Optional;
 
 @Service
 public class SubscriptionService {
-
     private final SubscriptionRepository subscriptionRepository;
-
     private final WorkingSpaceService workingSpaceService;
 
     public SubscriptionService(SubscriptionRepository subscriptionRepository, WorkingSpaceService workingSpaceService) {
         this.subscriptionRepository = subscriptionRepository;
         this.workingSpaceService = workingSpaceService;
+
     }
 
-
+    //--- get all subscriptions ---//
     public List<SubscriptionDto> getAllSubscriptions() {
         List<Subscription> subscriptions = subscriptionRepository.findAll();
         List<SubscriptionDto> subscriptionDtoList = new ArrayList<>();
@@ -34,8 +32,7 @@ public class SubscriptionService {
         return subscriptionDtoList;
     }
 
-    // FUNCTION FOR GET ONE COMPANY //
-
+    //--- get one subscription ---//
     public SubscriptionDto getOneSubscription(Long id) {
         Optional<Subscription> optionalSubscription = subscriptionRepository.findById(id);
         if (optionalSubscription.isPresent()) {
@@ -46,22 +43,20 @@ public class SubscriptionService {
         }
     }
 
-    // FUNCTION FOR CREATING ONE COMPANY //
-
+    //--- create subscription ---//
     public SubscriptionDto createSubscription(SubscriptionDto subscriptionDto) {
         Subscription newSubscription = transferSubscriptionDtoToSubscription(subscriptionDto);
         subscriptionRepository.save(newSubscription);
         return transferSubscriptionToSubscriptionDto(newSubscription);
     }
 
-    // FUNCTION TO UPDATE COMPANY //
+    //--- update subscription ---//
     public SubscriptionDto updateSubscription(Long id, SubscriptionDto subscriptionDto) {
 
         Optional<Subscription> optionalSubscription = subscriptionRepository.findById(id);
         if (optionalSubscription.isPresent()) {
 
             Subscription subscription = optionalSubscription.get();
-
             Subscription updatedSubscription = transferSubscriptionDtoToSubscription(subscriptionDto);
             updatedSubscription.setId(subscription.getId());
 
@@ -73,7 +68,7 @@ public class SubscriptionService {
         }
     }
 
-    // FUNCTION TO DELETE COMPANY //
+    //--- delete subscription ---//
     public void deleteSubscription(Long id) {
         if (subscriptionRepository.existsById(id)) {
             Optional<Subscription> optionalSubscription = subscriptionRepository.findById(id);
@@ -85,9 +80,7 @@ public class SubscriptionService {
         }
     }
 
-
-    // ******* TRANSFER HELPER METHODS HERE!!!  ******* //
-
+    //--- transfer helper method for subscription to subscriptionDto ---//
     public SubscriptionDto transferSubscriptionToSubscriptionDto(Subscription subscription) {
 
         SubscriptionDto subscriptionDto = new SubscriptionDto();
@@ -103,6 +96,7 @@ public class SubscriptionService {
         return subscriptionDto;
     }
 
+    //--- transfer helper method for subscriptionDto to subscription ---//
     public Subscription transferSubscriptionDtoToSubscription(SubscriptionDto subscriptionDto) {
 
         Subscription subscription = new Subscription();
@@ -115,4 +109,3 @@ public class SubscriptionService {
         return subscription;
     }
 }
-

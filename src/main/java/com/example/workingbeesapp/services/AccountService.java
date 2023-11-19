@@ -15,18 +15,14 @@ import java.util.Optional;
 
 @Service
 public class AccountService {
-
     private final AccountRepository accountRepository;
-
 
     public AccountService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
 
     }
 
-
-    // Get one account //
-
+    //--- get account ---//
     public AccountDto getOneAccount(Long id) {
         Optional<Account> optionalAccount = accountRepository.findById(id);
         if (optionalAccount.isPresent()) {
@@ -39,8 +35,7 @@ public class AccountService {
         }
     }
 
-
-    // Get all accounts //
+    //--- get all accounts ---//
     public List<AccountDto> getAllAccounts() {
 
         List<Account> accountList = accountRepository.findAll();
@@ -55,8 +50,9 @@ public class AccountService {
         return accountDtoList;
     }
 
-    // Create account //
+    //---create account ---//
     public AccountDto createAccount(AccountUserDto accountUserDto) {
+
         Account account = new Account();
         AccountUserDtoToAccount(accountUserDto, account);
 
@@ -69,7 +65,7 @@ public class AccountService {
     }
 
 
-    // Delete account //
+    //--- delete account ---//
     public void deleteAccount(Long id) {
         if (accountRepository.existsById(id)) {
             Optional<Account> optionalAccount = accountRepository.findById(id);
@@ -81,9 +77,7 @@ public class AccountService {
         }
     }
 
-    // transfer methods model to dto and back //
-
-    // this is the adjusted new method for the accountUserDto //
+    //--- transfer account user dto to account ---//
     private void AccountUserDtoToAccount(AccountUserDto accountUserDto, Account account) {
         /*       account.setId(accountDto.getId());*/
         account.setFirstName(accountUserDto.getFirstName());
@@ -92,7 +86,7 @@ public class AccountService {
         account.setCompanyName(accountUserDto.getCompanyName());
     }
 
-
+    //--- transfer account to account dto---//
     private static void transferAccountToAccountDto(Account account, AccountDto accountDto) {
         accountDto.setId(account.getId());
         accountDto.setFirstName(account.getFirstName());

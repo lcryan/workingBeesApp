@@ -57,8 +57,8 @@ public class SpringSecurityConfiguration {
                         // for users //
                         .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/users/{id}").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.PUT, "/users/{id}").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/users/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/users/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/users/{id}").hasRole("ADMIN")
 
                         // for roles //
@@ -67,7 +67,7 @@ public class SpringSecurityConfiguration {
                         // for accounts //
                         .requestMatchers(HttpMethod.POST, "/accounts").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.GET, "/accounts").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/accounts/{id}").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers(HttpMethod.GET, "/accounts/{id}").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/accounts/{id}").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.DELETE, "/accounts/{id}").hasRole("ADMIN")
 

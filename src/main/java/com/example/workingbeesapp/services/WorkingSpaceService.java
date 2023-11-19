@@ -15,7 +15,6 @@ import java.util.Optional;
 
 @Service
 public class WorkingSpaceService {
-
     private final WorkingSpaceRepository workingSpaceRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final DocFileRepository docFileRepository;
@@ -92,24 +91,7 @@ public class WorkingSpaceService {
         }
     }
 
-    //--- assign subscription to working space ---//
-    public void assignSubscriptionToWorkingSpace(Long id, Long subscriptionId) {
-        var optionalWorkingSpace = workingSpaceRepository.findById(id);
-        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
-
-        if (optionalWorkingSpace.isPresent() && optionalSubscription.isPresent()) {
-            var workingSpace = optionalWorkingSpace.get();
-            var subscription = optionalSubscription.get();
-
-            workingSpace.setSubscription(subscription);
-            workingSpaceRepository.save(workingSpace);
-        } else {
-            throw new RecordNotFoundException("Item not found.");
-        }
-    }
-
     //--- transfer helper method for working space to working space dto ---//
-
     public WorkingSpaceDto transferWorkingSpaceToWorkingSpaceDto(WorkingSpace workingSpace) {
 
         WorkingSpaceDto workingSpaceDto = new WorkingSpaceDto();
@@ -119,6 +101,7 @@ public class WorkingSpaceService {
         workingSpaceDto.setType(workingSpace.getType());
         workingSpaceDto.setCapacity(workingSpace.getCapacity());
         workingSpaceDto.setDuration(workingSpace.getDuration());
+        workingSpaceDto.setAvailable(workingSpace.isAvailable());
         workingSpaceDto.setStartDate(workingSpace.getStartDate());
         workingSpaceDto.setEndDate(workingSpace.getEndDate());
         workingSpaceDto.setRentalPrice(workingSpace.getRentalPrice());
@@ -140,6 +123,7 @@ public class WorkingSpaceService {
         workingSpace.setType(workingSpaceDto.getType());
         workingSpace.setCapacity(workingSpaceDto.getCapacity());
         workingSpace.setDuration(workingSpaceDto.getDuration());
+        workingSpace.setAvailable(workingSpaceDto.isAvailable());
         workingSpace.setStartDate(workingSpaceDto.getStartDate());
         workingSpace.setEndDate(workingSpaceDto.getEndDate());
         workingSpace.setRentalPrice(workingSpaceDto.getRentalPrice());
@@ -157,6 +141,22 @@ public class WorkingSpaceService {
             workingSpaceDtoList.add(transferWorkingSpaceToWorkingSpaceDto(workingSpaces));
         }
         return workingSpaceDtoList;
+    }
+
+    //--- assign subscription to working space ---//
+    public void assignSubscriptionToWorkingSpace(Long id, Long subscriptionId) {
+        var optionalWorkingSpace = workingSpaceRepository.findById(id);
+        var optionalSubscription = subscriptionRepository.findById(subscriptionId);
+
+        if (optionalWorkingSpace.isPresent() && optionalSubscription.isPresent()) {
+            var workingSpace = optionalWorkingSpace.get();
+            var subscription = optionalSubscription.get();
+
+            workingSpace.setSubscription(subscription);
+            workingSpaceRepository.save(workingSpace);
+        } else {
+            throw new RecordNotFoundException("Item not found.");
+        }
     }
 
     //--- assign image to working space ---//
